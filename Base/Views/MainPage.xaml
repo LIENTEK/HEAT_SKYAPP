@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:Base.Views"
+       xmlns:popups="clr-namespace:Base.Views.PopUp"
+       xmlns:effects="clr-namespace:Base.Effects"
+       effects:InitializeEffectsEffect.Init="true"
+       Shell.ItemTemplate="{StaticResource ShellMenuItemTemplate}"
+       Shell.MenuItemTemplate="{StaticResource ShellMenuItemTemplate}"
+       BackgroundColor="{StaticResource Primary }"
+       xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+       xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+       ios:Page.UseSafeArea="true"
+       FlyoutWidth="280"
+       
+       x:Class="Base.Views.MainPage">
+
+
+    <TabBar Route="Main">
+        <Tab Title="Cuenta" Icon="logout" Route="Cuenta">
+            <ShellContent Route="Base.Views.LoginPage" ContentTemplate="{DataTemplate local:LoginPage}"/>
+        </Tab>
+        
+        <Tab Title="Notificaciones" Icon="popup" >
+            <ShellContent ContentTemplate="{DataTemplate local:NotificacionesPage}" />
+        </Tab>
+
+        <Tab Title="Forecast" Icon="charts" Route="Home">
+            <ShellContent ContentTemplate="{DataTemplate local:HomePage}"/>
+        </Tab>
+
+        <Tab Title="RealTime" Icon="browse">
+            <ShellContent Title="TiempoReal" ContentTemplate="{DataTemplate local:TiempoRealPage}"/>
+            <ShellContent Title="Recomendacion" ContentTemplate="{DataTemplate local:RecomendacionPage}"/>
+        </Tab>
+        <Tab Title="Estres" Icon="grid">
+            <ShellContent Title="Estres Calorico" ContentTemplate="{DataTemplate local:EstresCaloricoPage}"/>
+        </Tab>
+    </TabBar>
+
+  
+
+</Shell>

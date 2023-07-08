@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Expander;assembly=Syncfusion.Maui.Expander"
+             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             x:Class="Base.Views.NotificacionesPage"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <ScrollView>
+        <StackLayout Spacing="0" Margin="10,10,10,10" >
+                <dxco:ShimmerView IsVisible="{Binding IsReady}" >
+                    <dxco:ShimmerView.LoadingView>
+                        <Grid RowDefinitions="*,*,*,*,*" ColumnDefinitions="*" Padding="10" Margin="10" ColumnSpacing="5" RowSpacing="25" HorizontalOptions="Center" >
+                            <RoundRectangle CornerRadius="15" Grid.Row="0" Fill="LightGray" HeightRequest="70" WidthRequest="300" HorizontalOptions="Center" />
+                            <RoundRectangle CornerRadius="15" Grid.Row="1" Fill="LightGray" HeightRequest="70" WidthRequest="300" HorizontalOptions="Center" />
+                            <RoundRectangle CornerRadius="15" Grid.Row="2" Fill="LightGray" HeightRequest="70" WidthRequest="300" HorizontalOptions="Center" />
+                            <RoundRectangle CornerRadius="15" Grid.Row="3" Fill="LightGray" HeightRequest="70" WidthRequest="300" HorizontalOptions="Center" />
+                            <RoundRectangle CornerRadius="15" Grid.Row="4" Fill="LightGray" HeightRequest="70" WidthRequest="300" HorizontalOptions="Center" />
+                        </Grid>
+                    </dxco:ShimmerView.LoadingView>
+                </dxco:ShimmerView>
+                <StackLayout IsVisible="{Binding IsOne}">
+                    <Border StrokeShape="RoundRectangle 8,8,8,8"  Stroke="#CAC4D0" Margin="10"  >
+                        <syncfusion:SfExpander AnimationDuration="200" IsExpanded="False" HeaderIconPosition="Start" HeaderBackground="{StaticResource Primary}" HeaderIconColor="White" >
+                            <syncfusion:SfExpander.Header >
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="https://cdn-icons-png.flaticon.com/512/16/16363.png" Grid.Column="0" HeightRequest="40" />
+                                    <Label CharacterSpacing="0.25" FontFamily="Roboto-Regular" TextColor="White"  Text="ACADEMICOS" FontAttributes="Bold" FontSize="20" Grid.Column="1" VerticalOptions="CenterAndExpand"/>
+                                </Grid>
+                            </syncfusion:SfExpander.Header>
+                            <syncfusion:SfExpander.Content>
+                                <Grid Padding="18,8,0,18" HeightRequest="400" >
+                                    <Label CharacterSpacing="0.25" FontFamily="Roboto-Regular"  Text="11:03 AM, 15 January 2019" FontSize="14" VerticalOptions="CenterAndExpand"/>
+                                </Grid>
+                            </syncfusion:SfExpander.Content>
+                        </syncfusion:SfExpander>
+                    </Border>
+                    <Border StrokeShape="RoundRectangle 8,8,8,8"  Stroke="#CAC4D0" Margin="10"  >
+                        <syncfusion:SfExpander AnimationDuration="200" IsExpanded="False" HeaderIconPosition="Start" HeaderBackground="Red" HeaderIconColor="White" >
+                            <syncfusion:SfExpander.Header >
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="https://cdn-icons-png.flaticon.com/512/16/16363.png" Grid.Column="0" HeightRequest="40" />
+                                    <Label CharacterSpacing="0.25" FontFamily="Roboto-Regular" TextColor="White"  Text="DEPORTIVOS" FontAttributes="Bold" FontSize="20" Grid.Column="1" VerticalOptions="CenterAndExpand"/>
+                                </Grid>
+                            </syncfusion:SfExpander.Header>
+                            <syncfusion:SfExpander.Content>
+                                <Grid Padding="18,8,0,18" HeightRequest="400" >
+                                    <Label CharacterSpacing="0.25" FontFamily="Roboto-Regular"  Text="11:03 AM, 15 January 2019" FontSize="14" VerticalOptions="CenterAndExpand"/>
+                                </Grid>
+                            </syncfusion:SfExpander.Content>
+                        </syncfusion:SfExpander>
+                    </Border>
+                    <Border StrokeShape="RoundRectangle 8,8,8,8"  Stroke="#CAC4D0" Margin="10"  >
+                        <syncfusion:SfExpander AnimationDuration="200" IsExpanded="False" HeaderIconPosition="Start" HeaderBackground="{StaticResource PrimaryElements}" HeaderIconColor="White" >
+                            <syncfusion:SfExpander.Header >
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="https://cdn-icons-png.flaticon.com/512/16/16363.png" Grid.Column="0" HeightRequest="40" />
+                                    <Label CharacterSpacing="0.25" FontFamily="Roboto-Regular" TextColor="White"  Text="SOCIAL" FontAttributes="Bold" FontSize="20" Grid.Column="1" VerticalOptions="CenterAndExpand"/>
+                                </Grid>
+                            </syncfusion:SfExpander.Header>
+                            <syncfusion:SfExpander.Content>
+                                <Grid Padding="18,8,0,18" HeightRequest="400" >
+                                    <Label CharacterSpacing="0.25" FontFamily="Roboto-Regular"  Text="11:03 AM, 15 January 2019" FontSize="14" VerticalOptions="CenterAndExpand"/>
+                                </Grid>
+                            </syncfusion:SfExpander.Content>
+                        </syncfusion:SfExpander>
+                    </Border>
+                    <Border StrokeShape="RoundRectangle 8,8,8,8"  Stroke="#CAC4D0" Margin="10"  >
+                        <syncfusion:SfExpander AnimationDuration="200" IsExpanded="False" HeaderIconPosition="Start" HeaderBackground="#e5be01" HeaderIconColor="White" >
+                            <syncfusion:SfExpander.Header >
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="https://cdn-icons-png.flaticon.com/512/16/16363.png" Grid.Column="0" HeightRequest="40" />
+                                    <Label CharacterSpacing="0.25" FontFamily="Roboto-Regular" TextColor="White"  Text="ADMINISTRATIVO" FontAttributes="Bold" FontSize="20" Grid.Column="1" VerticalOptions="CenterAndExpand"/>
+                                </Grid>
+                            </syncfusion:SfExpander.Header>
+                            <syncfusion:SfExpander.Content>
+                                <Grid Padding="18,8,0,18" HeightRequest="400" >
+                                    <Label CharacterSpacing="0.25" FontFamily="Roboto-Regular"  Text="11:03 AM, 15 January 2019" FontSize="14" VerticalOptions="CenterAndExpand"/>
+                                </Grid>
+                            </syncfusion:SfExpander.Content>
+                        </syncfusion:SfExpander>
+                    </Border>
+                    <Border StrokeShape="RoundRectangle 8,8,8,8"  Stroke="#CAC4D0" Margin="10"  >
+                        <syncfusion:SfExpander AnimationDuration="200" IsExpanded="False" HeaderIconPosition="Start" HeaderBackground="Violet" HeaderIconColor="White" >
+                            <syncfusion:SfExpander.Header >
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="https://cdn-icons-png.flaticon.com/512/16/16363.png" Grid.Column="0" HeightRequest="40" />
+                                    <Label CharacterSpacing="0.25" FontFamily="Roboto-Regular" TextColor="White"  Text="INTERNO" FontAttributes="Bold" FontSize="20" Grid.Column="1" VerticalOptions="CenterAndExpand"/>
+                                </Grid>
+                            </syncfusion:SfExpander.Header>
+                            <syncfusion:SfExpander.Content>
+                                <Grid Padding="18,8,0,18" HeightRequest="400" >
+                                    <Label CharacterSpacing="0.25" FontFamily="Roboto-Regular"  Text="11:03 AM, 15 January 2019" FontSize="14" VerticalOptions="CenterAndExpand"/>
+                                </Grid>
+                            </syncfusion:SfExpander.Content>
+                        </syncfusion:SfExpander>
+                    </Border>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

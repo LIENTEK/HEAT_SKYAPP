@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:popups="clr-namespace:Base.Views.PopUp"
+             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+             x:Class="Base.Views.PagoPage"
+             Title="{Binding Title}">
+    <Grid RowDefinitions="auto,auto,auto,auto,*" ColumnDefinitions="*,AUTO,*" RowSpacing="12">
+
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Nombre}" FontSize="25" FontAttributes="Bold" TextColor="Black" Margin="15,15,0,0" />
+        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Msg}" HorizontalOptions="Center" />
+        <Frame BorderColor="{StaticResource Primary}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" CornerRadius="15" WidthRequest="180" HeightRequest="70" >
+            <Label Text="{Binding Monto}" TextColor="{Binding Color}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="22"/>
+        </Frame>
+
+        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="1" Text="Detalle" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" FontSize="16" />
+        <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Text="{Binding Estatus}" TextColor="{Binding Color}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalOptions="Center" FontAttributes="Bold" FontSize="16" />
+        <Button Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="1" Text="Pagar" BackgroundColor="Green" CornerRadius="15" WidthRequest="100" TextColor="White" Command="{Binding ShowPopUpCommand}" IsVisible="{Binding IsOne}" HorizontalOptions="Center" />
+
+        <dxcv:DXCollectionView ItemsSource="{Binding Data}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" >
+            <dxcv:DXCollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="White" CornerRadius="15" BackgroundColor="LightGoldenrodYellow" Padding="5" Margin="20" HeightRequest="150">
+                        <StackLayout Grid.Column="1" Padding="18,1,18,7" Orientation="Vertical" VerticalOptions="Center">
+                            <Label Text="{Binding Clave}"  Margin="0,2" TextColor="#55575c"/>
+                            <Label Text="{Binding Detalle}"  TextColor="Black"/>
+                            <Label/>
+                        </StackLayout>
+                    </Frame>
+
+                </DataTemplate>
+            </dxcv:DXCollectionView.ItemTemplate>
+        </dxcv:DXCollectionView>
+
+        <dxco:DXPopup IsOpen="{Binding ShowPopUp}" AllowScrim="True" BackgroundColor="White" ScrimColor="#70111111" CornerRadius="12" Margin="25" >
+            <StackLayout Padding="0,0,0,20" WidthRequest="320" >
+                <ImageButton Source="https://w7.pngwing.com/pngs/912/224/png-transparent-close-delete-exit-remove-glyphs-icon-thumbnail.png" HorizontalOptions="End" CornerRadius="10" HeightRequest="30" WidthRequest="40" Command="{Binding ShowPopUpCommand}" Margin="0" BackgroundColor="Transparent" />
+
+                <Grid HorizontalOptions="Center"  RowSpacing="5" ColumnSpacing="10" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Pago con tarjeta" HorizontalOptions="Center" FontSize="25" FontAttributes="Bold"/>
+                    <dxe:TextEdit Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding NumeroTarjeta}" ErrorText="Ingrese un numero de tarjeta valido" HasError="{Binding ErrorUser}" TextChangedCommand="{Binding ResetTextBoxUserCommand}" LabelText="Numero Tarjeta"  ReturnType="Done" 
+                          BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" />
+
+
+                    <dxe:TextEdit  Grid.Row="2" Grid.Column="0" Text="{Binding Fecha}" ErrorText="Ingrese una fecha valida" HasError="{Binding ErrorFecha}" TextChangedCommand="{Binding ResetTextBoxFechaCommand}" LabelText="Fecha Expiración"  ReturnType="Done" WidthRequest="150"
+                          BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" />
+
+                    <dxe:PasswordEdit  Grid.Row="2" Grid.Column="1" Text="{Binding Cvv}" ErrorText="CVV incorrecto." HasError="{Binding ErrorCvv}"  TextChangedCommand="{Binding ResetTextBoxCvvCommand}" LabelText="CVV"  LabelFontSize="Small" ReturnType="Done" WidthRequest="100"
+                          BorderColor="{StaticResource Primary}"  CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}"/>
+
+                    <Button  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="Pagar" BackgroundColor="Green" WidthRequest="90" Margin="0,30,0,0" Command="{Binding CommandPagar}" />
+                </Grid>
+            </StackLayout>
+        </dxco:DXPopup>
+        <popups:ErrorPopWsContent/>
+        <popups:ExitoPopWsContent/>
+    </Grid>
+</ContentPage>

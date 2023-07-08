@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource NormalBackgroundColor}"
+             xmlns:popups="clr-namespace:Base.Views.PopUp"
+             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:dxc="clr-namespace:DevExpress.Maui.Charts;assembly=DevExpress.Maui.Charts"
+             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+             xmlns:dxsch="clr-namespace:DevExpress.Maui.Scheduler;assembly=DevExpress.Maui.Scheduler"
+             xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:dxdf="clr-namespace:DevExpress.Maui.DataForm;assembly=DevExpress.Maui.Editors"
+             xmlns:badge="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="true"
+             Shell.NavBarIsVisible="False"
+             x:Class="Base.Views.RecomendacionPage">
+
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="Transparent" >
+            <dxe:ComboBoxEdit x:Name="lkestablo" Margin="10,5,10,5" CursorColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" DropDownBackgroundColor="{StaticResource PrimaryLight}" DropDownSelectedItemTextColor="{StaticResource Primary}" DropDownSelectedItemBackgroundColor="White" LabelColor="{StaticResource Primary}"
+                          PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="Id" DisplayMember="Nombre"  IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
+            </dxe:ComboBoxEdit>
+            <dxcv:DXCollectionView ItemsSource="{Binding Items}" Margin="10" >
+                <dxcv:DXCollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="White" CornerRadius="15" BackgroundColor="{StaticResource PrimaryLight}" Padding="5" Margin="15,0,15,10" HeightRequest="150">
+                            <StackLayout Grid.Column="1" Padding="18,1,18,7" Orientation="Vertical" VerticalOptions="Center">
+                                <Label Text="{Binding Titulo}"  Margin="0,2" TextColor="#55575c" FontSize="25"/>
+                                <Label Text="{Binding Recomendacion}"  Margin="0,2" TextColor="#55575c" FontSize="15"/>
+
+                            </StackLayout>
+                        </Frame>
+
+                    </DataTemplate>
+                </dxcv:DXCollectionView.ItemTemplate>
+            </dxcv:DXCollectionView>
+        
+            <dxco:DXPopup IsOpen="{Binding ShowPopUp}" AllowScrim="True" BackgroundColor="White" ScrimColor="#70111111" CornerRadius="12" Margin="25" >
+                <StackLayout Padding="0,0,0,20" WidthRequest="320" >
+                    <ImageButton Source="https://w7.pngwing.com/pngs/912/224/png-transparent-close-delete-exit-remove-glyphs-icon-thumbnail.png" HorizontalOptions="End" CornerRadius="10" HeightRequest="30" WidthRequest="40" Command="{Binding ShowPopUpCommand}" Margin="0" BackgroundColor="Transparent" />
+
+                    <Grid HorizontalOptions="Center"  RowSpacing="5" ColumnSpacing="10" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Pago con tarjeta" HorizontalOptions="Center" FontSize="25" FontAttributes="Bold"/>
+                        <dxe:TextEdit Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding NumeroTarjeta}" ErrorText="Ingrese un numero de tarjeta valido" HasError="{Binding ErrorUser}" TextChangedCommand="{Binding ResetTextBoxUserCommand}" LabelText="Numero Tarjeta"  ReturnType="Done" 
+                          BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" />
+
+
+                        <dxe:TextEdit  Grid.Row="2" Grid.Column="0" Text="{Binding Fecha}" ErrorText="Ingrese una fecha valida" HasError="{Binding ErrorFecha}" TextChangedCommand="{Binding ResetTextBoxFechaCommand}" LabelText="Fecha Expiración"  ReturnType="Done" WidthRequest="150"
+                          BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" />
+
+                        <dxe:PasswordEdit  Grid.Row="2" Grid.Column="1" Text="{Binding Cvv}" ErrorText="CVV incorrecto." HasError="{Binding ErrorCvv}"  TextChangedCommand="{Binding ResetTextBoxCvvCommand}" LabelText="CVV"  LabelFontSize="Small" ReturnType="Done" WidthRequest="100"
+                          BorderColor="{StaticResource Primary}"  CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}"/>
+
+                        <Button  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="Pagar" BackgroundColor="Green" WidthRequest="90" Margin="0,30,0,0" Command="{Binding CommandPagar}" />
+                    </Grid>
+                </StackLayout>
+            </dxco:DXPopup>
+            <popups:ErrorPopWsContent/>
+            <popups:ExitoPopWsContent/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

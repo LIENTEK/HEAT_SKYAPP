@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Base.Views"
+             xmlns:popups="clr-namespace:Base.Views.PopUp"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             BackgroundColor="{StaticResource NormalBackgroundColor}"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="true"
+             Title="{Binding Title}"
+             x:Class="Base.Views.ResetearContraseñaPage ">
+    
+    <ScrollView >
+        <StackLayout>
+            
+       
+        <StackLayout IsVisible="{Binding IsOne}" Margin="5" >
+            <Image Source="https://upload.wikimedia.org/wikipedia/en/5/56/Xcode_14_icon.png" HorizontalOptions="Center" Aspect="AspectFit"  HeightRequest="140"/>
+            <Label Margin="50,15,50,0" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="Para proteger tu cuenta, " FontSize="20" FontAttributes="Bold" TextColor="Black" />
+            <Label Margin="50,0,50,0" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="queremos asegurarnos de que " FontSize="20" FontAttributes="Bold" TextColor="Black" />
+            <Label Text=" realmente seas tu la persona" Margin="50,0,50,0" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="20" FontAttributes="Bold" TextColor="Black" />
+            <Label Text="que intenta acceder." Margin="50,0,50,10" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="20" FontAttributes="Bold" TextColor="Black" />
+
+            <dxe:TextEdit Margin="50,20,50,0" Text="{Binding Usuario}" HorizontalOptions="FillAndExpand" ErrorText="Ingrese su usuario"  LabelText="Usuario" ReturnType="Done" HasError="{Binding ErrorUsuario}" TextChangedCommand="{Binding RTUsuarioCommand}" 
+                              BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" />
+
+            <Label Margin="35,10,35,0" Text="Se enviara un codigo con el cua podras " HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <Label Margin="35,0,35,10" Text=" reestablecer tu contraseña" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+
+                <Frame BackgroundColor="{StaticResource Primary}" Padding="0" CornerRadius="15" Margin="80,40,80,0"  >
+                    <Grid Padding="0" HorizontalOptions="Center"  >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ActivityIndicator IsVisible="{Binding IsBusy}"  Color="White" IsRunning="{Binding IsBusy}" HeightRequest="40" />
+                        <dxco:SimpleButton IsVisible="{Binding IsReady}" Text="Solicitar" Command="{Binding ResetCommand}" TextColor="White" WidthRequest="500" BackgroundColor="Transparent" FontAttributes="Bold" />
+                    </Grid>
+                </Frame>
+
+            </StackLayout>
+
+        <StackLayout IsVisible="{Binding ShowToken}" Margin="5">
+            <Label Margin="0,10,0,0" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="Ingrese el codigo enviado al correo:" FontSize="20" FontAttributes="Bold" TextColor="Black" />
+            <Label Margin="0,10,0,15" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="{Binding Correo}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource PrimaryElements}" />
+
+            <dxe:TextEdit Margin="50,0,50,15" Text="{Binding Token}" HorizontalOptions="FillAndExpand" ErrorText="Ingrese un codigo valido"  LabelText="Codigo" ReturnType="Done" HasError="{Binding ErrorToken}" TextChangedCommand="{Binding RTTokenCommand}" 
+                              BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" />
+
+            <dxe:PasswordEdit Margin="50,0,50,10" Text="{Binding Password}" HelpText="{Binding HelpPassword}" ErrorText="Ingrese una contraseña." HasError="{Binding ErrorPassword}"  TextChangedCommand="{Binding RTPasswordCommand}" LabelText="Password"  LabelFontSize="Small" ReturnType="Done"
+                          BorderColor="{StaticResource Primary}"  CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}"/>
+
+            <dxe:PasswordEdit Margin="50,0,50,10" Text="{Binding Cpassword}" ErrorText="Confirme la contraseña." HasError="{Binding ErrorCpassword}"  TextChangedCommand="{Binding RTCPasswordCommand}" LabelText="Confirm Password"  LabelFontSize="Small" ReturnType="Done"
+                          BorderColor="{StaticResource Primary}"  CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}"/>
+
+
+                <Frame BackgroundColor="{StaticResource Primary}" Padding="0" CornerRadius="15" Margin="80,130,80,0"  >
+                    <Grid Padding="0" HorizontalOptions="Center"  >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ActivityIndicator IsVisible="{Binding IsBusy}"  Color="White" IsRunning="{Binding IsBusy}" HeightRequest="40" />
+                        <dxco:SimpleButton IsVisible="{Binding IsReady}" Text="Reestablecer" Command="{Binding SendTokenCommand}" TextColor="White" WidthRequest="220" BackgroundColor="Transparent" FontAttributes="Bold" />
+                    </Grid>
+                </Frame>
+            </StackLayout>
+        
+        <popups:LientekPopContent/>
+        <popups:ErrorPopWsContent/>
+        <popups:ExitoPopWsContent/>
+
+        <dxco:SimpleButton x:Name="btnLientek" PressedBackgroundColor="White" PressedBorderColor="White" Clicked="lientek" Command="{Binding ShowPopUpCommand}" Text="By LIENTEK" FontSize="19" HorizontalOptions="Center" BackgroundColor="Transparent" FontAttributes="Bold" Margin="0,0,0,10" VerticalOptions="EndAndExpand" TextColor="{StaticResource Lientek}" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

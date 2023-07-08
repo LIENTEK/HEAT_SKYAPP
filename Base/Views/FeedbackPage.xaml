@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:local="clr-namespace:Base.Views"
+             xmlns:popups="clr-namespace:Base.Views.PopUp"
+             BackgroundColor="{StaticResource NormalBackgroundColor}"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="true"
+             x:Class="Base.Views.FeedbackPage"
+             Title="FeedbackPage"
+             Shell.NavBarIsVisible="False" >
+    
+    <ScrollView>
+        <StackLayout Padding="20">
+            <Label Text="Give feeedback" HorizontalOptions="Start" FontSize="35" FontAttributes="Bold" TextColor="Black" Margin="0,5,0,40" />
+            <Label Text="Califica tu experiencia?" TextColor="Black" FontSize="15" Margin="0,0,0,20" />
+            <Grid HorizontalOptions="Center" ColumnSpacing="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+                <ImageButton Source="{Binding S1}" Command="{Binding S1TCommand}" Grid.Column="0"  />
+                <ImageButton Source="{Binding S2}" Command="{Binding S2TCommand}" Grid.Column="1"  />
+                <ImageButton Source="{Binding S3}" Command="{Binding S3TCommand}" Grid.Column="2"  />
+                <ImageButton Source="{Binding S4}" Command="{Binding S4TCommand}" Grid.Column="3"  />
+                <ImageButton Source="{Binding S5}" Command="{Binding S5TCommand}" Grid.Column="4"  />
+
+                <!--<ImageButton IsVisible="{Binding S1F}" Command="{Binding S1FCommand}" Grid.Column="0" Source="https://icon-library.com/images/star-png-icon/star-png-icon-0.jpg" />-->
+
+            </Grid>
+            <Label Text="Describe un poco mas tu experiencia?" TextColor="Black" FontSize="15" Margin="0,70,0,20" />
+            <dxe:MultilineEdit Text="{Binding Comentario}" ErrorText="" HasError="{Binding ErrorComentario}" LabelText=""  ReturnType="Done" HeightRequest="200" 
+                         LabelColor="Gray" BorderColor="Gray" CursorColor="{StaticResource Primary}" ClearIconColor="Gray" FocusedBorderColor="Gray" FocusedLabelColor="Gray" />
+            
+            <Frame BackgroundColor="{StaticResource Primary}" Padding="0" CornerRadius="15" Margin="60,40,60,0"  >
+                <Grid Padding="0" HorizontalOptions="Center"  >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ActivityIndicator IsVisible="{Binding IsBusy}"  Color="White" IsRunning="{Binding IsBusy}" HeightRequest="40" />
+                    <dxco:SimpleButton IsVisible="{Binding IsReady}" Text="SEND FEEDBACK" Command="{Binding SendCommand}" TextColor="White" WidthRequest="5000" BackgroundColor="Transparent" FontAttributes="Bold" />
+                </Grid>
+            </Frame>
+            <Label Text="" />
+            <popups:LientekPopContent/>
+            <popups:ErrorPopWsContent/>
+            <popups:ExitoPopWsContent/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

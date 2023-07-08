@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "1020776952900",
+    "project_id": "lientek1",
+    "storage_bucket": "lientek1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020776952900:android:e8adf7c64d31f932753811",
+        "android_client_info": {
+          "package_name": "com.companyname.firebaseapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020776952900-g0rtmq6lrm97gi5enc7rc4ghkc0dicq0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZLJQeA-Fbno0GR4H58S7FYxYh-zYQuC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020776952900-g0rtmq6lrm97gi5enc7rc4ghkc0dicq0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020776952900:android:dcf1d8d084b4a721753811",
+        "android_client_info": {
+          "package_name": "com.companyname.pruebafirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020776952900-g0rtmq6lrm97gi5enc7rc4ghkc0dicq0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZLJQeA-Fbno0GR4H58S7FYxYh-zYQuC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020776952900-g0rtmq6lrm97gi5enc7rc4ghkc0dicq0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020776952900:android:bd9e025c27c44c0c753811",
+        "android_client_info": {
+          "package_name": "com.example.colegio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020776952900-g0rtmq6lrm97gi5enc7rc4ghkc0dicq0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZLJQeA-Fbno0GR4H58S7FYxYh-zYQuC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020776952900-g0rtmq6lrm97gi5enc7rc4ghkc0dicq0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020776952900:android:5c9d179f5b9468ac753811",
+        "android_client_info": {
+          "package_name": "com.lientek.base"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020776952900-g0rtmq6lrm97gi5enc7rc4ghkc0dicq0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZLJQeA-Fbno0GR4H58S7FYxYh-zYQuC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020776952900-g0rtmq6lrm97gi5enc7rc4ghkc0dicq0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

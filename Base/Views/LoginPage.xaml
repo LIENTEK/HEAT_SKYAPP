@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:local="clr-namespace:Base.Views"
+             xmlns:popups="clr-namespace:Base.Views.PopUp"
+             BackgroundColor="{StaticResource NormalBackgroundColor}"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="true"
+             Shell.NavBarIsVisible="False"
+             x:Class="Base.Views.LoginPage">
+    <ContentPage.Content>
+        <ScrollView >
+            <StackLayout>
+                <StackLayout IsVisible="{Binding LogOut}" BackgroundColor="White" Padding="10" >
+                <Image Source="montesorieicon1.jpg" Aspect="AspectFit" Margin="0" HeightRequest="160"/>
+                <Label Text="" FontAttributes="Bold" FontSize="Title" HorizontalOptions="Center" Margin="20,10,20,50" HorizontalTextAlignment="Center"></Label>
+
+                <dxe:TextEdit Text="{Binding UserName}" ErrorText="Ingrese un usuario valido" HasError="{Binding ErrorUser}" TextChangedCommand="{Binding ResetTextBoxUserCommand}" LabelText="User" Margin="50,5,50,0" ReturnType="Done" 
+                          BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" />
+                <dxe:PasswordEdit Text="{Binding Password}" ErrorText="Contraseña incorrecta." HasError="{Binding ErrorPassword}"  TextChangedCommand="{Binding ResetTextBoxPasswordCommand}" LabelText="Password"  LabelFontSize="Small" Margin="50,5,50,0" ReturnType="Done"
+                          BorderColor="{StaticResource Primary}"  CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}"/>
+
+                <Grid HorizontalOptions="End" Margin="50,5,50,0" Padding="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <dxco:SimpleButton Grid.Row="0" Grid.Column="0" FontSize="11" Text="¿Olvidaste tu contraseña?" Command="{Binding NewPasswordComand}" BackgroundColor="White" PressedBackgroundColor="White" PressedBorderColor="White" PressedTextColor="{StaticResource PrimaryElements}" FontAttributes="Bold" TextColor="{StaticResource PrimaryElements}" ></dxco:SimpleButton>
+                </Grid>
+
+                <Frame BackgroundColor="{StaticResource Primary}" Padding="0" CornerRadius="15" Margin="80,40,80,0"  >
+                        <Grid Padding="0" HorizontalOptions="Center"  >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ActivityIndicator IsVisible="{Binding IsBusy}"  Color="White" IsRunning="{Binding IsBusy}" HeightRequest="40" />
+                            <dxco:SimpleButton IsVisible="{Binding IsReady}" Text="Iniciar Sesión" Command="{Binding LoginCommand}" TextColor="White" WidthRequest="5000" BackgroundColor="Transparent" FontAttributes="Bold" />
+                        </Grid>
+                </Frame>
+                
+               
+             </StackLayout>
+
+                <StackLayout IsVisible="{Binding LogIn}" BackgroundColor="White" Padding="10">
+                <Label Text="Bienvenido" FontAttributes="Bold" FontSize="Title" HorizontalOptions="Center" Margin="20,10,20,50" HorizontalTextAlignment="Center"></Label>
+
+                <dxe:TextEdit Text="{Binding UserName}" LabelText="Usuario" Margin="50,5,50,0" ReturnType="Done" 
+                          BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" IsEnabled="False" DisabledBorderColor="{StaticResource Primary}"
+                          DisabledLabelColor="{StaticResource Primary}" DisabledTextColor="{StaticResource Primary}" />
+
+                    <dxe:TextEdit Text="{Binding UserName}" LabelText="Nombre" Margin="50,5,50,0" ReturnType="Done" 
+                          BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" IsEnabled="False" DisabledBorderColor="{StaticResource Primary}"
+                          DisabledLabelColor="{StaticResource Primary}" DisabledTextColor="{StaticResource Primary}" />
+
+                    <dxco:SimpleButton  Text="Save Changes" Command="{Binding LogInCommand}" TextColor="White" BackgroundColor="{StaticResource Primary}" FontAttributes="Bold" CornerRadius="15" Margin="0,45,0,0" WidthRequest="200" />
+                
+                <dxco:SimpleButton  Text="Cerrar Sesion" Command="{Binding LogOutCommand}" TextColor="White" BackgroundColor="red" FontAttributes="Bold" CornerRadius="15" Margin="0,45,0,0" WidthRequest="200" />
+
+                </StackLayout>
+            
+                <dxco:SimpleButton x:Name="btnLientek" PressedBackgroundColor="White" PressedBorderColor="White" Clicked="lientek" Command="{Binding ShowPopUpCommand}" Text="By LIENTEK" FontSize="19" HorizontalOptions="Center" BackgroundColor="Transparent" FontAttributes="Bold" Margin="0,0,0,10" VerticalOptions="EndAndExpand" TextColor="{StaticResource Lientek}" />
+
+                <popups:LientekPopContent/>
+                <popups:ErrorPopWsContent/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,194 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource NormalBackgroundColor}"
+             xmlns:popups="clr-namespace:Base.Views.PopUp"
+             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:dxc="clr-namespace:DevExpress.Maui.Charts;assembly=DevExpress.Maui.Charts"
+             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+             xmlns:dxsch="clr-namespace:DevExpress.Maui.Scheduler;assembly=DevExpress.Maui.Scheduler"
+             xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:dxdf="clr-namespace:DevExpress.Maui.DataForm;assembly=DevExpress.Maui.Editors"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="true"
+             Shell.NavBarIsVisible="False"
+             x:Class="Base.Views.EstresCaloricoPage">
+    
+    <ContentPage.Resources>
+        <dxc:SeriesHintOptions x:Key="pointSeriesHintOptions" PointTextPattern="{}{V} ITH"/>
+        <dxc:SeriesHintOptions x:Key="lineSeriesHintOptions" PointTextPattern="{}{V} °C"/>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid RowDefinitions="auto,auto,auto,*">
+            <dxe:ComboBoxEdit x:Name="lkestablo" Grid.Row="0" IsVisible="true" Margin="10,5,10,5" CursorColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" DropDownBackgroundColor="{StaticResource PrimaryLight}" DropDownSelectedItemTextColor="{StaticResource Primary}" DropDownSelectedItemBackgroundColor="White" LabelColor="{StaticResource Primary}"
+                          PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="Id" DisplayMember="Nombre"  IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
+            </dxe:ComboBoxEdit>
+
+            <Grid Grid.Row="1" RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="2*,*,*"  Padding="20">
+
+                <Label Text="SIN ESTRES" Grid.Row="0" Grid.Column="0" BackgroundColor="White" TextColor="Black" />
+                <Label Text="40" Grid.Row="0" Grid.Column="1" BackgroundColor="White" TextColor="Black" />
+                <Label Text="24%" Grid.Row="0" Grid.Column="2" BackgroundColor="White" TextColor="Black" />
+
+                <Label Text="ESTRES LIGERO" Grid.Row="1" Grid.Column="0" BackgroundColor="LightGoldenrodYellow" TextColor="Black" />
+                <Label Text="65" Grid.Row="1" Grid.Column="1" BackgroundColor="LightGoldenrodYellow" TextColor="Black"/>
+                <Label Text="39%" Grid.Row="1" Grid.Column="2" BackgroundColor="LightGoldenrodYellow" TextColor="Black"/>
+
+                <Label Text="ESTRES MODERADO" Grid.Row="2" Grid.Column="0" BackgroundColor="LightSalmon" TextColor="Black"/>
+                <Label Text="63" Grid.Row="2" Grid.Column="1" BackgroundColor="LightSalmon" TextColor="Black"/>
+                <Label Text="38%" Grid.Row="2" Grid.Column="2" BackgroundColor="LightSalmon" TextColor="Black"/>
+
+                <Label Text="ESTRES ALTO" Grid.Row="3" Grid.Column="0" BackgroundColor="Salmon" TextColor="Black"/>
+                <Label Text="0" Grid.Row="3" Grid.Column="1" BackgroundColor="Salmon" TextColor="Black"/>
+                <Label Text="0%" Grid.Row="3" Grid.Column="2" BackgroundColor="Salmon" TextColor="Black" />
+
+                <Label Text="PELIGRO" Grid.Row="4" Grid.Column="0" BackgroundColor="Red" TextColor="Black"/>
+                <Label Text="0" Grid.Row="4" Grid.Column="1" BackgroundColor="Red" TextColor="Black"/>
+                <Label Text="0%" Grid.Row="4" Grid.Column="2" BackgroundColor="Red" TextColor="Black"/>
+
+                <Label Text="HORAS DE ESTRES" Grid.Row="5" Grid.Column="0" BackgroundColor="Gray" TextColor="Black"/>
+                <Label Text="128" Grid.Row="5" Grid.Column="1" BackgroundColor="Gray" TextColor="Black"/>
+                <Label Text="76%" Grid.Row="5" Grid.Column="2" BackgroundColor="Gray" TextColor="Black"/>
+                
+            </Grid>
+            <Label Grid.Row="2" Text="{Binding Date}"  HorizontalOptions="Center" Margin="0,0,5,0" FontSize="20"  FontAttributes="Bold"/>
+
+            <Frame Grid.Row="3" Padding="5" >
+                <dxc:ChartView  x:Name="Sestres" >
+                    
+                    <dxc:ChartView.ChartStyle>
+                        <dxc:ChartStyle Palette="{Binding Palette}"
+                            Padding="0"
+                            BorderThickness="1" >
+                        </dxc:ChartStyle>
+                    </dxc:ChartView.ChartStyle>
+
+                    <dxc:ChartView.Hint>
+                        <dxc:Hint>
+                            <dxc:Hint.Behavior>
+                                <dxc:TooltipHintBehavior ShowPointTooltip="True" ShowSeriesTooltip="False"/>
+                            </dxc:Hint.Behavior>
+                        </dxc:Hint>
+                    </dxc:ChartView.Hint>
+
+                    <dxc:ChartView.AxisX>
+                        <dxc:NumericAxisX GridOffset="5" GridAlignment="1" >
+                            <dxc:NumericAxisX.Title>
+                                <dxc:AxisTitle Text="Horas">
+                                    <dxc:AxisTitle.Style>
+                                        <dxc:TitleStyle>
+                                            <dxc:TitleStyle.TextStyle>
+                                                <dxc:TextStyle Size="16"/>
+                                            </dxc:TitleStyle.TextStyle>
+                                        </dxc:TitleStyle>
+                                    </dxc:AxisTitle.Style>
+                                </dxc:AxisTitle>
+                            </dxc:NumericAxisX.Title>
+                            <dxc:NumericAxisX.Label>
+                                <dxc:AxisLabel  Position="Outside"/>
+                            </dxc:NumericAxisX.Label>
+                            <dxc:NumericAxisX.Range>
+                                <dxc:NumericRange Min="0" Max="23" VisualMax="23" VisualMin="0" />
+                            </dxc:NumericAxisX.Range>
+                        </dxc:NumericAxisX>
+                    </dxc:ChartView.AxisX>
+
+                    <dxc:ChartView.Legend>
+                        <dxc:Legend VerticalPosition="TopOutside" HorizontalPosition="Center" Orientation="LeftToRight"/>
+                    </dxc:ChartView.Legend>
+
+                    <dxc:ChartView.Series>
+
+                        <dxc:PointSeries DisplayName="ITH" HintOptions="{StaticResource pointSeriesHintOptions}" >
+                            <dxc:PointSeries.Style>
+                                <dxc:LineSeriesStyle MarkerSize="10" Stroke="LimeGreen">
+                                    <dxc:LineSeriesStyle.MarkerStyle>
+                                        <dxc:MarkerStyle Fill="LimeGreen" />
+                                    </dxc:LineSeriesStyle.MarkerStyle>
+                                </dxc:LineSeriesStyle>
+                            </dxc:PointSeries.Style>
+                            <dxc:PointSeries.Data>
+                                    <dxc:SeriesDataAdapter DataSource="{Binding Items.Values, Mode=TwoWay}" 
+                                           ArgumentDataMember="Year">
+                                    <dxc:ValueDataMember Type="Value" Member="Value"/>
+                                </dxc:SeriesDataAdapter>
+                            </dxc:PointSeries.Data>
+                            <dxc:PointSeries.AxisY>
+                                <dxc:NumericAxisY GridAlignment="2" >
+                                    <dxc:NumericAxisY.Style>
+                                        <dxc:AxisStyle LineVisible="True" LineThickness="2" LineColor="Green"/>
+                                    </dxc:NumericAxisY.Style>
+                                </dxc:NumericAxisY>
+                            </dxc:PointSeries.AxisY>
+                        </dxc:PointSeries>
+
+                        <dxc:LineSeries DisplayName="UV" MarkersVisible="True" HintOptions="{StaticResource lineSeriesHintOptions}" >
+                            <dxc:LineSeries.Style>
+                                <dxc:LineSeriesStyle MarkerSize="10" Stroke="DarkViolet">
+                                    <dxc:LineSeriesStyle.MarkerStyle>
+                                        <dxc:MarkerStyle Fill="DarkViolet" />
+                                    </dxc:LineSeriesStyle.MarkerStyle>
+                                </dxc:LineSeriesStyle>
+                            </dxc:LineSeries.Style>
+                            <dxc:LineSeries.Data>
+                                <dxc:SeriesDataAdapter DataSource="{Binding Items, Mode=TwoWay}" AllowLiveDataUpdates="True" ArgumentDataMember="Value">
+                                    <dxc:ValueDataMember Type="Value" Member="Value"/>
+                                </dxc:SeriesDataAdapter>
+                            </dxc:LineSeries.Data>
+                            <dxc:LineSeries.AxisY>
+                                <dxc:NumericAxisY GridAlignment="2" >
+                                    <dxc:NumericAxisY.Style>
+                                        <dxc:AxisStyle LineVisible="True" LineThickness="2" LineColor="DarkViolet"/>
+                                    </dxc:NumericAxisY.Style>
+                                </dxc:NumericAxisY>
+                            </dxc:LineSeries.AxisY>
+                        </dxc:LineSeries>
+
+                      
+
+
+                    </dxc:ChartView.Series>
+
+                </dxc:ChartView>
+
+            </Frame>
+            
+            <dxco:DXPopup IsOpen="{Binding ShowPopUp}" AllowScrim="True" BackgroundColor="White" ScrimColor="#70111111" CornerRadius="12" Margin="25" >
+                <StackLayout Padding="0,0,0,20" WidthRequest="320" >
+                    <ImageButton Source="https://w7.pngwing.com/pngs/912/224/png-transparent-close-delete-exit-remove-glyphs-icon-thumbnail.png" HorizontalOptions="End" CornerRadius="10" HeightRequest="30" WidthRequest="40" Command="{Binding ShowPopUpCommand}" Margin="0" BackgroundColor="Transparent" />
+
+                    <Grid HorizontalOptions="Center"  RowSpacing="5" ColumnSpacing="10" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Pago con tarjeta" HorizontalOptions="Center" FontSize="25" FontAttributes="Bold"/>
+                        <dxe:TextEdit Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding NumeroTarjeta}" ErrorText="Ingrese un numero de tarjeta valido" HasError="{Binding ErrorUser}" TextChangedCommand="{Binding ResetTextBoxUserCommand}" LabelText="Numero Tarjeta"  ReturnType="Done" 
+                          BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" />
+
+
+                        <dxe:TextEdit  Grid.Row="2" Grid.Column="0" Text="{Binding Fecha}" ErrorText="Ingrese una fecha valida" HasError="{Binding ErrorFecha}" TextChangedCommand="{Binding ResetTextBoxFechaCommand}" LabelText="Fecha Expiración"  ReturnType="Done" WidthRequest="150"
+                          BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" />
+
+                        <dxe:PasswordEdit  Grid.Row="2" Grid.Column="1" Text="{Binding Cvv}" ErrorText="CVV incorrecto." HasError="{Binding ErrorCvv}"  TextChangedCommand="{Binding ResetTextBoxCvvCommand}" LabelText="CVV"  LabelFontSize="Small" ReturnType="Done" WidthRequest="100"
+                          BorderColor="{StaticResource Primary}"  CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}"/>
+
+                        <Button  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="Pagar" BackgroundColor="Green" WidthRequest="90" Margin="0,30,0,0" Command="{Binding CommandPagar}" />
+                    </Grid>
+                </StackLayout>
+            </dxco:DXPopup>
+            <popups:ErrorPopWsContent/>
+            <popups:ExitoPopWsContent/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
