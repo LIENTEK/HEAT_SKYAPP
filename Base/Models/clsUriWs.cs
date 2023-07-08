@@ -39,7 +39,7 @@ namespace Base.Models
 
 		#region RutasApi
 		public static string ApiVersion { get => "Versiones/PostVersion"; }
-		public static string ApiLogIn { get => "Usuarios/PostLogIn"; }
+		public static string ApiLogIn { get => "/LogIn"; }
 		public static string ApiNuevoRegistro { get => "Usuarios/PostNuevo"; }
 		public static string GetTokenPassword { get => "Usuarios/PostTokenPassword"; }
 		public static string UpdatePassword { get => "Usuarios/PostUpdatePassword"; }

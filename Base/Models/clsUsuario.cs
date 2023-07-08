@@ -31,8 +31,8 @@ namespace Base.Models
 		{
 			string jsnversion =
 				"{" +
-					"usuario:'" + User + "'," +
-					"password:'" + Password + "'," +
+					"user:'" + User + "'," +
+					"pwd:'" + Password + "'," +
 					"ambiente:'" + Amb + "'" +
 				"}";
 

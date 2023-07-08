@@ -12,7 +12,9 @@ namespace Base.Models
 		public string URI { get; set; }
 		public string JsonData { get; set; }
 
-		string MainURI = "http://www.modernagroup.com.mx:8099/ApiAppVentasDiscalse/api/";  // INTERNET ISS
+		//string MainURI = "http://www.modernagroup.com.mx:8099/ApiAppVentasDiscalse/api/";  // INTERNET ISS
+
+		string MainURI = "http://50.21.190.132/wsHeatsky.asmx";  // INTERNET ISS
 
 
 		public clsRequestHttp()
@@ -29,7 +31,7 @@ namespace Base.Models
 			{
 				var content = new StringContent(JsonData, Encoding.UTF8, "application/json");
 				HttpResponseMessage response = client.PostAsync(MainURI, content).Result;
-				result = await response.Content.ReadAsStringAsync();
+				result = await response.Content.ReadAsStringAsync();				
 
 				return result;
 			}
