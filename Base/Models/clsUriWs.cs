@@ -39,14 +39,19 @@ namespace Base.Models
 
 		#region RutasApi
 		public static string ApiVersion { get => "Versiones/PostVersion"; }
-		public static string ApiLogIn { get => "/LogIn"; }
+		public static string ApiLogIn { get => "/Login"; }
 		public static string ApiNuevoRegistro { get => "Usuarios/PostNuevo"; }
 		public static string GetTokenPassword { get => "Usuarios/PostTokenPassword"; }
 		public static string UpdatePassword { get => "Usuarios/PostUpdatePassword"; }
-		#endregion
 
-		#region LientekInfo
-		public static string Company { get => "Lientek Solutios"; }
+        public static string ApiListaEstablos { get => "/Establos_Ususarios"; }
+        public static string ApiListaPropiedades { get => "/ParametrosClima"; }
+        public static string ApiChart24 { get => "/GraficaClima24"; }
+        public static string ApiReporte { get => "/ReporteMeteoeologico"; }
+        #endregion
+
+        #region LientekInfo
+        public static string Company { get => "Lientek Solutios"; }
 		public static string BodyContactoLientek { get => "Estimado " +ManagerLientek; }
 		public static string CorreoLientek { get => "rubendiaznt@live.com.mx"; }
 		public static string ManagerLientek { get => "ING.REY OMAR NAVARRETE MARTINEZ"; }

@@ -110,8 +110,8 @@
                                 </dxc:LineSeriesStyle>
                             </dxc:PointSeries.Style>
                             <dxc:PointSeries.Data>
-                                    <dxc:SeriesDataAdapter DataSource="{Binding Items.Values, Mode=TwoWay}" 
-                                           ArgumentDataMember="Year">
+                                    <dxc:SeriesDataAdapter DataSource="{Binding Items, Mode=TwoWay}" 
+                                           ArgumentDataMember="Value">
                                     <dxc:ValueDataMember Type="Value" Member="Value"/>
                                 </dxc:SeriesDataAdapter>
                             </dxc:PointSeries.Data>
