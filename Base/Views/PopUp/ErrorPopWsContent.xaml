@@ -15,7 +15,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="10" />
             </Grid.ColumnDefinitions>
-            <Image Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="https://w7.pngwing.com/pngs/558/606/png-transparent-error-icon-thumbnail.png" HeightRequest="50" WidthRequest="50" Margin="5" />
+            <Image Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="error" HeightRequest="50" WidthRequest="50" Margin="5" />
             <Label Grid.Row="1" Grid.Column="1" Text="{Binding ErrorPopWsMsg}" HorizontalTextAlignment="Center" />
 
         </Grid>

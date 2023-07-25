@@ -14,22 +14,24 @@ namespace Base.Models
 
 		//string MainURI = "http://www.modernagroup.com.mx:8099/ApiAppVentasDiscalse/api/";  // INTERNET ISS
 
-		string MainURI = "http://50.21.190.132/wsHeatsky.asmx";  // INTERNET ISS
+		string MainURIHeat = "http://50.21.190.132/HEATSKY/wsHeatsky.asmx";
+
+        string MainURI = "http://50.21.190.132/DIGISKY/wsDigisky.asmx"; // INTERNET ISS
 
 
-		public clsRequestHttp()
+        public clsRequestHttp()
 		{
 
 		}
 
-		async public Task<string> RequestJSON()
+		async public Task<string> Requestform()
 		{
 			HttpClient client = new HttpClient();
 			string result;
 			MainURI = MainURI + URI;
 			try
 			{
-				var content = new StringContent(JsonData, Encoding.UTF8, "application/json");
+				var content = new StringContent(JsonData, Encoding.UTF8, "application/x-www-form-urlencoded");
 				HttpResponseMessage response = client.PostAsync(MainURI, content).Result;
 				result = await response.Content.ReadAsStringAsync();				
 
@@ -41,7 +43,26 @@ namespace Base.Models
 			}
 		}
 
-		async public Task<string> RequestJSONtoken()
+        async public Task<string> RequestformHeatsky()
+        {
+            HttpClient client = new HttpClient();
+            string result;
+            MainURIHeat = MainURIHeat + URI;
+            try
+            {
+                var content = new StringContent(JsonData, Encoding.UTF8, "application/x-www-form-urlencoded");
+                HttpResponseMessage response = client.PostAsync(MainURIHeat, content).Result;
+                result = await response.Content.ReadAsStringAsync();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message;
+            }
+        }
+
+        async public Task<string> RequestJSONtoken()
 		{
 			HttpClient client = new HttpClient();
 			string result;

@@ -103,14 +103,13 @@ namespace Base.ViewModels
 					for (int i = 0; i <= 15; i++)
 					{
 						establo = new clsEstablo();
-						establo.Id = i.ToString();
-						establo.Nombre = "Establo " + i.ToString();
+						
 
 						Establos.Add(establo);
 
 					}
 
-					SelEstablo = Establos.Where(x => x.Id == Preferences.Get("IdEstablo", "1")).FirstOrDefault();
+					SelEstablo = Establos.Where(x => x.ESTABLO_ID.Equals( Preferences.Get("IdEstablo", "1"))).FirstOrDefault();
 
 					//Temperatura = Hoy.LTEMPERATURA.Values;
 					//ITH = Hoy.LITH;
@@ -138,7 +137,7 @@ namespace Base.ViewModels
 
 		void LoadPropiedades()
 		{
-			Preferences.Set("IdEstablo", SelEstablo.Id);
+			Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
 			Pressed = true;
 			//consultar
 			

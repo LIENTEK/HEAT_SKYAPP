@@ -101,14 +101,14 @@ namespace Base.ViewModels
 					elemento.ITH = (80 + i).ToString();
 
 					establo = new clsEstablo();
-					establo.Id = i.ToString();
-					establo.Nombre = "Establo " + i.ToString();
+					//establo.Id = i.ToString();
+					//establo.Nombre = "Establo " + i.ToString();
 
 					Items.Add(elemento);
 					Establos.Add(establo);
 				}
 
-				SelEstablo = Establos.Where(x => x.Id == Preferences.Get("IdEstablo", "1")).FirstOrDefault();
+				SelEstablo = Establos.Where(x => x.ESTABLO_ID.Equals(Preferences.Get("IdEstablo", "1"))).FirstOrDefault();
 
 			}
 			else
@@ -121,7 +121,7 @@ namespace Base.ViewModels
 
 		void LoadPropiedades()
 		{
-			Preferences.Set("IdEstablo", SelEstablo.Id);
+			Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
 			Pressed = true;
 			//consultar
 			Pressed = false;

@@ -1,4 +1,5 @@
 ﻿using Base.Models;
+using Newtonsoft.Json;
 using System.Windows.Input;
 
 namespace Base.ViewModels
@@ -224,26 +225,21 @@ namespace Base.ViewModels
 
 			
 			var rq = new clsUsuario();
-			rq.Amb = Amb;
-			rq.User = userName;
-			rq.Password = Password;
-			var strrq = rq.LogInWsJson();
+			rq.USUARIO = userName;
+			rq.PWD = Password;
+			var strrq = rq.LogInWs();
 
-			if (strrq.Contains(clsUriWs.ErrorHttp))
+			rq = JsonConvert.DeserializeObject<clsUsuario>(strrq);
+
+            if (rq.CLIENTE_ID == -1)
 			{
-				strrq=strrq.Replace(clsUriWs.ErrorHttp, string.Empty);
-				ErrorPopWsMsg = strrq;
-				IsReady = true;
-				IsBusy = false;
-				return false;
-			}else if (strrq.Contains(clsUriWs.ErrorHttpLientek))
-			{
-				strrq = strrq.Replace(clsUriWs.ErrorHttpLientek, string.Empty);
-				ErrorPopWsMsg = strrq;
+				ErrorPopWsMsg = rq.NOMBRE;
 				IsReady = true;
 				IsBusy = false;
 				return false;
 			}
+
+			Preferences.Set("objuser", Newtonsoft.Json.JsonConvert.SerializeObject(rq));
 
 			IsBusy = false;
 			IsReady = true;

@@ -26,7 +26,7 @@ namespace Base.Models
 			clsRequestHttp req = new clsRequestHttp();
 			req.URI = clsUriWs.ApiNuevoRegistro;
 			req.JsonData = Newtonsoft.Json.JsonConvert.SerializeObject(this);
-			string result = req.RequestJSON().Result;
+			string result = req.Requestform().Result;
 			return result;
 		}
 	}

@@ -10,6 +10,7 @@ using DevExpress.Maui.Editors;
 using System.Collections.Generic;
 using BitMiracle.LibTiff.Classic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Base.ViewModels
 {
@@ -60,8 +61,10 @@ namespace Base.ViewModels
 		public ICommand CommandConsultar { get; }
 		public ICommand CommandConsultarPropiedad { get; }
 
+        public Thread ThFaillog { get; set; }
 
-		clsEstablo selEstablo;
+
+        clsEstablo selEstablo;
 		public clsEstablo SelEstablo
 		{
 			get => this.selEstablo;
@@ -102,37 +105,78 @@ namespace Base.ViewModels
 		{
 			if (Pago())
 			{
-				
-				Items.Clear();
-				Establos.Clear();
-				Propiedades.Clear();
+                Items.Clear();
+                Establos.Clear();
+                Propiedades.Clear();
 
-				var elemento = new clsPropiedadesMet();
-				var establo = new clsEstablo();
-				var propiedad = new clsPropiedades();
-
-				for (int i = 0; i <= 15; i++)
+                try
 				{
-					elemento = new clsPropiedadesMet();
-					elemento.Hora = DateTime.Now.AddHours(i).ToString("HH:mm");
-					elemento.Fecha = DateTime.Now.AddDays(i).ToString("dd/MM");
-					elemento.Valor = i.ToString();
+					clsUsuario  objuser = new clsUsuario();
+					string obj = Preferences.Get("objuser", "");
+					objuser = Newtonsoft.Json.JsonConvert.DeserializeObject<clsUsuario>(obj);
 
-					establo = new clsEstablo();
-					establo.Id = i.ToString();
-					establo.Nombre ="Establo "+ i.ToString();
+                    var elemento = new clsPropiedadesMet();
+                    var establo = new clsEstablo();
+                    var propiedad = new clsPropiedades();
 
-					propiedad = new clsPropiedades();
-					propiedad.Id = i.ToString();
-					propiedad.Propiedad = "Propiedad "+i.ToString();
+					//obtener establos
+                    var rqestablo = new clsEstablo();
+                    var strrq = rqestablo.ObtenerEstablos(objuser.USUARIO_ID.ToString());
 
-					Items.Add(elemento);
-					Establos.Add(establo);
-					Propiedades.Add(propiedad);
+                    var responseestablos = JsonConvert.DeserializeObject<List<clsEstablo>>(strrq);
+
+                    if (responseestablos.Count >1)
+                    {
+						foreach (var item in responseestablos)
+						{
+							establo = new clsEstablo();
+							establo.ESTABLO_ID = item.ESTABLO_ID;
+							establo.NOMBRE =item.NOMBRE;
+                            Establos.Add(establo);
+                        }
+
+					}
+					else
+					{
+						if (responseestablos[0].ESTABLO_ID==-1)
+						{
+							ErrorPopWsMsg= rqestablo.NOMBRE;
+							ShowPopErrorWs = true;
+                            ThFaillog = new Thread(new ThreadStart(hidePopUp));
+                            ThFaillog.Start();
+                        }
+					}
+
+
+					//obtener proiedades
+				   strrq = new clsConsultas().ObtenerParametros();
+                   var rqpropiedad = JsonConvert.DeserializeObject<List<string>>(strrq);
+
+					try
+					{
+						foreach (string item in rqpropiedad)
+						{
+                            propiedad = new clsPropiedades();
+                            propiedad.Id = item;
+                            propiedad.Propiedad =item;
+                            Propiedades.Add(propiedad);
+                        }
+                    }
+					catch
+					{
+                        throw new InvalidOperationException("No se descargaron las propiedades meteorologicas");
+                    }
+
+                    SelEstablo = Establos.Where(x => x.ESTABLO_ID.Equals(Preferences.Get("IdEstablo", 0))).FirstOrDefault();
+                    SelPropiedad = Propiedades.Where(x => x.Id.Equals(Preferences.Get("Propiedad", ""))).FirstOrDefault();
+					LoadPropiedades();
+
+                }
+				catch(Exception ex)
+				{
+					
 				}
-
-				SelEstablo = Establos.Where(x => x.Id == Preferences.Get("IdEstablo","1")).FirstOrDefault();
-				SelPropiedad = Propiedades.Where(x => x.Id == "1").FirstOrDefault();
+				
 
 			}
 			else
@@ -143,31 +187,46 @@ namespace Base.ViewModels
 			
 		}
 
-		void LoadPropiedades()
+        async void hidePopUp()
+        {
+            if (ErrorPopWsMsg.Length > 40)
+            {
+                await Task.Delay(7000);
+            }
+            else
+            {
+                await Task.Delay(5000);
+            }
+            ShowPopErrorWs = false;
+        }
+
+        void LoadPropiedades()
 		{
-			Preferences.Set("IdEstablo", SelEstablo.Id);
+			Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
 			Pressed = true;
-			//consultar
-			Pressed= false;
+            var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
+			strrq = strrq.Substring(1, strrq.Length-2);
+            var arrofarr = strrq.TrimStart('[').TrimEnd(']').Split(',');
+            var rqalldata = JsonConvert.DeserializeObject<List<List<clsPropiedadesMet>>>(strrq);
+
+
+            Pressed = false;
 		}
 
 		void ChangePropiedad()
 		{
-			Pressed = true;
+            Preferences.Set("Propiedad", SelPropiedad.Id.ToString());
+            Pressed = true;
 			// cambiar el Items
 			Pressed = false;
 		}
 
 		Boolean Pago()
 		{
-			if (Preferences.Get("IdEstablo", "1").Equals("15"))
-			{
-				return false;
-			}
-			else
-			{
+			
+			//revisar si esta pagada la app
 				return true;
-			}
+			
 		}
 
 		#endregion

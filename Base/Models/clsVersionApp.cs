@@ -19,7 +19,7 @@ namespace Base.Models
 			clsRequestHttp req = new clsRequestHttp();
 			req.URI = clsUriWs.ApiVersion;
 			req.JsonData = Newtonsoft.Json.JsonConvert.SerializeObject(this);
-			string result = req.RequestJSON().Result;
+			string result = req.Requestform().Result;
 			return result;
 		}
 
@@ -36,7 +36,7 @@ namespace Base.Models
 			clsRequestHttp req = new clsRequestHttp();
 			req.URI = clsUriWs.ApiVersion;
 			req.JsonData = jsnversion;
-			string result = req.RequestJSON().Result;
+			string result = req.Requestform().Result;
 			return result;
 		}
 	}

@@ -24,7 +24,7 @@ namespace Base.Models
 			clsRequestHttp req = new clsRequestHttp();
 			req.URI = clsUriWs.GetTokenPassword;
 			req.JsonData = Newtonsoft.Json.JsonConvert.SerializeObject(this);
-			string result = req.RequestJSON().Result;
+			string result = req.Requestform().Result;
 			return result;
 		}
 
@@ -33,7 +33,7 @@ namespace Base.Models
 			clsRequestHttp req = new clsRequestHttp();
 			req.URI = clsUriWs.UpdatePassword;
 			req.JsonData = Newtonsoft.Json.JsonConvert.SerializeObject(this);
-			string result = req.RequestJSON().Result;
+			string result = req.Requestform().Result;
 			return result;
 		}
 	}

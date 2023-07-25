@@ -138,8 +138,7 @@ namespace Base.ViewModels
 
 
 			var rq = new clsUsuario();
-			rq.Amb = Amb;
-			var strrq = rq.LogInWsJson();
+			var strrq = rq.LogInWs();
 			if (strrq.Contains(clsUriWs.ErrorHttp))
 			{
 				strrq = strrq.Replace(clsUriWs.ErrorHttp, string.Empty);
