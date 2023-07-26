@@ -10,5 +10,6 @@ namespace Base.Models
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
 		public double Value { get; set; }
+		public int Hora { get; set; }
 	}
 }

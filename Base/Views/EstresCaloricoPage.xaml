@@ -17,13 +17,18 @@
     
     <ContentPage.Resources>
         <dxc:SeriesHintOptions x:Key="pointSeriesHintOptions" PointTextPattern="{}{V} ITH"/>
-        <dxc:SeriesHintOptions x:Key="lineSeriesHintOptions" PointTextPattern="{}{V} °C"/>
+        <!--<dxc:SeriesHintOptions x:Key="lineSeriesHintOptions" PointTextPattern="{}{V} °C"/>-->
+        <dxc:SeriesCrosshairOptions x:Key="lineSeriesHintOptions"
+                                PointTextPattern="{}{S}: {V}"
+                                ShowInLabel="True"
+                                AxisLabelVisible="True"
+                                AxisLineVisible="True"/>
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <Grid RowDefinitions="auto,auto,auto,*">
+        <Grid RowDefinitions="auto,auto,auto,*" >
             <dxe:ComboBoxEdit x:Name="lkestablo" Grid.Row="0" IsVisible="true" Margin="10,5,10,5" CursorColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" DropDownBackgroundColor="{StaticResource PrimaryLight}" DropDownSelectedItemTextColor="{StaticResource Primary}" DropDownSelectedItemBackgroundColor="White" LabelColor="{StaticResource Primary}"
-                          PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="Id" DisplayMember="Nombre"  IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
+                          PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="ESTABLO_ID" DisplayMember="NOMBRE"  IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
             </dxe:ComboBoxEdit>
 
             <Grid Grid.Row="1" RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="2*,*,*"  Padding="20">
@@ -55,9 +60,9 @@
             </Grid>
             <Label Grid.Row="2" Text="{Binding Date}"  HorizontalOptions="Center" Margin="0,0,5,0" FontSize="20"  FontAttributes="Bold"/>
 
-            <Frame Grid.Row="3" Padding="5" >
-                <dxc:ChartView  x:Name="Sestres" >
-                    
+            <Frame Grid.Row="3" Padding="0" Margin="10" >
+                <dxc:ChartView  x:Name="Sestres" Margin="5" >
+
                     <dxc:ChartView.ChartStyle>
                         <dxc:ChartStyle Palette="{Binding Palette}"
                             Padding="0"
@@ -66,9 +71,9 @@
                     </dxc:ChartView.ChartStyle>
 
                     <dxc:ChartView.Hint>
-                        <dxc:Hint>
+                        <dxc:Hint Enabled="True" ShowMode="OnTap">
                             <dxc:Hint.Behavior>
-                                <dxc:TooltipHintBehavior ShowPointTooltip="True" ShowSeriesTooltip="False"/>
+                                <dxc:CrosshairHintBehavior GroupHeaderTextPattern="{}HORA: {A}" MaxSeriesCount="4"/>
                             </dxc:Hint.Behavior>
                         </dxc:Hint>
                     </dxc:ChartView.Hint>
@@ -90,7 +95,7 @@
                                 <dxc:AxisLabel  Position="Outside"/>
                             </dxc:NumericAxisX.Label>
                             <dxc:NumericAxisX.Range>
-                                <dxc:NumericRange Min="0" Max="23" VisualMax="23" VisualMin="0" />
+                                <dxc:NumericRange Min="0" Max="23" VisualMax="24" VisualMin="-1" />
                             </dxc:NumericAxisX.Range>
                         </dxc:NumericAxisX>
                     </dxc:ChartView.AxisX>
@@ -101,7 +106,7 @@
 
                     <dxc:ChartView.Series>
 
-                        <dxc:PointSeries DisplayName="ITH" HintOptions="{StaticResource pointSeriesHintOptions}" >
+                        <dxc:PointSeries DisplayName="ITH" HintOptions="{StaticResource lineSeriesHintOptions}" >
                             <dxc:PointSeries.Style>
                                 <dxc:LineSeriesStyle MarkerSize="10" Stroke="LimeGreen">
                                     <dxc:LineSeriesStyle.MarkerStyle>
@@ -110,21 +115,14 @@
                                 </dxc:LineSeriesStyle>
                             </dxc:PointSeries.Style>
                             <dxc:PointSeries.Data>
-                                    <dxc:SeriesDataAdapter DataSource="{Binding Items, Mode=TwoWay}" 
-                                           ArgumentDataMember="Value">
+                                <dxc:SeriesDataAdapter DataSource="{Binding ITH, Mode=TwoWay}"  AllowLiveDataUpdates="True"
+                                           ArgumentDataMember="Hora">
                                     <dxc:ValueDataMember Type="Value" Member="Value"/>
                                 </dxc:SeriesDataAdapter>
                             </dxc:PointSeries.Data>
-                            <dxc:PointSeries.AxisY>
-                                <dxc:NumericAxisY GridAlignment="2" >
-                                    <dxc:NumericAxisY.Style>
-                                        <dxc:AxisStyle LineVisible="True" LineThickness="2" LineColor="Green"/>
-                                    </dxc:NumericAxisY.Style>
-                                </dxc:NumericAxisY>
-                            </dxc:PointSeries.AxisY>
                         </dxc:PointSeries>
 
-                        <dxc:LineSeries DisplayName="UV" MarkersVisible="True" HintOptions="{StaticResource lineSeriesHintOptions}" >
+                        <dxc:LineSeries DisplayName="HUMEDAD %" MarkersVisible="True" HintOptions="{StaticResource lineSeriesHintOptions}" >
                             <dxc:LineSeries.Style>
                                 <dxc:LineSeriesStyle MarkerSize="10" Stroke="DarkViolet">
                                     <dxc:LineSeriesStyle.MarkerStyle>
@@ -133,23 +131,29 @@
                                 </dxc:LineSeriesStyle>
                             </dxc:LineSeries.Style>
                             <dxc:LineSeries.Data>
-                                <dxc:SeriesDataAdapter DataSource="{Binding Items, Mode=TwoWay}" AllowLiveDataUpdates="True" ArgumentDataMember="Value">
+                                <dxc:SeriesDataAdapter DataSource="{Binding HUMEDAD, Mode=TwoWay}" AllowLiveDataUpdates="True" ArgumentDataMember="Hora">
                                     <dxc:ValueDataMember Type="Value" Member="Value"/>
                                 </dxc:SeriesDataAdapter>
                             </dxc:LineSeries.Data>
-                            <dxc:LineSeries.AxisY>
-                                <dxc:NumericAxisY GridAlignment="2" >
-                                    <dxc:NumericAxisY.Style>
-                                        <dxc:AxisStyle LineVisible="True" LineThickness="2" LineColor="DarkViolet"/>
-                                    </dxc:NumericAxisY.Style>
-                                </dxc:NumericAxisY>
-                            </dxc:LineSeries.AxisY>
                         </dxc:LineSeries>
 
-                      
-
+                        <dxc:LineSeries DisplayName="TEMPERATURA °C" MarkersVisible="True" HintOptions="{StaticResource lineSeriesHintOptions}" >
+                            <dxc:LineSeries.Style>
+                                <dxc:LineSeriesStyle MarkerSize="10" Stroke="Red">
+                                    <dxc:LineSeriesStyle.MarkerStyle>
+                                        <dxc:MarkerStyle Fill="Red" />
+                                    </dxc:LineSeriesStyle.MarkerStyle>
+                                </dxc:LineSeriesStyle>
+                            </dxc:LineSeries.Style>
+                            <dxc:LineSeries.Data>
+                                <dxc:SeriesDataAdapter DataSource="{Binding TEMP, Mode=TwoWay}" AllowLiveDataUpdates="True" ArgumentDataMember="Hora">
+                                    <dxc:ValueDataMember Type="Value" Member="Value"/>
+                                </dxc:SeriesDataAdapter>
+                            </dxc:LineSeries.Data>
+                        </dxc:LineSeries>
 
                     </dxc:ChartView.Series>
+                
 
                 </dxc:ChartView>
 
@@ -157,7 +161,7 @@
             
             <dxco:DXPopup IsOpen="{Binding ShowPopUp}" AllowScrim="True" BackgroundColor="White" ScrimColor="#70111111" CornerRadius="12" Margin="25" >
                 <StackLayout Padding="0,0,0,20" WidthRequest="320" >
-                    <ImageButton Source="https://w7.pngwing.com/pngs/912/224/png-transparent-close-delete-exit-remove-glyphs-icon-thumbnail.png" HorizontalOptions="End" CornerRadius="10" HeightRequest="30" WidthRequest="40" Command="{Binding ShowPopUpCommand}" Margin="0" BackgroundColor="Transparent" />
+                    <ImageButton Source="cerrar" HorizontalOptions="End" CornerRadius="10" HeightRequest="30" WidthRequest="40" Command="{Binding ShowPopUpCommand}" Margin="0" BackgroundColor="Transparent" />
 
                     <Grid HorizontalOptions="Center"  RowSpacing="5" ColumnSpacing="10" >
                         <Grid.RowDefinitions>

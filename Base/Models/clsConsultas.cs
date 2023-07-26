@@ -50,5 +50,15 @@ namespace Base.Models
             return result;
         }
 
-    }
+		public string DatosChart(string lat, string lon)
+		{
+			string jsnversion = "lat=" + lat + "&lon=" + lon;
+			clsRequestHttp req = new clsRequestHttp();
+			req.JsonData = jsnversion;
+			req.URI = "/GraficaClima24";
+			string result = req.RequestformHeatsky().Result;
+			return result;
+		}
+
+	}
 }

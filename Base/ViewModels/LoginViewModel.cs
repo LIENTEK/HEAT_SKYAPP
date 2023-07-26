@@ -36,6 +36,8 @@ namespace Base.ViewModels
 
 		string userName;
 		string password;
+		string cliente;
+		string nombre;
 
 		#endregion
 
@@ -89,6 +91,17 @@ namespace Base.ViewModels
 		{
 			get => this.password;
 			set => SetProperty(ref this.password, value);
+		}
+
+		public string Cliente
+		{
+			get => this.cliente;
+			set => SetProperty(ref this.cliente, value);
+		}
+		public string Nombre
+		{
+			get => this.nombre;
+			set => SetProperty(ref this.nombre, value);
 		}
 
 		#endregion
@@ -238,6 +251,9 @@ namespace Base.ViewModels
 				IsBusy = false;
 				return false;
 			}
+
+			Nombre = rq.NOMBRE.ToString();
+			Cliente = rq.CLIENTE_ID.ToString();
 
 			Preferences.Set("objuser", Newtonsoft.Json.JsonConvert.SerializeObject(rq));
 

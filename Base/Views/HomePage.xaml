@@ -17,12 +17,12 @@
              x:Class="Base.Views.HomePage">
 
     <ContentPage.Content>
-        <StackLayout BackgroundColor="Transparent" >
-            <dxe:ComboBoxEdit x:Name="lkestablo" Margin="10,5,10,5" CursorColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" DropDownBackgroundColor="{StaticResource PrimaryLight}" DropDownSelectedItemTextColor="{StaticResource Primary}" DropDownSelectedItemBackgroundColor="White" LabelColor="{StaticResource Primary}"
+        <Grid BackgroundColor="Transparent" RowDefinitions="70,70,70,*" >
+            <dxe:ComboBoxEdit x:Name="lkestablo" Grid.Row="0" Margin="10,5,10,5" CursorColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" DropDownBackgroundColor="{StaticResource PrimaryLight}" DropDownSelectedItemTextColor="{StaticResource Primary}" DropDownSelectedItemBackgroundColor="White" LabelColor="{StaticResource Primary}"
                           PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="ESTABLO_ID" DisplayMember="NOMBRE"  IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
             </dxe:ComboBoxEdit>
-            
-            <Grid RowDefinitions="*" ColumnDefinitions="*,*" Margin="10,0,10,0" ColumnSpacing="10" >
+
+            <Grid  Grid.Row="1" RowDefinitions="*" ColumnDefinitions="*,*" Margin="10,0,10,0" ColumnSpacing="10" >
                 <dxe:DateEdit Grid.Row="0" Grid.Column="0" UseNativePicker="False" DisplayFormat="dd/MM/yyyy"  Date ="{Binding FechaHoy}" HorizontalOptions="FillAndExpand" 
                               LabelText="Fecha Inicio" IsEnabled="False" DisabledLabelColor="{StaticResource Primary}" DisabledTextColor="{StaticResource Primary}" DisabledIconColor="Transparent"
                               BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" DisabledBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" />
@@ -30,12 +30,12 @@
                               LabelText="Fecha Fin" IsEnabled="False" DisabledLabelColor="{StaticResource Primary}" DisabledTextColor="{StaticResource Primary}" DisabledIconColor="Transparent"
                               BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" DisabledBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" />
             </Grid>
-            <dxe:ComboBoxEdit x:Name="lkpropiedad" Margin="10,5,10,5" CursorColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" DropDownBackgroundColor="{StaticResource PrimaryLight}" DropDownSelectedItemTextColor="{StaticResource Primary}" DropDownSelectedItemBackgroundColor="White" LabelColor="{StaticResource Primary}"
+            <dxe:ComboBoxEdit  Grid.Row="2"  x:Name="lkpropiedad" Margin="10,5,10,5" CursorColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" DropDownBackgroundColor="{StaticResource PrimaryLight}" DropDownSelectedItemTextColor="{StaticResource Primary}" DropDownSelectedItemBackgroundColor="White" LabelColor="{StaticResource Primary}"
                           PlaceholderText="Selecciona una propiedad" LabelText="Propiedad" ItemsSource="{Binding Propiedades}" ValueMember="Id" DisplayMember="Propiedad" IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultarPropiedad}" SelectedItem="{Binding SelPropiedad, Mode=TwoWay}" >
             </dxe:ComboBoxEdit>
 
-            <Grid RowDefinitions="Auto, *" Margin="10" >
-                <dxg:DataGridView x:Name="grid" ItemsSource="{Binding Items}"  FilterString="like" HeightRequest="600" CustomCellAppearance="DataGridView_CustomCellAppearance"
+            <Frame  Grid.Row="3"  Margin="0" Padding="5">
+                <dxg:DataGridView x:Name="grid" ItemsSource="{Binding Items}"  FilterString="like"  CustomCellAppearance="DataGridView_CustomCellAppearance"
                    ShowAutoFilterRow="{Binding IsReady, Mode=TwoWay}" IsRefreshing="{Binding IsBusy,Mode=TwoWay}" IsLoadMoreEnabled="{Binding IsOne, Mode=TwoWay}"  IsPullToRefreshEnabled="true" PullToRefreshCommand="{Binding LoadCommand}">
                     <dxg:DataGridView.ColumnHeaderAppearance>
                         <dxg:ColumnHeaderAppearance BackgroundColor="{StaticResource Primary}" FontColor="White" />
@@ -45,21 +45,19 @@
                     </dxg:DataGridView.CellAppearance>
                     <dxg:DataGridView.Columns>
                         <dxg:TextColumn Caption="HORA" FieldName="Hora" AutoFilterCondition="Contains" MinWidth="80" Column="0" FixedStyle="Start"/>
-                        <dxg:TextColumn Caption="06/07" FieldName="Valor" MinWidth="80" AllowAutoFilter="False" />
-                        <dxg:TextColumn Caption="07/07" FieldName="Valor" MinWidth="80" AllowAutoFilter="False" />
-                        <dxg:TextColumn Caption="08/07" FieldName="Marca" MinWidth="80" AllowAutoFilter="False" />
-                        <dxg:TextColumn Caption="09/07" FieldName="Marca" MinWidth="80" AllowAutoFilter="False" />
-                        <dxg:TextColumn Caption="10/07" FieldName="Marca" MinWidth="80" AllowAutoFilter="False" />
-                        <dxg:TextColumn Caption="11/07" FieldName="Marca" MinWidth="80" AllowAutoFilter="False" />
-                        <dxg:TextColumn Caption="12/07" FieldName="Marca" MinWidth="80" AllowAutoFilter="False" />
-                        <dxg:TextColumn Caption="13/07" FieldName="Marca" MinWidth="80" AllowAutoFilter="False" />
+                        <dxg:TextColumn Caption="{Binding D1}" FieldName="Valor1" MinWidth="80" AllowAutoFilter="False" />
+                        <dxg:TextColumn Caption="{Binding D2}" FieldName="Valor2" MinWidth="80" AllowAutoFilter="False" />
+                        <dxg:TextColumn Caption="{Binding D3}" FieldName="Valor3" MinWidth="80" AllowAutoFilter="False" />
+                        <dxg:TextColumn Caption="{Binding D4}" FieldName="Valor4" MinWidth="80" AllowAutoFilter="False" />
+                        <dxg:TextColumn Caption="{Binding D5}" FieldName="Valor5" MinWidth="80" AllowAutoFilter="False" />
+                        <dxg:TextColumn Caption="{Binding D6}" FieldName="Valor6" MinWidth="80" AllowAutoFilter="False" />
+                        <dxg:TextColumn Caption="{Binding D7}" FieldName="Valor7" MinWidth="80" AllowAutoFilter="False" />
                     </dxg:DataGridView.Columns>
                 </dxg:DataGridView>
-            </Grid>
-
+            </Frame>
             <dxco:DXPopup IsOpen="{Binding ShowPopUp}" AllowScrim="True" BackgroundColor="White" ScrimColor="#70111111" CornerRadius="12" Margin="25" >
                 <StackLayout Padding="0,0,0,20" WidthRequest="320" >
-                    <ImageButton Source="https://w7.pngwing.com/pngs/912/224/png-transparent-close-delete-exit-remove-glyphs-icon-thumbnail.png" HorizontalOptions="End" CornerRadius="10" HeightRequest="30" WidthRequest="40" Command="{Binding ShowPopUpCommand}" Margin="0" BackgroundColor="Transparent" />
+                    <ImageButton Source="cerrar" HorizontalOptions="End" CornerRadius="10" HeightRequest="30" WidthRequest="40" Command="{Binding ShowPopUpCommand}" Margin="0" BackgroundColor="Transparent" />
 
                     <Grid HorizontalOptions="Center"  RowSpacing="5" ColumnSpacing="10" >
                         <Grid.RowDefinitions>
@@ -91,6 +89,6 @@
             </dxco:DXPopup>
             <popups:ErrorPopWsContent/>
             <popups:ExitoPopWsContent/>
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

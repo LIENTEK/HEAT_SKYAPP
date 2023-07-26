@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using BitMiracle.LibTiff.Classic;
 using System.Linq;
 using Newtonsoft.Json;
+using System.Data;
 
 namespace Base.ViewModels
 {
@@ -18,18 +19,28 @@ namespace Base.ViewModels
 	{
 		public HomeViewModel()
 		{
-			Items = new ObservableCollection<clsPropiedadesMet>();
+			Items = new ObservableCollection<clsItemsMet>();
 			Establos = new ObservableCollection<clsEstablo>();
 			Propiedades = new ObservableCollection<clsPropiedades>();
-
-			CommandConsultar = new Command(LoadPropiedades, BlockButton);
-			CommandConsultarPropiedad = new Command(ChangePropiedad, BlockButton);
+			banderaleiado = 0;
+			CommandConsultar = new Command(LoadPropiedades);
+			CommandConsultarPropiedad = new Command(ChangePropiedad);
+			LoadCommand = new Command(Refresh);
 		}
 
 
 
 		#region Variables
 		string nombre = string.Empty;
+		string d1=string.Empty;
+		string d2 = string.Empty;
+		string d3 = string.Empty;
+		string d4 = string.Empty;
+		string d5 = string.Empty;
+		string d6 = string.Empty;
+		string d7 = string.Empty;
+		clsPropiedadesMet[][] res;
+		int banderaleiado = 0;
 		#endregion
 
 		#region Propiedades bool
@@ -42,6 +53,43 @@ namespace Base.ViewModels
 			get => this.nombre;
 			set => SetProperty(ref this.nombre, value);
 		}
+
+		public string D1
+		{
+			get => this.d1;
+			set => SetProperty(ref this.d1, value);
+		}
+		public string D2
+		{
+			get => this.d2;
+			set => SetProperty(ref this.d2, value);
+		}
+		public string D3
+		{
+			get => this.d3;
+			set => SetProperty(ref this.d3, value);
+		}
+		public string D4
+		{
+			get => this.d4;
+			set => SetProperty(ref this.d4, value);
+		}
+		public string D5
+		{
+			get => this.d5;
+			set => SetProperty(ref this.d5, value);
+		}
+		public string D6
+		{
+			get => this.d6;
+			set => SetProperty(ref this.d6, value);
+		}
+		public string D7
+		{
+			get => this.d7;
+			set => SetProperty(ref this.d7, value);
+		}
+
 		public DateTime FechaHoy
 		{
 			get => DateTime.Now;
@@ -51,12 +99,13 @@ namespace Base.ViewModels
 			get => DateTime.Now.AddDays(7);
 		}
 
-		public ObservableCollection<clsPropiedadesMet> Items { get;  set; }
+		public ObservableCollection<clsItemsMet> Items { get;  set; }
 		public ObservableCollection<clsEstablo> Establos { get;  set; }
 		public ObservableCollection<clsPropiedades> Propiedades { get;  set; }
 		#endregion
 
 		#region Commands
+		public ICommand LoadCommand { get; }
 		public ICommand CommandCalendario { get; }
 		public ICommand CommandConsultar { get; }
 		public ICommand CommandConsultarPropiedad { get; }
@@ -96,6 +145,7 @@ namespace Base.ViewModels
 			else
 			{
 				IsOne= false;
+				IsBusy = true;
 				LoadData();
 			}
 			
@@ -105,17 +155,16 @@ namespace Base.ViewModels
 		{
 			if (Pago())
 			{
-                Items.Clear();
                 Establos.Clear();
                 Propiedades.Clear();
+				Items.Clear();
 
-                try
+				try
 				{
 					clsUsuario  objuser = new clsUsuario();
 					string obj = Preferences.Get("objuser", "");
 					objuser = Newtonsoft.Json.JsonConvert.DeserializeObject<clsUsuario>(obj);
 
-                    var elemento = new clsPropiedadesMet();
                     var establo = new clsEstablo();
                     var propiedad = new clsPropiedades();
 
@@ -132,6 +181,8 @@ namespace Base.ViewModels
 							establo = new clsEstablo();
 							establo.ESTABLO_ID = item.ESTABLO_ID;
 							establo.NOMBRE =item.NOMBRE;
+							establo.LATITUD = item.LATITUD;
+							establo.LONGITUD = item.LONGITUD;
                             Establos.Add(establo);
                         }
 
@@ -167,20 +218,27 @@ namespace Base.ViewModels
                         throw new InvalidOperationException("No se descargaron las propiedades meteorologicas");
                     }
 
-                    SelEstablo = Establos.Where(x => x.ESTABLO_ID.Equals(Preferences.Get("IdEstablo", 0))).FirstOrDefault();
-                    SelPropiedad = Propiedades.Where(x => x.Id.Equals(Preferences.Get("Propiedad", ""))).FirstOrDefault();
-					LoadPropiedades();
+                    SelPropiedad = Propiedades.Where(x => x.Id.Equals(Preferences.Get("Propiedad", "Temperatura °C"))).FirstOrDefault();
+					SelEstablo = Establos.Where(x => x.ESTABLO_ID.Equals(Preferences.Get("IdEstablo", 0))).FirstOrDefault();
 
-                }
+
+				}
 				catch(Exception ex)
 				{
-					
+					IsBusy = false;
+					ErrorPopWsMsg = ex.Message;
+					ShowPopErrorWs = true;
+					ThFaillog = new Thread(new ThreadStart(hidePopUp));
+					ThFaillog.Start();
 				}
+
 				
+				//LoadPropiedades();
 
 			}
 			else
 			{
+				IsBusy = false;
 				await Task.Delay(100);
 				ShowPopUp = true;
 			}
@@ -202,23 +260,181 @@ namespace Base.ViewModels
 
         void LoadPropiedades()
 		{
-			Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-			Pressed = true;
-            var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
-			strrq = strrq.Substring(1, strrq.Length-2);
-            var arrofarr = strrq.TrimStart('[').TrimEnd(']').Split(',');
-            var rqalldata = JsonConvert.DeserializeObject<List<List<clsPropiedadesMet>>>(strrq);
+			Items.Clear();
 
+			try
+			{
+				var establo = Preferences.Get("IdEstablo", 0);
+				if (establo == SelEstablo.ESTABLO_ID && banderaleiado==0)
+				{
+					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
+					var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
+					res = JsonConvert.DeserializeObject<clsPropiedadesMet[][]>(strrq);
+				}
+				else if(establo == SelEstablo.ESTABLO_ID && banderaleiado == 1)
+				{
+					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
+					//var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
+					//res = JsonConvert.DeserializeObject<clsPropiedadesMet[][]>(strrq);
+				}
+				else 
+				{
+					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
+					var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
+					res = JsonConvert.DeserializeObject<clsPropiedadesMet[][]>(strrq);
+				}
+				
+				D1 = res[0][0].FechaHora;
+				D2 = res[1][0].FechaHora;
+				D3 = res[2][0].FechaHora;
+				D4 = res[3][0].FechaHora;
+				D5 = res[4][0].FechaHora;
+				D6 = res[5][0].FechaHora;
+				D7 = res[6][0].FechaHora;
+				var elemento = new clsItemsMet();
 
-            Pressed = false;
+				if (SelPropiedad.Id.Equals("Temperatura °C"))
+				{
+					for (int i = 0; i <= 23; i++)
+					{
+						elemento = new clsItemsMet();
+						elemento.Hora = res[0][i].Hora.ToString();
+						elemento.Valor1 = res[0][i].temp_c.ToString();
+						elemento.Valor2 = res[1][i].temp_c.ToString();
+						elemento.Valor3 = res[2][i].temp_c.ToString();
+						elemento.Valor4 = res[3][i].temp_c.ToString();
+						elemento.Valor5 = res[4][i].temp_c.ToString();
+						elemento.Valor6 = res[5][i].temp_c.ToString();
+						elemento.Valor7 = res[6][i].temp_c.ToString();
+						Items.Add(elemento);
+					}
+				}
+				else if (SelPropiedad.Id.Equals("Humedad %"))
+				{
+					for (int i = 0; i <= 23; i++)
+					{
+						elemento = new clsItemsMet();
+						elemento.Hora = res[0][i].Hora.ToString();
+						elemento.Valor1 = res[0][i].humidity.ToString();
+						elemento.Valor2 = res[1][i].humidity.ToString();
+						elemento.Valor3 = res[2][i].humidity.ToString();
+						elemento.Valor4 = res[3][i].humidity.ToString();
+						elemento.Valor5 = res[4][i].humidity.ToString();
+						elemento.Valor6 = res[5][i].humidity.ToString();
+						elemento.Valor7 = res[6][i].humidity.ToString();
+						Items.Add(elemento);
+					}
+				}
+				else if (SelPropiedad.Id.Equals("ITH"))
+				{
+					for (int i = 0; i <= 23; i++)
+					{
+						elemento = new clsItemsMet();
+						elemento.Hora = res[0][i].Hora.ToString();
+						elemento.Valor1 = res[0][i].ITH.ToString();
+						elemento.Valor2 = res[1][i].ITH.ToString();
+						elemento.Valor3 = res[2][i].ITH.ToString();
+						elemento.Valor4 = res[3][i].ITH.ToString();
+						elemento.Valor5 = res[4][i].ITH.ToString();
+						elemento.Valor6 = res[5][i].ITH.ToString();
+						elemento.Valor7 = res[6][i].ITH.ToString();
+						Items.Add(elemento);
+					}
+				}
+				else if (SelPropiedad.Id.Equals("Nubosidad %"))
+				{
+					for (int i = 0; i <= 23; i++)
+					{
+						elemento = new clsItemsMet();
+						elemento.Hora = res[0][i].Hora.ToString();
+						elemento.Valor1 = res[0][i].cloud.ToString();
+						elemento.Valor2 = res[1][i].cloud.ToString();
+						elemento.Valor3 = res[2][i].cloud.ToString();
+						elemento.Valor4 = res[3][i].cloud.ToString();
+						elemento.Valor5 = res[4][i].cloud.ToString();
+						elemento.Valor6 = res[5][i].cloud.ToString();
+						elemento.Valor7 = res[6][i].cloud.ToString();
+						Items.Add(elemento);
+					}
+				}
+				else if (SelPropiedad.Id.Equals("Prob. Lluvia %"))
+				{
+					for (int i = 0; i <= 23; i++)
+					{
+						elemento = new clsItemsMet();
+						elemento.Hora = res[0][i].Hora.ToString();
+						elemento.Valor1 = res[0][i].chance_of_rain.ToString();
+						elemento.Valor2 = res[1][i].chance_of_rain.ToString();
+						elemento.Valor3 = res[2][i].chance_of_rain.ToString();
+						elemento.Valor4 = res[3][i].chance_of_rain.ToString();
+						elemento.Valor5 = res[4][i].chance_of_rain.ToString();
+						elemento.Valor6 = res[5][i].chance_of_rain.ToString();
+						elemento.Valor7 = res[6][i].chance_of_rain.ToString();
+						Items.Add(elemento);
+					}
+				}
+				else if (SelPropiedad.Id.Equals("Indice UV"))
+				{
+					for (int i = 0; i <= 23; i++)
+					{
+						elemento = new clsItemsMet();
+						elemento.Hora = res[0][i].Hora.ToString();
+						elemento.Valor1 = res[0][i].uv.ToString();
+						elemento.Valor2 = res[1][i].uv.ToString();
+						elemento.Valor3 = res[2][i].uv.ToString();
+						elemento.Valor4 = res[3][i].uv.ToString();
+						elemento.Valor5 = res[4][i].uv.ToString();
+						elemento.Valor6 = res[5][i].uv.ToString();
+						elemento.Valor7 = res[6][i].uv.ToString();
+						Items.Add(elemento);
+					}
+				}
+				else if (SelPropiedad.Id.Equals("Velocidad Viento km/hra"))
+				{
+					for (int i = 0; i <= 23; i++)
+					{
+						elemento = new clsItemsMet();
+						elemento.Hora = res[0][i].Hora.ToString();
+						elemento.Valor1 = res[0][i].wind_kph.ToString();
+						elemento.Valor2 = res[1][i].wind_kph.ToString();
+						elemento.Valor3 = res[2][i].wind_kph.ToString();
+						elemento.Valor4 = res[3][i].wind_kph.ToString();
+						elemento.Valor5 = res[4][i].wind_kph.ToString();
+						elemento.Valor6 = res[5][i].wind_kph.ToString();
+						elemento.Valor7 = res[6][i].wind_kph.ToString();
+						Items.Add(elemento);
+					}
+				}
+
+				banderaleiado = 1;
+				IsBusy=false;
+			}
+			catch(Exception ex)
+			{
+				IsBusy = false;
+				ErrorPopWsMsg = ex.Message;
+				ShowPopErrorWs = true;
+				ThFaillog = new Thread(new ThreadStart(hidePopUp));
+				ThFaillog.Start();
+			}
+			
+		}
+
+		async void Refresh()
+		{
+			Items.Clear();
+			await Task.Delay(1000);
+			IsBusy = true;
+			banderaleiado = 0;
+			LoadPropiedades();
 		}
 
 		void ChangePropiedad()
 		{
             Preferences.Set("Propiedad", SelPropiedad.Id.ToString());
-            Pressed = true;
-			// cambiar el Items
-			Pressed = false;
+			if (banderaleiado==1) {
+				LoadPropiedades();
+			}
 		}
 
 		Boolean Pago()
