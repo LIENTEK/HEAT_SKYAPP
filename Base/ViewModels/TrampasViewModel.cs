@@ -1,29 +1,23 @@
 ﻿using Base.Models;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Base.ViewModels
 {
-	public class RecomendacionViewModel : BaseViewModel
+    public class TrampasViewModel : BaseViewModel
 	{
-		public RecomendacionViewModel() {
-			Items = new ObservableCollection<clsTiempoReal>();
+		public TrampasViewModel()
+		{
+			Items = new ObservableCollection<clsTrampas>();
 			Establos = new ObservableCollection<clsEstablo>();
 			CommandConsultar = new Command(LoadPropiedades);
-			banderaleiado = 0;
 		}
 
 
 
 		#region Variables
-			string nombre = string.Empty;
-			int banderaleiado = 0;
+		string nombre = string.Empty;
 		#endregion
 
 		#region Propiedades bool
@@ -38,7 +32,7 @@ namespace Base.ViewModels
 		}
 
 
-		public ObservableCollection<clsTiempoReal> Items { get; set; }
+		public ObservableCollection<clsTrampas> Items { get; set; }
 		public ObservableCollection<clsEstablo> Establos { get; set; }
 		#endregion
 
@@ -172,31 +166,16 @@ namespace Base.ViewModels
 
 			try
 			{
-				var establo = Preferences.Get("IdEstablo", 0);
-				if (establo == SelEstablo.ESTABLO_ID && banderaleiado == 0)
-				{
-					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-					var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
+				Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
 
-				}
-				else if (establo == SelEstablo.ESTABLO_ID && banderaleiado == 1)
-				{
-					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-					//var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
-					//res = JsonConvert.DeserializeObject<clsPropiedadesMet[][]>(strrq);
-				}
-				else
-				{
-					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-					var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
+				var strrq = new clsConsultas().ObtenerTrampas(SelEstablo.ESTABLO_ID.ToString());
+				var res = JsonConvert.DeserializeObject<List<clsTrampas>>(strrq);
 
+				foreach (var item in res)
+				{
+					Items.Add(item);
 				}
 
-				var elemento = new clsItemsMet();
-
-
-
-				banderaleiado = 1;
 				IsBusy = false;
 			}
 			catch (Exception ex)
@@ -215,7 +194,6 @@ namespace Base.ViewModels
 			Items.Clear();
 			await Task.Delay(1000);
 			IsBusy = true;
-			banderaleiado = 0;
 			LoadPropiedades();
 		}
 

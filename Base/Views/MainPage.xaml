@@ -29,9 +29,10 @@
             <ShellContent ContentTemplate="{DataTemplate local:HomePage}"/>
         </Tab>
 
-        <Tab Title="RealTime" Icon="browse">
-            <ShellContent Title="TiempoReal" ContentTemplate="{DataTemplate local:TiempoRealPage}"/>
-            <!--<ShellContent Title="Recomendacion" ContentTemplate="{DataTemplate local:RecomendacionPage}"/>-->
+        <Tab Title="Monitoreo" Icon="browse">
+            <ShellContent Title="Corrales" ContentTemplate="{DataTemplate local:TiempoRealPage}"/>
+            <ShellContent Title="Trampas" ContentTemplate="{DataTemplate local:TrampasPage}"/>
+            <ShellContent Title="Antenas" ContentTemplate="{DataTemplate local:AntenasPage}"/>
         </Tab>
         <Tab Title="Estres" Icon="grid">
             <ShellContent Title="Estres Calorico" ContentTemplate="{DataTemplate local:EstresCaloricoPage}"/>

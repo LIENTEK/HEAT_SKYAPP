@@ -237,25 +237,24 @@ namespace Base.ViewModels
 			}
 
 			
-			var rq = new clsUsuario();
-			rq.USUARIO = userName;
-			rq.PWD = Password;
-			var strrq = rq.LogInWs();
+			var rq = new clsConsultas();
+			
+			var strrq = rq.LogInWs(userName,Password);
 
-			rq = JsonConvert.DeserializeObject<clsUsuario>(strrq);
+			var response = JsonConvert.DeserializeObject<clsUsuario>(strrq);
 
-            if (rq.CLIENTE_ID == -1)
+            if (response.CLIENTE_ID == -1)
 			{
-				ErrorPopWsMsg = rq.NOMBRE;
+				ErrorPopWsMsg = response.NOMBRE;
 				IsReady = true;
 				IsBusy = false;
 				return false;
 			}
 
-			Nombre = rq.NOMBRE.ToString();
-			Cliente = rq.CLIENTE_ID.ToString();
+			Nombre = response.NOMBRE.ToString();
+			Cliente = response.CLIENTE_ID.ToString();
 
-			Preferences.Set("objuser", Newtonsoft.Json.JsonConvert.SerializeObject(rq));
+			Preferences.Set("objuser", Newtonsoft.Json.JsonConvert.SerializeObject(response));
 
 			IsBusy = false;
 			IsReady = true;

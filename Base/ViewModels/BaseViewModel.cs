@@ -202,13 +202,8 @@ namespace Base.ViewModels
 		{
 			try
 			{
-				var rq = new clsVersionApp();
-				rq.Amb = amb;
-				rq.Plataforma = DeviceInfo.Current.Platform.ToString();
-				rq.Version = AppInfo.VersionString; 
-				rq.Compilacion = DeviceInfo.Current.Version.Build.ToString();
-
-				var strrq = rq.VersionActualJson();//corregir este metodo cuando el api este bien hecha
+				var rq = new clsConsultas();
+				var strrq = rq.VersionActual(DeviceInfo.Current.Platform.ToString(), AppInfo.VersionString, DeviceInfo.Current.Version.Build.ToString(), amb);//corregir este metodo cuando el api este bien hecha
 
 				if (strrq.Contains(clsUriWs.ErrorHttp))
 				{

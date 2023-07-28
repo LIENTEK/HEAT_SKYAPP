@@ -12,14 +12,12 @@ namespace Base.ViewModels
 			Items = new ObservableCollection<clsTiempoReal>();
 			Establos = new ObservableCollection<clsEstablo>();
 			CommandConsultar = new Command(LoadPropiedades);
-			banderaleiado = 0;
 		}
 
 
 
 		#region Variables
 		string nombre = string.Empty;
-		int banderaleiado = 0;
 		#endregion
 
 		#region Propiedades bool
@@ -97,7 +95,7 @@ namespace Base.ViewModels
 					var propiedad = new clsPropiedades();
 
 					//obtener establos
-					var rqestablo = new clsEstablo();
+					var rqestablo = new clsConsultas();
 					var strrq = rqestablo.ObtenerEstablos(objuser.USUARIO_ID.ToString());
 
 					var responseestablos = JsonConvert.DeserializeObject<List<clsEstablo>>(strrq);
@@ -119,7 +117,8 @@ namespace Base.ViewModels
 					{
 						if (responseestablos[0].ESTABLO_ID == -1)
 						{
-							ErrorPopWsMsg = rqestablo.NOMBRE;
+							var responerror = JsonConvert.DeserializeObject<clsEstablo>(strrq);
+							ErrorPopWsMsg = responerror.NOMBRE;
 							ShowPopErrorWs = true;
 							ThFaillog = new Thread(new ThreadStart(hidePopUp));
 							ThFaillog.Start();
@@ -167,31 +166,17 @@ namespace Base.ViewModels
 
 			try
 			{
-				var establo = Preferences.Get("IdEstablo", 0);
-				if (establo == SelEstablo.ESTABLO_ID && banderaleiado == 0)
-				{
-					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-					var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
-					
-				}
-				else if (establo == SelEstablo.ESTABLO_ID && banderaleiado == 1)
-				{
-					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-					//var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
-					//res = JsonConvert.DeserializeObject<clsPropiedadesMet[][]>(strrq);
-				}
-				else
-				{
-					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-					var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
-					
-				}
+				Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
 
-				var elemento = new clsItemsMet();
+				var strrq = new clsConsultas().ObtenerCorrales(SelEstablo.ESTABLO_ID.ToString());
+				var res = JsonConvert.DeserializeObject<List<clsTiempoReal>>(strrq);
 
+				foreach (var item in res)
+				{
+					Items.Add(item);
+				}
 			
 
-				banderaleiado = 1;
 				IsBusy = false;
 			}
 			catch (Exception ex)
@@ -210,7 +195,6 @@ namespace Base.ViewModels
 			Items.Clear();
 			await Task.Delay(1000);
 			IsBusy = true;
-			banderaleiado = 0;
 			LoadPropiedades();
 		}
 

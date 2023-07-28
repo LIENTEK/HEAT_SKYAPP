@@ -155,86 +155,91 @@ namespace Base.ViewModels
 		{
 			if (Pago())
 			{
-                Establos.Clear();
-                Propiedades.Clear();
-				Items.Clear();
-
-				try
-				{
-					clsUsuario  objuser = new clsUsuario();
-					string obj = Preferences.Get("objuser", "");
-					objuser = Newtonsoft.Json.JsonConvert.DeserializeObject<clsUsuario>(obj);
-
-                    var establo = new clsEstablo();
-                    var propiedad = new clsPropiedades();
-
-					//obtener establos
-                    var rqestablo = new clsEstablo();
-                    var strrq = rqestablo.ObtenerEstablos(objuser.USUARIO_ID.ToString());
-
-                    var responseestablos = JsonConvert.DeserializeObject<List<clsEstablo>>(strrq);
-
-                    if (responseestablos.Count >1)
-                    {
-						foreach (var item in responseestablos)
-						{
-							establo = new clsEstablo();
-							establo.ESTABLO_ID = item.ESTABLO_ID;
-							establo.NOMBRE =item.NOMBRE;
-							establo.LATITUD = item.LATITUD;
-							establo.LONGITUD = item.LONGITUD;
-                            Establos.Add(establo);
-                        }
-
-					}
-					else
-					{
-						if (responseestablos[0].ESTABLO_ID==-1)
-						{
-							ErrorPopWsMsg= rqestablo.NOMBRE;
-							ShowPopErrorWs = true;
-                            ThFaillog = new Thread(new ThreadStart(hidePopUp));
-                            ThFaillog.Start();
-                        }
-					}
-
-
-					//obtener proiedades
-				   strrq = new clsConsultas().ObtenerParametros();
-                   var rqpropiedad = JsonConvert.DeserializeObject<List<string>>(strrq);
+					Establos.Clear();
+					Propiedades.Clear();
+					Items.Clear();
 
 					try
 					{
-						foreach (string item in rqpropiedad)
+						clsUsuario objuser = new clsUsuario();
+						string obj = Preferences.Get("objuser", "");
+						objuser = Newtonsoft.Json.JsonConvert.DeserializeObject<clsUsuario>(obj);
+
+						var establo = new clsEstablo();
+						var propiedad = new clsPropiedades();
+
+						//obtener establos
+						var rqestablo = new clsConsultas();
+						var strrq = rqestablo.ObtenerEstablos(objuser.USUARIO_ID.ToString());
+
+						var responseestablos = JsonConvert.DeserializeObject<List<clsEstablo>>(strrq);
+
+						if (responseestablos.Count > 1)
 						{
-                            propiedad = new clsPropiedades();
-                            propiedad.Id = item;
-                            propiedad.Propiedad =item;
-                            Propiedades.Add(propiedad);
-                        }
-                    }
-					catch
+							foreach (var item in responseestablos)
+							{
+								establo = new clsEstablo();
+								establo.ESTABLO_ID = item.ESTABLO_ID;
+								establo.NOMBRE = item.NOMBRE;
+								establo.LATITUD = item.LATITUD;
+								establo.LONGITUD = item.LONGITUD;
+								Establos.Add(establo);
+							}
+
+						}
+						else
+						{
+							if (responseestablos[0].ESTABLO_ID == -1)
+							{
+								var error = JsonConvert.DeserializeObject<clsEstablo>(strrq);
+								ErrorPopWsMsg = error.NOMBRE;
+								ShowPopErrorWs = true;
+								ThFaillog = new Thread(new ThreadStart(hidePopUp));
+								ThFaillog.Start();
+							}
+						}
+
+
+						//obtener proiedades
+						strrq = new clsConsultas().ObtenerParametros();
+						var rqpropiedad = JsonConvert.DeserializeObject<List<string>>(strrq);
+
+						try
+						{
+							foreach (string item in rqpropiedad)
+							{
+								propiedad = new clsPropiedades();
+								propiedad.Id = item;
+								propiedad.Propiedad = item;
+								Propiedades.Add(propiedad);
+							}
+						}
+						catch
+						{
+							throw new InvalidOperationException("No se descargaron las propiedades meteorologicas");
+						}
+
+						if (banderaleiado==0)
+						{
+							SelPropiedad = Propiedades.Where(x => x.Id.Equals(Preferences.Get("Propiedad", "Temperatura °C"))).FirstOrDefault();
+						}
+						
+						SelEstablo = Establos.Where(x => x.ESTABLO_ID.Equals(Preferences.Get("IdEstablo", 0))).FirstOrDefault();
+
+
+					}
+					catch (Exception ex)
 					{
-                        throw new InvalidOperationException("No se descargaron las propiedades meteorologicas");
-                    }
+						IsBusy = false;
+						ErrorPopWsMsg = ex.Message;
+						ShowPopErrorWs = true;
+						ThFaillog = new Thread(new ThreadStart(hidePopUp));
+						ThFaillog.Start();
+					}
 
-                    SelPropiedad = Propiedades.Where(x => x.Id.Equals(Preferences.Get("Propiedad", "Temperatura °C"))).FirstOrDefault();
-					SelEstablo = Establos.Where(x => x.ESTABLO_ID.Equals(Preferences.Get("IdEstablo", 0))).FirstOrDefault();
 
-
-				}
-				catch(Exception ex)
-				{
-					IsBusy = false;
-					ErrorPopWsMsg = ex.Message;
-					ShowPopErrorWs = true;
-					ThFaillog = new Thread(new ThreadStart(hidePopUp));
-					ThFaillog.Start();
-				}
-
+					//LoadPropiedades();
 				
-				//LoadPropiedades();
-
 			}
 			else
 			{
@@ -264,26 +269,12 @@ namespace Base.ViewModels
 
 			try
 			{
-				var establo = Preferences.Get("IdEstablo", 0);
-				if (establo == SelEstablo.ESTABLO_ID && banderaleiado==0)
-				{
-					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-					var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
-					res = JsonConvert.DeserializeObject<clsPropiedadesMet[][]>(strrq);
-				}
-				else if(establo == SelEstablo.ESTABLO_ID && banderaleiado == 1)
-				{
-					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-					//var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
-					//res = JsonConvert.DeserializeObject<clsPropiedadesMet[][]>(strrq);
-				}
-				else 
-				{
-					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-					var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
-					res = JsonConvert.DeserializeObject<clsPropiedadesMet[][]>(strrq);
-				}
-				
+
+				Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
+				var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
+				res = JsonConvert.DeserializeObject<clsPropiedadesMet[][]>(strrq);
+
+
 				D1 = res[0][0].FechaHora;
 				D2 = res[1][0].FechaHora;
 				D3 = res[2][0].FechaHora;

@@ -173,7 +173,7 @@ namespace Base.ViewModels
 				return false;
 			}
 
-			var rq = new clsNuevoRegistro();
+			var rq = new clsConsultas();
 			var strrq = rq.NuevoRegistroWs();
 			strrq= "rubendiaznt@live.com.mx";
 
@@ -253,7 +253,7 @@ namespace Base.ViewModels
 				return false;
 			}
 
-			var rq = new clsNuevoRegistro();
+			var rq = new clsConsultas();
 			var strrq = rq.NuevoRegistroWs();
 			strrq= "Tu contraseña se reestablecio correctamente, ya puedes iniciar sesion";
 

@@ -17,17 +17,5 @@ namespace Base.Models
 		public string FechaNacimiento { get; set; }
 		public string Telefono { get; set; }
 
-		public clsNuevoRegistro() { 
-		
-		}
-
-		public string NuevoRegistroWs()
-		{
-			clsRequestHttp req = new clsRequestHttp();
-			req.URI = clsUriWs.ApiNuevoRegistro;
-			req.JsonData = Newtonsoft.Json.JsonConvert.SerializeObject(this);
-			string result = req.Requestform().Result;
-			return result;
-		}
 	}
 }

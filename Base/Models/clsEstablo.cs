@@ -26,15 +26,6 @@ namespace Base.Models
         public int MOTIVO_CAN_ID { get; set; }
         public object MOTIVO_CAN { get; set; }
 
-        public string ObtenerEstablos(string id)
-        {
-
-            string jsnversion = "usuario_id=" + id ;
-            clsRequestHttp req = new clsRequestHttp();
-            req.URI = "/EstablosUsuario";
-            req.JsonData = jsnversion;
-            string result = req.Requestform().Result;
-            return result;
-        }
+        
     }
 }

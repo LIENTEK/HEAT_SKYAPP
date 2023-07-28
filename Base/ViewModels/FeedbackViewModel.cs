@@ -137,8 +137,8 @@ namespace Base.ViewModels
 			}
 
 
-			var rq = new clsUsuario();
-			var strrq = rq.LogInWs();
+			var rq = new clsConsultas();
+			var strrq = rq.LogInWs("","");
 			if (strrq.Contains(clsUriWs.ErrorHttp))
 			{
 				strrq = strrq.Replace(clsUriWs.ErrorHttp, string.Empty);

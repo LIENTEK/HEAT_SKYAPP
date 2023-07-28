@@ -18,8 +18,9 @@ namespace Base.Models
 
         string MainURI = "http://50.21.190.132/DIGISKY/wsDigisky.asmx"; // INTERNET ISS
 
+		string MainURICOW = "http://50.21.190.132/COWLOOK/COWLOOK.ASMX";
 
-        public clsRequestHttp()
+		public clsRequestHttp()
 		{
 
 		}
@@ -62,7 +63,26 @@ namespace Base.Models
             }
         }
 
-        async public Task<string> RequestJSONtoken()
+		async public Task<string> RequestformCOW()
+		{
+			HttpClient client = new HttpClient();
+			string result;
+			MainURICOW = MainURICOW + URI;
+			try
+			{
+				var content = new StringContent(JsonData, Encoding.UTF8, "application/x-www-form-urlencoded");
+				HttpResponseMessage response = client.PostAsync(MainURICOW, content).Result;
+				result = await response.Content.ReadAsStringAsync();
+
+				return result;
+			}
+			catch (Exception ex)
+			{
+				return "ERROR: " + ex.Message;
+			}
+		}
+
+		async public Task<string> RequestJSONtoken()
 		{
 			HttpClient client = new HttpClient();
 			string result;

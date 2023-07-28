@@ -118,7 +118,7 @@ namespace Base.ViewModels
 					var propiedad = new clsPropiedades();
 
 					//obtener establos
-					var rqestablo = new clsEstablo();
+					var rqestablo = new clsConsultas();
 					var strrq = rqestablo.ObtenerEstablos(objuser.USUARIO_ID.ToString());
 
 					var responseestablos = JsonConvert.DeserializeObject<List<clsEstablo>>(strrq);
@@ -140,7 +140,8 @@ namespace Base.ViewModels
 					{
 						if (responseestablos[0].ESTABLO_ID == -1)
 						{
-							ErrorPopWsMsg = rqestablo.NOMBRE;
+							var error = JsonConvert.DeserializeObject<clsEstablo>(strrq);
+							ErrorPopWsMsg = error.NOMBRE;
 							ShowPopErrorWs = true;
 							ThFaillog = new Thread(new ThreadStart(hidePopUp));
 							ThFaillog.Start();

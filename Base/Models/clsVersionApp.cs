@@ -14,30 +14,5 @@ namespace Base.Models
 		public string Version { get; set; }
 		public string Compilacion { get; set; }
 
-		public string VersionActual()
-		{
-			clsRequestHttp req = new clsRequestHttp();
-			req.URI = clsUriWs.ApiVersion;
-			req.JsonData = Newtonsoft.Json.JsonConvert.SerializeObject(this);
-			string result = req.Requestform().Result;
-			return result;
-		}
-
-		public string VersionActualJson()
-		{
-			string jsnversion =
-				"{" +
-					"plataforma:'" + Plataforma + "'," +
-					"version:'" + Version + "'," +
-					"compilacion:'" + Compilacion + "'," +
-					"ambiente:'" + Amb + "'" +
-				"}";
-
-			clsRequestHttp req = new clsRequestHttp();
-			req.URI = clsUriWs.ApiVersion;
-			req.JsonData = jsnversion;
-			string result = req.Requestform().Result;
-			return result;
-		}
 	}
 }

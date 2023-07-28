@@ -30,6 +30,44 @@ namespace Base.Models
 			return result;
 		}
 
+		public string NuevoRegistroWs()
+		{
+			clsRequestHttp req = new clsRequestHttp();
+			req.URI = clsUriWs.ApiNuevoRegistro;
+			req.JsonData ="";
+			string result = req.Requestform().Result;
+			return result;
+		}
+
+		public string GetToken()
+		{
+			clsRequestHttp req = new clsRequestHttp();
+			req.URI = clsUriWs.GetTokenPassword;
+			req.JsonData = "";
+			string result = req.Requestform().Result;
+			return result;
+		}
+
+		public string UpdatePassword()
+		{
+			clsRequestHttp req = new clsRequestHttp();
+			req.URI = clsUriWs.UpdatePassword;
+			req.JsonData = "";
+			string result = req.Requestform().Result;
+			return result;
+		}
+
+		public string LogInWs(string user, string pwd)
+		{
+
+			string jsnversion = "usr=" + user + "&pwd=" + pwd;
+			clsRequestHttp req = new clsRequestHttp();
+			req.URI = clsUriWs.ApiLogIn;
+			req.JsonData = jsnversion;
+			string result = req.Requestform().Result;
+			return result;
+		}
+
 		public string ObtenerParametros()
 		{
 			string jsnversion = " ";
@@ -57,6 +95,50 @@ namespace Base.Models
 			req.JsonData = jsnversion;
 			req.URI = "/GraficaClima24";
 			string result = req.RequestformHeatsky().Result;
+			return result;
+		}
+
+		public string ObtenerEstablos(string id)
+		{
+
+			string jsnversion = "usuario_id=" + id;
+			clsRequestHttp req = new clsRequestHttp();
+			req.URI = "/EstablosUsuario";
+			req.JsonData = jsnversion;
+			string result = req.Requestform().Result;
+			return result;
+		}
+
+		public string ObtenerAntenas(string id)
+		{
+
+			string jsnversion = "estid=" + id;
+			clsRequestHttp req = new clsRequestHttp();
+			req.URI = "/EstatusAntenas";
+			req.JsonData = jsnversion;
+			string result = req.RequestformCOW().Result;
+			return result;
+		}
+
+		public string ObtenerTrampas(string id)
+		{
+
+			string jsnversion = "estid=" + id;
+			clsRequestHttp req = new clsRequestHttp();
+			req.URI = "/EstatusTrampas";
+			req.JsonData = jsnversion;
+			string result = req.RequestformCOW().Result;
+			return result;
+		}
+
+		public string ObtenerCorrales(string id)
+		{
+
+			string jsnversion = "estid=" + id;
+			clsRequestHttp req = new clsRequestHttp();
+			req.URI = "/MonitoreoTemp";
+			req.JsonData = jsnversion;
+			string result = req.RequestformCOW().Result;
 			return result;
 		}
 
