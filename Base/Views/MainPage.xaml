@@ -21,9 +21,9 @@
             <ShellContent Route="Base.Views.LoginPage" ContentTemplate="{DataTemplate local:LoginPage}"/>
         </Tab>
         
-        <Tab Title="Notificaciones" Icon="popup" >
+        <!--<Tab Title="Notificaciones" Icon="popup" >
             <ShellContent ContentTemplate="{DataTemplate local:NotificacionesPage}" />
-        </Tab>
+        </Tab>-->
 
         <Tab Title="Forecast" Icon="charts" Route="Home">
             <ShellContent ContentTemplate="{DataTemplate local:HomePage}"/>
@@ -31,7 +31,7 @@
 
         <Tab Title="RealTime" Icon="browse">
             <ShellContent Title="TiempoReal" ContentTemplate="{DataTemplate local:TiempoRealPage}"/>
-            <ShellContent Title="Recomendacion" ContentTemplate="{DataTemplate local:RecomendacionPage}"/>
+            <!--<ShellContent Title="Recomendacion" ContentTemplate="{DataTemplate local:RecomendacionPage}"/>-->
         </Tab>
         <Tab Title="Estres" Icon="grid">
             <ShellContent Title="Estres Calorico" ContentTemplate="{DataTemplate local:EstresCaloricoPage}"/>

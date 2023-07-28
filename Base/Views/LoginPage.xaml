@@ -49,14 +49,14 @@
              </StackLayout>
 
                 <StackLayout IsVisible="{Binding LogIn}" BackgroundColor="White" Padding="10">
-                    <Label Text="Bienvenido" FontAttributes="Bold" FontSize="25" HorizontalOptions="Center" Margin="20,10,20,10" HorizontalTextAlignment="Center"></Label>
-                    <Label Text="{Binding Nombre}" FontAttributes="Bold" FontSize="Title" HorizontalOptions="Center" Margin="20,10,20,50" HorizontalTextAlignment="Center" TextColor="{StaticResource Primary}" ></Label>
+                    <Label Text="Bienvenido" FontAttributes="Bold" FontSize="28" HorizontalOptions="Center" Margin="20,10,20,10" HorizontalTextAlignment="Center"></Label>
+                    <Label Text="{Binding Nombre}" FontAttributes="Bold" FontSize="20" HorizontalOptions="Center" Margin="20,10,20,30" HorizontalTextAlignment="Center" TextColor="{StaticResource Primary}" ></Label>
 
-                    <dxe:TextEdit Text="{Binding UserName}" LabelText="Usuario" Margin="50,5,50,0" ReturnType="Done" 
+                    <dxe:TextEdit Text="{Binding UserName}" LabelText="Usuario" Margin="50,5,50,10" ReturnType="Done" 
                           BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" IsEnabled="False" DisabledBorderColor="{StaticResource Primary}"
                           DisabledLabelColor="{StaticResource Primary}" DisabledTextColor="{StaticResource Primary}" />
 
-                    <dxe:TextEdit Text="{Binding Cliente}" LabelText="Cliente" Margin="50,5,50,0" ReturnType="Done" 
+                    <dxe:TextEdit Text="{Binding Cliente}" LabelText="Numero de Cliente" Margin="50,5,50,0" ReturnType="Done" 
                           BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" IsEnabled="False" DisabledBorderColor="{StaticResource Primary}"
                           DisabledLabelColor="{StaticResource Primary}" DisabledTextColor="{StaticResource Primary}" />
 

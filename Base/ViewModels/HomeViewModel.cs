@@ -422,11 +422,23 @@ namespace Base.ViewModels
 
 		async void Refresh()
 		{
-			Items.Clear();
-			await Task.Delay(1000);
-			IsBusy = true;
-			banderaleiado = 0;
-			LoadPropiedades();
+			Logged = Preferences.Get("Logged", false);
+			if (!Logged)
+			{
+				IsOne = true;
+				ErrorPopWsMsg = "No has iniciado session no puedes continuar.";
+				await Task.Delay(100);
+				ShowPopErrorWs = true;
+			}
+			else
+			{
+				Items.Clear();
+				await Task.Delay(1000);
+				IsBusy = true;
+				banderaleiado = 0;
+				LoadPropiedades();
+			}
+			
 		}
 
 		void ChangePropiedad()
