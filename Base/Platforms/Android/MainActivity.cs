@@ -12,7 +12,7 @@ namespace Base
 	{
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
-			Window.SetFlags(WindowManagerFlags.Secure, WindowManagerFlags.Secure);
+			//Window.SetFlags(WindowManagerFlags.Secure, WindowManagerFlags.Secure);
 			base.OnCreate(savedInstanceState);
 
 			const int requestNotification = 0;

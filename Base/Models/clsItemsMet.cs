@@ -16,5 +16,6 @@ namespace Base.Models
 		public string Valor5 { get; set; }
 		public string Valor6 { get; set; }
 		public string Valor7 { get; set; }
+
 	}
 }

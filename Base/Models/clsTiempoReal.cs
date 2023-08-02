@@ -15,5 +15,9 @@ namespace Base.Models
 		public string ESTATUS { get; set; }
 		public double DURACION { get; set; }
 		public int ITH { get; set; }
+
+		public Color AlertaTemp { get; set; }
+		public Color AlertaHumedad { get; set; }
+		public Color AlertaITH { get; set; }
 	}
 }

@@ -9,10 +9,10 @@
 		<RootNamespace>Base</RootNamespace>
 
 		<!-- Display name -->
-		<ApplicationTitle>DIGITH</ApplicationTitle>
+		<ApplicationTitle>HEAT SKY</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.lientek.Digith</ApplicationId>
+		<ApplicationId>com.lientek.heatsky</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
@@ -36,12 +36,16 @@
 	  <MtouchDebug>True</MtouchDebug>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#3988CA" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#3988CA" ForegroundFile="Resources\AppIcon\appiconfg.svg" ForegroundScale="0.75" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\AppIcon\appiconfg.svg" Color="#3988CA" />
+		<MauiSplashScreen Include="Resources\AppIcon\appiconfg.svg" Color="#3988CA" BaseSize="128,100" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />

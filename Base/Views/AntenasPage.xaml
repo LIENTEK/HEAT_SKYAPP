@@ -32,12 +32,12 @@
                                 <Label Text="{Binding UBICACION}"  Margin="0,2,0,0" TextColor="#55575c" FontSize="20"/>
                                 <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*" Margin="0,10,0,0" VerticalOptions="End" >
                                     <Button Text="Lectura" Grid.Column="0" WidthRequest="100" VerticalOptions="End" CornerRadius="0" />
-                                    <Button Text="Estatus"  Grid.Column="1" WidthRequest="100" VerticalOptions="End" BackgroundColor="Orange" CornerRadius="0"/>
-                                    <Button Text="Offline" Grid.Column="2" WidthRequest="100" VerticalOptions="End" BackgroundColor="Red" CornerRadius="0"/>
+                                    <Button Text="Estatus"  Grid.Column="1" WidthRequest="100" VerticalOptions="End" CornerRadius="0"/>
+                                    <Button Text="Offline" Grid.Column="2" WidthRequest="100" VerticalOptions="End"  CornerRadius="0"/>
 
-                                    <Button Text="{Binding FECHA_ULT_LECTURA}"  Grid.Row="1"  Grid.Column="0" WidthRequest="100" VerticalOptions="End" CornerRadius="0" />
-                                    <Button Text="{Binding ULTIMO_ESTATUS}" Grid.Row="1"  Grid.Column="1" WidthRequest="100" VerticalOptions="End" BackgroundColor="Orange" CornerRadius="0" />
-                                    <Button Text="{Binding HORAS_OFFLINE}"  Grid.Row="1"  Grid.Column="2" WidthRequest="100" VerticalOptions="End" BackgroundColor="Red" CornerRadius="0"/>
+                                    <Button Text="{Binding FECHA_ULT_LECTURA}"  Grid.Row="1"  Grid.Column="0" WidthRequest="100" VerticalOptions="End" BackgroundColor="White" CornerRadius="0" TextColor="Black" />
+                                    <Button Text="{Binding ULTIMO_ESTATUS}" Grid.Row="1"  Grid.Column="1" WidthRequest="100" VerticalOptions="End" BackgroundColor="{Binding AlertaEstatus}" CornerRadius="0"  TextColor="Black" />
+                                    <Button Text="{Binding HORAS_OFFLINE}"  Grid.Row="1"  Grid.Column="2" WidthRequest="100" VerticalOptions="End" BackgroundColor="{Binding AlertaOffline}" CornerRadius="0"  TextColor="Black" />
                                 </Grid>
 
                             </StackLayout>

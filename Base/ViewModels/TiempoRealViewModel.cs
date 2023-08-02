@@ -30,7 +30,6 @@ namespace Base.ViewModels
 			get => this.nombre;
 			set => SetProperty(ref this.nombre, value);
 		}
-		
 
 		public ObservableCollection<clsTiempoReal> Items { get; set; }
 		public ObservableCollection<clsEstablo> Establos { get; set; }
@@ -173,6 +172,34 @@ namespace Base.ViewModels
 
 				foreach (var item in res)
 				{
+					item.AlertaTemp = Color.FromRgba("#ffffff");
+					item.AlertaITH = Color.FromRgba("#ffffff");
+					item.AlertaHumedad = Color.FromRgba("#ffffff");
+
+					
+					if (item.ITH >= 80)
+					{
+						item.AlertaITH = Color.FromRgb(255,117,117);
+					}
+					if (item.ITH >= 74 && item.ITH < 80)
+					{
+						item.AlertaITH = Color.FromRgb(255, 204, 102);
+					}
+					if (item.ITH >= 60 && item.ITH < 74)
+					{
+						item.AlertaITH = Color.FromRgb(255, 255, 153);
+					}
+
+					if (item.TEMPERATURA >= 39.5)
+					{
+						item.AlertaTemp = Color.FromRgb(255, 199, 206);
+					}
+					if (item.TEMPERATURA >= 39 && item.TEMPERATURA<39.5)
+					{
+						item.AlertaTemp = Color.FromRgb(255, 235, 156);
+					}
+					
+
 					Items.Add(item);
 				}
 			

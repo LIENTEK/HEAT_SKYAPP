@@ -14,6 +14,8 @@ namespace Base.Views
 			InitializeComponent();
 			vm = new HomeViewModel();
 			BindingContext = vm;
+			grid.ItemsSource = vm.Items;
+			grid.RefreshData();
 		}
 
 		async protected override void OnAppearing()
@@ -31,19 +33,105 @@ namespace Base.Views
 
 		void DataGridView_CustomCellAppearance(object sender, CustomCellAppearanceEventArgs e)
 		{
-			if (e.RowHandle % 2 == 0)
-				e.BackgroundColor = Color.FromArgb("#F7F7F7");
-			e.FontColor = Color.FromArgb("#55575C");
+			
+			try
+			{
+				if (vm.SelPropiedad.Id.Equals("Temperatura °C"))
+				{
+						double value = (double)grid.GetCellValue(e.RowHandle, e.FieldName);
+						if (value >= 39.5)
+						{
+							e.FontColor = Color.FromRgb(255, 199, 206);
+						}
+						if (value >= 39 && value < 39.5)
+						{
+							e.FontColor = Color.FromRgb(255, 235, 156);
+						}
+					
+				}
+				else if (vm.SelPropiedad.Id.Equals("ITH"))
+				{
+						double value = (double)grid.GetCellValue(e.RowHandle, e.FieldName);
+						if (value >= 80)
+						{
+							e.FontColor = Color.FromRgb(255, 117, 117);
+						}
+						if (value >= 74 && value < 80)
+						{
+							e.FontColor = Color.FromRgb(255, 204, 102);
+						}
+						if (value >= 60 && value < 74)
+						{
+							e.FontColor = Color.FromRgb(255, 255, 153);
+						}
+				}
+				else
+				{
+					e.FontColor = Colors.Black;
+				}
+				
 
-			//if (e.FieldName == "Valor" )
-			//{
-			//	double value = (double)grid.GetCellValue(e.RowHandle, e.FieldName);
-			//	if (value > 7)
-			//		e.BackgroundColor = Color.FromArgb("#00AE00");
-			//	else if (value < 4000000)
-			//		e.BackgroundColor = Color.FromArgb("#FF5458");
-			//}
+			}
+			catch(Exception ex)
+			{
+				e.FontColor = Colors.Black;
+			}
 		}
 
+		public void DataGridView_CustomCellAppearance1(object sender, CustomCellAppearanceEventArgs e)
+		{
+			//if (e.RowHandle % 2 == 0)
+			//	e.BackgroundColor = Color.FromArgb("#F7F7F7");
+			//e.FontColor = Color.FromArgb("#55575C");
+
+			//vm.SelPropiedad = new Models.clsPropiedades()
+			//{
+			//	Id = "Temperatura °C",
+			//	Propiedad = "Temperatura °C"
+			//};
+
+
+			//if (vm.SelPropiedad.Id.Equals("Temperatura °C"))
+			//{
+			//	if (e.FieldName == "Valor1")
+			//	{
+			//		double value = (double)grid.GetCellValue(e.RowHandle, e.FieldName);
+			//		if (value >= 39.5)
+			//		{
+			//			e.FontColor = Color.FromRgb(255, 199, 206);
+			//		}
+			//		if (value >= 39 && value < 39.5)
+			//		{
+			//			e.FontColor = Color.FromRgb(255, 235, 156);
+			//		}
+			//	}
+			//}
+			//else if (vm.SelPropiedad.Id.Equals("ITH"))
+			//{
+			//	if (e.FieldName == "Valor1")
+			//	{
+			//		double value = (double)grid.GetCellValue(e.RowHandle, e.FieldName);
+			//		if (value >= 80)
+			//		{
+			//			e.FontColor = Color.FromRgb(255, 117, 117);
+			//		}
+			//		if (value >= 74 && value < 80)
+			//		{
+			//			e.FontColor = Color.FromRgb(255, 204, 102);
+			//		}
+			//		if (value >= 60 && value < 74)
+			//		{
+			//			e.FontColor = Color.FromRgb(255, 255, 153);
+			//		}
+			//	}
+			//}
+			//else
+			//{
+			//	if (e.FieldName == "Valor1")
+			//	{
+			//		e.FontColor = Colors.Black;
+			//	}
+			//}
+		}
 	}
 }

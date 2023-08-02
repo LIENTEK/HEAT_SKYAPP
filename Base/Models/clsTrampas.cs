@@ -12,5 +12,8 @@ namespace Base.Models
 		public string TRAMPA { get; set; }
 		public string ESTATUS { get; set; }
 		public double DURACION { get; set; }
+
+		public Color AlertaEstatus { get; set; }
+		public Color AlertaOffline { get; set; }
 	}
 }

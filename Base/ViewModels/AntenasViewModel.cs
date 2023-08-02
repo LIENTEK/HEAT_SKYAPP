@@ -173,6 +173,18 @@ namespace Base.ViewModels
 
 				foreach (var item in res)
 				{
+					item.AlertaEstatus = Colors.Green;
+					item.AlertaOffline = Colors.White;
+
+					if (item.ULTIMO_ESTATUS.Equals("OFFLINE"))
+					{
+						item.AlertaEstatus = Colors.Red;
+					}
+
+					if (item.HORAS_OFFLINE > 200)
+					{
+						item.AlertaOffline = Colors.Red;
+					}
 					Items.Add(item);
 				}
 

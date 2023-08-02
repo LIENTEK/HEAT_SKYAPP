@@ -41,7 +41,7 @@
                         <dxg:ColumnHeaderAppearance BackgroundColor="{StaticResource Primary}" FontColor="White" />
                     </dxg:DataGridView.ColumnHeaderAppearance>
                     <dxg:DataGridView.CellAppearance>
-                        <dxg:CellAppearance BackgroundColor="{StaticResource PrimaryLight}" />
+                        <dxg:CellAppearance  SelectionColor="{StaticResource PrimaryElements}" />
                     </dxg:DataGridView.CellAppearance>
                     <dxg:DataGridView.Columns>
                         <dxg:TextColumn Caption="HORA" FieldName="Hora" AutoFilterCondition="Contains" MinWidth="80" Column="0" FixedStyle="Start"/>
@@ -53,6 +53,7 @@
                         <dxg:TextColumn Caption="{Binding D6}" FieldName="Valor6" MinWidth="80" AllowAutoFilter="False" />
                         <dxg:TextColumn Caption="{Binding D7}" FieldName="Valor7" MinWidth="80" AllowAutoFilter="False" />
                     </dxg:DataGridView.Columns>
+
                 </dxg:DataGridView>
             </Frame>
             <dxco:DXPopup IsOpen="{Binding ShowPopUp}" AllowScrim="True" BackgroundColor="White" ScrimColor="#70111111" CornerRadius="12" Margin="25" >

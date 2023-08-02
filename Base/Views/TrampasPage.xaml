@@ -29,13 +29,13 @@
                             <StackLayout Grid.Column="1" Padding="18,1,18,7" Orientation="Vertical" VerticalOptions="Center">
                                 <Label Text="{Binding CORRAL,  StringFormat='Corral {0}'}"  Margin="0,2,0,0" TextColor="#55575c" FontSize="25"/>
                                 <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*" Margin="0,10,0,0" VerticalOptions="End" >
-                                    <Button Text="Trampa" Grid.Column="0" WidthRequest="100" VerticalOptions="End" CornerRadius="0" />
-                                    <Button Text="Estatus"  Grid.Column="1" WidthRequest="100" VerticalOptions="End" BackgroundColor="Orange" CornerRadius="0"/>
-                                    <Button Text="Offline" Grid.Column="2" WidthRequest="100" VerticalOptions="End" BackgroundColor="Red" CornerRadius="0"/>
+                                    <Button Text="Trampa" Grid.Column="0" WidthRequest="80" VerticalOptions="End" CornerRadius="0" />
+                                    <Button Text="Estatus"  Grid.Column="1" WidthRequest="120" VerticalOptions="End"  CornerRadius="0"/>
+                                    <Button Text="Offline" Grid.Column="2" WidthRequest="100" VerticalOptions="End"  CornerRadius="0"/>
 
-                                    <Button Text="{Binding TRAMPA}"  Grid.Row="1"  Grid.Column="0" WidthRequest="100" VerticalOptions="End" CornerRadius="0" />
-                                    <Button Text="{Binding ESTATUS}" Grid.Row="1"  Grid.Column="1" WidthRequest="100" VerticalOptions="End" BackgroundColor="Orange" CornerRadius="0" />
-                                    <Button Text="{Binding DURACION}"  Grid.Row="1"  Grid.Column="2" WidthRequest="100" VerticalOptions="End" BackgroundColor="Red" CornerRadius="0"/>
+                                    <Button Text="{Binding TRAMPA}"  Grid.Row="1"  Grid.Column="0" WidthRequest="80" VerticalOptions="End" CornerRadius="0" BackgroundColor="White" TextColor="Black" />
+                                    <Button Text="{Binding ESTATUS}" Grid.Row="1"  Grid.Column="1" WidthRequest="120" VerticalOptions="End" BackgroundColor="{Binding AlertaEstatus}" CornerRadius="0" TextColor="Black" />
+                                    <Button Text="{Binding DURACION}"  Grid.Row="1"  Grid.Column="2" WidthRequest="100" VerticalOptions="End" BackgroundColor="{Binding AlertaOffline}" CornerRadius="0" TextColor="Black" />
                                     
                                 </Grid>
 

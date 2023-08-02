@@ -22,7 +22,7 @@
                           PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="ESTABLO_ID" DisplayMember="NOMBRE"   IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
             </dxe:ComboBoxEdit>
 
-            <dxcv:DXCollectionView Grid.Row="1" ItemsSource="{Binding Items}" VerticalOptions="Fill" >
+            <dxcv:DXCollectionView Grid.Row="1" ItemsSource="{Binding Items}" VerticalOptions="Fill" AllowLiveDataShaping="True" >
                 <dxcv:DXCollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame BorderColor="White" CornerRadius="15" BackgroundColor="{StaticResource PrimaryLight}" Padding="5" Margin="25,0,25,10" HeightRequest="150">
@@ -30,12 +30,12 @@
                                 <Label Text="{Binding NOMBRE}"  Margin="0,2,0,0" TextColor="#55575c" FontSize="25"/>
                                 <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*" Margin="0,10,0,0" VerticalOptions="End" >
                                     <Button Text="Humedad" Grid.Column="0" WidthRequest="100" VerticalOptions="End" CornerRadius="0" />
-                                    <Button Text="Temp"  Grid.Column="1" WidthRequest="100" VerticalOptions="End" BackgroundColor="Orange" CornerRadius="0"/>
-                                    <Button Text="ITH" Grid.Column="2" WidthRequest="100" VerticalOptions="End" BackgroundColor="Red" CornerRadius="0"/>
+                                    <Button Text="Temp"  Grid.Column="1" WidthRequest="100" VerticalOptions="End"  CornerRadius="0"/>
+                                    <Button Text="ITH" Grid.Column="2" WidthRequest="100" VerticalOptions="End" CornerRadius="0"/>
 
-                                    <Button Text="{Binding HUMEDAD}"  Grid.Row="1"  Grid.Column="0" WidthRequest="100" VerticalOptions="End" CornerRadius="0" />
-                                    <Button Text="{Binding TEMPERATURA}" Grid.Row="1"  Grid.Column="1" WidthRequest="100" VerticalOptions="End" BackgroundColor="Orange" CornerRadius="0" />
-                                    <Button Text="{Binding ITH}"  Grid.Row="1"  Grid.Column="2" WidthRequest="100" VerticalOptions="End" BackgroundColor="Red" CornerRadius="0"/>
+                                    <Button Text="{Binding HUMEDAD}"  Grid.Row="1"  Grid.Column="0" WidthRequest="100" VerticalOptions="End" BackgroundColor="{Binding AlertaHumedad}" CornerRadius="0" TextColor="Black" />
+                                    <Button Text="{Binding TEMPERATURA}" Grid.Row="1"  Grid.Column="1" WidthRequest="100" VerticalOptions="End" BackgroundColor="{Binding AlertaTemp}" CornerRadius="0" TextColor="Black" />
+                                    <Button Text="{Binding ITH}"  Grid.Row="1"  Grid.Column="2" WidthRequest="100" VerticalOptions="End" BackgroundColor="{Binding AlertaITH}" CornerRadius="0" TextColor="Black" />
                                 </Grid>
 
                             </StackLayout>

@@ -18,5 +18,7 @@ namespace Base.Models
 		public DateTime FECHA_ULT_LECTURA { get; set; }
 		public string ULTIMO_ESTATUS { get; set; }
 		public double HORAS_OFFLINE { get; set; }
+		public Color AlertaEstatus { get; set; }
+		public Color AlertaOffline { get; set; }
 	}
 }
