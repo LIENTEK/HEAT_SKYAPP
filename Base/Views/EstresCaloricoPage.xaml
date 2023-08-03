@@ -18,7 +18,7 @@
     <ContentPage.Resources>
         <dxc:SeriesHintOptions x:Key="pointSeriesHintOptions" PointTextPattern="{}{V} ITH"/>
         <!--<dxc:SeriesHintOptions x:Key="lineSeriesHintOptions" PointTextPattern="{}{V} °C"/>-->
-        <dxc:SeriesCrosshairOptions x:Key="lineSeriesHintOptions"
+        <dxc:SeriesCrosshairOptions x:Key="lineSeriesHintOptions" 
                                 PointTextPattern="{}{S}: {V}"
                                 ShowInLabel="True"
                                 AxisLabelVisible="True"
@@ -31,37 +31,43 @@
                           PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="ESTABLO_ID" DisplayMember="NOMBRE"  IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
             </dxe:ComboBoxEdit>
 
-            <Grid Grid.Row="1" RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="2*,*,*"  Padding="20">
+            <Grid Grid.Row="1" RowDefinitions="25,*,*,*,*,*" ColumnDefinitions="2*,1*,1.2*"  Padding="40,10,40,20">
+                
+                <Label Text="ESTRES"  Grid.Row="0" Grid.Column="0" BackgroundColor="{StaticResource Primary}" TextColor="White" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Padding="5,0,0,0" />
+                <Label Text="HORAS"  Grid.Row="0" Grid.Column="1" TextColor="White"  BackgroundColor="{StaticResource Primary}" FontAttributes="Bold"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="0"/>
+                <Label Text="PORCENTAJE"  Grid.Row="0" Grid.Column="2" TextColor="White" BackgroundColor="{StaticResource Primary}" FontAttributes="Bold"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="0"/>
 
-                <Label Text="SIN ESTRES" Grid.Row="0" Grid.Column="0" BackgroundColor="White" TextColor="Black" />
-                <Label Text="40" Grid.Row="0" Grid.Column="1" BackgroundColor="White" TextColor="Black" />
-                <Label Text="24%" Grid.Row="0" Grid.Column="2" BackgroundColor="White" TextColor="Black" />
 
-                <Label Text="ESTRES LIGERO" Grid.Row="1" Grid.Column="0" BackgroundColor="LightGoldenrodYellow" TextColor="Black" />
-                <Label Text="65" Grid.Row="1" Grid.Column="1" BackgroundColor="LightGoldenrodYellow" TextColor="Black"/>
-                <Label Text="39%" Grid.Row="1" Grid.Column="2" BackgroundColor="LightGoldenrodYellow" TextColor="Black"/>
+                <Label Text="SIN ESTRES" Grid.Row="1" Grid.Column="0" BackgroundColor="White" TextColor="Black" />
+                <Label Text="{Binding H1}" Grid.Row="1" Grid.Column="1" BackgroundColor="White" TextColor="Black" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding P1}" Grid.Row="1" Grid.Column="2" BackgroundColor="White" TextColor="Black" HorizontalTextAlignment="Center"/>
 
-                <Label Text="ESTRES MODERADO" Grid.Row="2" Grid.Column="0" BackgroundColor="LightSalmon" TextColor="Black"/>
-                <Label Text="63" Grid.Row="2" Grid.Column="1" BackgroundColor="LightSalmon" TextColor="Black"/>
-                <Label Text="38%" Grid.Row="2" Grid.Column="2" BackgroundColor="LightSalmon" TextColor="Black"/>
+                <Label Text="ESTRES LIGERO" Grid.Row="2" Grid.Column="0" BackgroundColor="LightGoldenrodYellow" TextColor="Black" />
+                <Label Text="{Binding H2}" Grid.Row="2" Grid.Column="1" BackgroundColor="LightGoldenrodYellow" TextColor="Black" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding P2}" Grid.Row="2" Grid.Column="2" BackgroundColor="LightGoldenrodYellow" TextColor="Black" HorizontalTextAlignment="Center"/>
 
-                <Label Text="ESTRES ALTO" Grid.Row="3" Grid.Column="0" BackgroundColor="Salmon" TextColor="Black"/>
-                <Label Text="0" Grid.Row="3" Grid.Column="1" BackgroundColor="Salmon" TextColor="Black"/>
-                <Label Text="0%" Grid.Row="3" Grid.Column="2" BackgroundColor="Salmon" TextColor="Black" />
+                <Label Text="ESTRES MODERADO" Grid.Row="3" Grid.Column="0" BackgroundColor="LightSalmon" TextColor="Black"/>
+                <Label Text="{Binding H3}" Grid.Row="3" Grid.Column="1" BackgroundColor="LightSalmon" TextColor="Black" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding P3}" Grid.Row="3" Grid.Column="2" BackgroundColor="LightSalmon" TextColor="Black" HorizontalTextAlignment="Center"/>
 
-                <Label Text="PELIGRO" Grid.Row="4" Grid.Column="0" BackgroundColor="Red" TextColor="Black"/>
-                <Label Text="0" Grid.Row="4" Grid.Column="1" BackgroundColor="Red" TextColor="Black"/>
-                <Label Text="0%" Grid.Row="4" Grid.Column="2" BackgroundColor="Red" TextColor="Black"/>
+                <Label Text="ESTRES ALTO" Grid.Row="4" Grid.Column="0" BackgroundColor="Salmon" TextColor="Black"/>
+                <Label Text="{Binding H4}" Grid.Row="4" Grid.Column="1" BackgroundColor="Salmon" TextColor="Black" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding H4}" Grid.Row="4" Grid.Column="2" BackgroundColor="Salmon" TextColor="Black" HorizontalTextAlignment="Center"/>
 
-                <Label Text="HORAS DE ESTRES" Grid.Row="5" Grid.Column="0" BackgroundColor="Gray" TextColor="Black"/>
-                <Label Text="128" Grid.Row="5" Grid.Column="1" BackgroundColor="Gray" TextColor="Black"/>
-                <Label Text="76%" Grid.Row="5" Grid.Column="2" BackgroundColor="Gray" TextColor="Black"/>
+                <Label Text="PELIGRO" Grid.Row="5" Grid.Column="0" BackgroundColor="Red" TextColor="Black"/>
+                <Label Text="{Binding H5}" Grid.Row="5" Grid.Column="1" BackgroundColor="Red" TextColor="Black" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding P5}" Grid.Row="5" Grid.Column="2" BackgroundColor="Red" TextColor="Black" HorizontalTextAlignment="Center"/>
+
+                <Label Text="HORAS DE ESTRES" Grid.Row="6" Grid.Column="0" BackgroundColor="Gray" TextColor="Black"/>
+                <Label Text="{Binding H6}" Grid.Row="6" Grid.Column="1" BackgroundColor="Gray" TextColor="Black" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding P6}" Grid.Row="6" Grid.Column="2" BackgroundColor="Gray" TextColor="Black" HorizontalTextAlignment="Center"/>
                 
             </Grid>
+            
             <Label Grid.Row="2" Text="{Binding Date}"  HorizontalOptions="Center" Margin="0,0,5,0" FontSize="20"  FontAttributes="Bold"/>
 
-            <Frame Grid.Row="3" Padding="0" Margin="10" >
-                <dxc:ChartView  x:Name="Sestres" Margin="5" >
+            <Frame Grid.Row="3" Padding="5" Margin="0" >
+                <dxc:ChartView  x:Name="Sestres" Margin="0" >
 
                     <dxc:ChartView.ChartStyle>
                         <dxc:ChartStyle Palette="{Binding Palette}"
@@ -77,6 +83,18 @@
                             </dxc:Hint.Behavior>
                         </dxc:Hint>
                     </dxc:ChartView.Hint>
+
+                    <dxc:ChartView.AxisY>
+                        <dxc:NumericAxisY GridAlignment="2" >
+                            <dxc:NumericAxisY.Style>
+                                <dxc:AxisStyle LineVisible="True" LineThickness="2" LineColor="Black" />
+                            </dxc:NumericAxisY.Style>
+                            <dxc:NumericAxisY.Range>
+                                <dxc:NumericRange Min="0" Max="100" VisualMax="100" VisualMin="-1" />
+                            </dxc:NumericAxisY.Range>
+                        </dxc:NumericAxisY>
+                    </dxc:ChartView.AxisY>
+
 
                     <dxc:ChartView.AxisX>
                         <dxc:NumericAxisX GridOffset="5" GridAlignment="1" >
@@ -95,7 +113,7 @@
                                 <dxc:AxisLabel  Position="Outside"/>
                             </dxc:NumericAxisX.Label>
                             <dxc:NumericAxisX.Range>
-                                <dxc:NumericRange Min="0" Max="23" VisualMax="24" VisualMin="-1" />
+                                <dxc:NumericRange Min="0" Max="23" VisualMax="23" VisualMin="0" />
                             </dxc:NumericAxisX.Range>
                         </dxc:NumericAxisX>
                     </dxc:ChartView.AxisX>
@@ -122,20 +140,20 @@
                             </dxc:PointSeries.Data>
                         </dxc:PointSeries>
 
-                        <dxc:LineSeries DisplayName="HUMEDAD %" MarkersVisible="True" HintOptions="{StaticResource lineSeriesHintOptions}" >
-                            <dxc:LineSeries.Style>
-                                <dxc:LineSeriesStyle MarkerSize="10" Stroke="DarkViolet">
-                                    <dxc:LineSeriesStyle.MarkerStyle>
-                                        <dxc:MarkerStyle Fill="DarkViolet" />
-                                    </dxc:LineSeriesStyle.MarkerStyle>
-                                </dxc:LineSeriesStyle>
-                            </dxc:LineSeries.Style>
-                            <dxc:LineSeries.Data>
+                        <dxc:AreaSeries DisplayName="HUMEDAD %"  HintOptions="{StaticResource lineSeriesHintOptions}" >
+                            <dxc:AreaSeries.Style>
+                                <dxc:AreaSeriesStyle Stroke="{StaticResource Primary}" Fill="{StaticResource Primary}" >
+                                    <dxc:AreaSeriesStyle.MarkerStyle>
+                                        <dxc:MarkerStyle Fill="{StaticResource Primary}"  />
+                                    </dxc:AreaSeriesStyle.MarkerStyle>
+                                </dxc:AreaSeriesStyle>
+                            </dxc:AreaSeries.Style>
+                            <dxc:AreaSeries.Data>
                                 <dxc:SeriesDataAdapter DataSource="{Binding HUMEDAD, Mode=TwoWay}" AllowLiveDataUpdates="True" ArgumentDataMember="Hora">
                                     <dxc:ValueDataMember Type="Value" Member="Value"/>
                                 </dxc:SeriesDataAdapter>
-                            </dxc:LineSeries.Data>
-                        </dxc:LineSeries>
+                            </dxc:AreaSeries.Data>
+                        </dxc:AreaSeries>
 
                         <dxc:LineSeries DisplayName="TEMPERATURA °C" MarkersVisible="True" HintOptions="{StaticResource lineSeriesHintOptions}" >
                             <dxc:LineSeries.Style>
@@ -150,6 +168,18 @@
                                     <dxc:ValueDataMember Type="Value" Member="Value"/>
                                 </dxc:SeriesDataAdapter>
                             </dxc:LineSeries.Data>
+
+                            <dxc:LineSeries.AxisY>
+                                <dxc:NumericAxisY GridAlignment="2" >
+                                    <dxc:NumericAxisY.Style>
+                                        <dxc:AxisStyle LineVisible="True" LineThickness="2" LineColor="Red" />
+                                    </dxc:NumericAxisY.Style>
+                                    <dxc:NumericAxisY.Range>
+                                        <dxc:NumericRange Min="0" Max="50" VisualMax="50" VisualMin="-1" />
+                                    </dxc:NumericAxisY.Range>
+                                </dxc:NumericAxisY>
+                            </dxc:LineSeries.AxisY>
+
                         </dxc:LineSeries>
 
                     </dxc:ChartView.Series>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,20 +45,22 @@ namespace Base.Models
 		public static string GetTokenPassword { get => "Usuarios/PostTokenPassword"; }
 		public static string UpdatePassword { get => "Usuarios/PostUpdatePassword"; }
 
-        public static string ApiListaEstablos { get => "/Establos_Ususarios"; }
-        public static string ApiListaPropiedades { get => "/ParametrosClima"; }
-        public static string ApiChart24 { get => "/GraficaClima24"; }
-        public static string ApiReporte { get => "/ReporteMeteoeologico"; }
-        #endregion
+		public static string ApiListaEstablos { get => "/Establos_Ususarios"; }
+		public static string ApiListaPropiedades { get => "/ParametrosClima"; }
+		public static string ApiChart24 { get => "/GraficaClima24"; }
+		public static string ApiReporte { get => "/ReporteMeteoeologico"; }
+		#endregion
 
-        #region LientekInfo
-        public static string Company { get => "Lientek Solutios"; }
-		public static string BodyContactoLientek { get => "Estimado " +ManagerLientek; }
+		#region LientekInfo
+		public static string Company { get => "Lientek Solutios"; }
+		public static string BodyContactoLientek { get => "Estimado " + ManagerLientek; }
 		public static string CorreoLientek { get => "rubendiaznt@live.com.mx"; }
 		public static string ManagerLientek { get => "ING.REY OMAR NAVARRETE MARTINEZ"; }
 		public static string NumeroLientek { get => "871-480-2130"; }
-		public static string FbLientek { get=> "https://www.facebook.com/people/Lien-Tek/100076257905455/?locale=en_GB"; }
+		public static string FbLientek { get => "https://www.facebook.com/people/Lien-Tek/100076257905455/?locale=en_GB"; }
 		public static string GoogleLientek { get => "https://www.google.com/search?q=lien+technologique&rlz=1C1CHBF_esMX1017MX1017&oq=lien+t&aqs=chrome.0.69i59l3j0i512l2j69i57j0i512l4.1162819j1j15&sourceid=chrome&ie=UTF-8"; }
+
+		public static string Cliente { get => "http://digithpro.com/"; }
 
 		public static string CatalogoLientek
 		{

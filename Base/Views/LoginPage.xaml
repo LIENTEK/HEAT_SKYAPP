@@ -14,7 +14,7 @@
         <ScrollView >
             <StackLayout>
                 <StackLayout IsVisible="{Binding LogOut}" BackgroundColor="White" Padding="10" >
-                <Image Source="montesorieicon1.jpg" Aspect="AspectFit" Margin="0" HeightRequest="160"/>
+                <Image Source="heatsky" Aspect="AspectFit" Margin="0,50,0,0" HeightRequest="220"/>
                 <Label Text="" FontAttributes="Bold" FontSize="Title" HorizontalOptions="Center" Margin="20,10,20,50" HorizontalTextAlignment="Center"></Label>
 
                 <dxe:TextEdit Text="{Binding UserName}" ErrorText="Ingrese un usuario valido" HasError="{Binding ErrorUser}" TextChangedCommand="{Binding ResetTextBoxUserCommand}" LabelText="User" Margin="50,5,50,0" ReturnType="Done" 
@@ -67,7 +67,7 @@
 
                 </StackLayout>
             
-                <dxco:SimpleButton x:Name="btnLientek" PressedBackgroundColor="White" PressedBorderColor="White" Clicked="lientek" Command="{Binding ShowPopUpCommand}" Text="By LIENTEK" FontSize="19" HorizontalOptions="Center" BackgroundColor="Transparent" FontAttributes="Bold" Margin="0,0,0,10" VerticalOptions="EndAndExpand" TextColor="{StaticResource Lientek}" />
+                <dxco:SimpleButton x:Name="btnLientek" PressedBackgroundColor="White" PressedBorderColor="White" Clicked="lientek" Command="{Binding ShowPopUpCommand}" Text="By DIGiTH" FontSize="19" HorizontalOptions="Center" BackgroundColor="Transparent" FontAttributes="Bold" Margin="0,0,0,10" VerticalOptions="EndAndExpand" TextColor="{StaticResource Lientek}" />
 
                 <popups:LientekPopContent/>
                 <popups:ErrorPopWsContent/>

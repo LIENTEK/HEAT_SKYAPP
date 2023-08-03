@@ -36,40 +36,50 @@ namespace Base.Views
 			
 			try
 			{
-				if (vm.SelPropiedad.Id.Equals("Temperatura °C"))
+				double value = (double)grid.GetCellValue(e.RowHandle, "Valor1");
+				if (value >= 39.5)
 				{
-						double value = (double)grid.GetCellValue(e.RowHandle, e.FieldName);
-						if (value >= 39.5)
-						{
-							e.FontColor = Color.FromRgb(255, 199, 206);
-						}
-						if (value >= 39 && value < 39.5)
-						{
-							e.FontColor = Color.FromRgb(255, 235, 156);
-						}
-					
+					e.FontColor = Color.FromRgb(255, 199, 206);
 				}
-				else if (vm.SelPropiedad.Id.Equals("ITH"))
+				if (value >= 39 && value < 39.5)
 				{
-						double value = (double)grid.GetCellValue(e.RowHandle, e.FieldName);
-						if (value >= 80)
-						{
-							e.FontColor = Color.FromRgb(255, 117, 117);
-						}
-						if (value >= 74 && value < 80)
-						{
-							e.FontColor = Color.FromRgb(255, 204, 102);
-						}
-						if (value >= 60 && value < 74)
-						{
-							e.FontColor = Color.FromRgb(255, 255, 153);
-						}
+					e.FontColor = Color.FromRgb(255, 235, 156);
 				}
-				else
-				{
-					e.FontColor = Colors.Black;
-				}
-				
+
+				//if (vm.SelPropiedad.Id.Equals("Temperatura °C"))
+				//{
+				//		double value = (double)grid.GetCellValue(e.RowHandle, e.FieldName);
+				//		if (value >= 39.5)
+				//		{
+				//			e.FontColor = Color.FromRgb(255, 199, 206);
+				//		}
+				//		if (value >= 39 && value < 39.5)
+				//		{
+				//			e.FontColor = Color.FromRgb(255, 235, 156);
+				//		}
+
+				//}
+				//else if (vm.SelPropiedad.Id.Equals("ITH"))
+				//{
+				//		double value = (double)grid.GetCellValue(e.RowHandle, e.FieldName);
+				//		if (value >= 80)
+				//		{
+				//			e.FontColor = Color.FromRgb(255, 117, 117);
+				//		}
+				//		if (value >= 74 && value < 80)
+				//		{
+				//			e.FontColor = Color.FromRgb(255, 204, 102);
+				//		}
+				//		if (value >= 60 && value < 74)
+				//		{
+				//			e.FontColor = Color.FromRgb(255, 255, 153);
+				//		}
+				//}
+				//else
+				//{
+				//	e.FontColor = Colors.Black;
+				//}
+
 
 			}
 			catch(Exception ex)

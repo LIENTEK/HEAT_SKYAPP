@@ -34,7 +34,7 @@ namespace Base.Models
 		{
 			clsRequestHttp req = new clsRequestHttp();
 			req.URI = clsUriWs.ApiNuevoRegistro;
-			req.JsonData ="";
+			req.JsonData = "";
 			string result = req.Requestform().Result;
 			return result;
 		}
@@ -71,22 +71,22 @@ namespace Base.Models
 		public string ObtenerParametros()
 		{
 			string jsnversion = " ";
-            clsRequestHttp req = new clsRequestHttp();
-            req.JsonData = jsnversion;
-            req.URI = "/ParametrosClima";
-            string result = req.RequestformHeatsky().Result;
-            return result;
-        }
+			clsRequestHttp req = new clsRequestHttp();
+			req.JsonData = jsnversion;
+			req.URI = "/ParametrosClima";
+			string result = req.RequestformHeatsky().Result;
+			return result;
+		}
 
-        public string ObtenerAllData(string lat, string lon)
-        {
-            string jsnversion = "lat="+lat+"&lon="+lon;
-            clsRequestHttp req = new clsRequestHttp();
-            req.JsonData = jsnversion;
-            req.URI = "/ReporteMeteorologico";
-            string result = req.RequestformHeatsky().Result;
-            return result;
-        }
+		public string ObtenerAllData(string lat, string lon)
+		{
+			string jsnversion = "lat=" + lat + "&lon=" + lon;
+			clsRequestHttp req = new clsRequestHttp();
+			req.JsonData = jsnversion;
+			req.URI = "/ReporteMeteorologico";
+			string result = req.RequestformHeatsky().Result;
+			return result;
+		}
 
 		public string DatosChart(string lat, string lon)
 		{
@@ -94,6 +94,16 @@ namespace Base.Models
 			clsRequestHttp req = new clsRequestHttp();
 			req.JsonData = jsnversion;
 			req.URI = "/GraficaClima24";
+			string result = req.RequestformHeatsky().Result;
+			return result;
+		}
+
+		public string ResumenEstres(string lat, string lon)
+		{
+			string jsnversion = "lat=" + lat + "&lon=" + lon;
+			clsRequestHttp req = new clsRequestHttp();
+			req.JsonData = jsnversion;
+			req.URI = "/ResumenEstres";
 			string result = req.RequestformHeatsky().Result;
 			return result;
 		}

@@ -26,10 +26,22 @@ namespace Base.ViewModels
 			set => SetProperty(ref this.temp, value);
 		}
 
+		public ObservableCollection<Item> ESTRES1
+		{
+			get => this.estres1;
+			set => SetProperty(ref this.estres1, value);
+		}
+
+		public ObservableCollection<Item> ESTRES2
+		{
+			get => this.estres2;
+			set => SetProperty(ref this.estres2, value);
+		}
+
 		public EstresCaloricoViewModel() {
 
 			Establos = new ObservableCollection<clsEstablo>();
-			CommandConsultar = new Command(LoadPropiedades);
+			CommandConsultar = new Command(ChangeEstablo);
 			//LoadData();
 
 		}
@@ -40,11 +52,14 @@ namespace Base.ViewModels
 		string nombre = string.Empty;
 		string date;
 		List<clsChart> res;
+		ObservableCollection<Item> estres1 = new ObservableCollection<Item>();
+		ObservableCollection<Item> estres2 = new ObservableCollection<Item>();
 		ObservableCollection<Item> temp = new ObservableCollection<Item>();
 		ObservableCollection<Item> uv = new ObservableCollection<Item>();
 		ObservableCollection<Item> ith = new ObservableCollection<Item>();
 		ObservableCollection<Item> humedad = new ObservableCollection<Item>();
-
+		string p1,p2,p3,p4,p5,p6 = string.Empty;
+		string h1,h2,h3,h4,h5,h6 = string.Empty;
 		#endregion
 
 		#region Propiedades bool
@@ -62,6 +77,67 @@ namespace Base.ViewModels
 		{
 			get => this.date;
 			set => SetProperty(ref this.date, value);
+		}
+
+		public string H1
+		{
+			get => this.h1;
+			set => SetProperty(ref this.h1, value);
+		}
+		public string P1
+		{
+			get => this.p1;
+			set => SetProperty(ref this.p1, value);
+		}
+		public string H2
+		{
+			get => this.h2;
+			set => SetProperty(ref this.h2, value);
+		}
+		public string P2
+		{
+			get => this.p2;
+			set => SetProperty(ref this.p2, value);
+		}
+		public string H3
+		{
+			get => this.h3;
+			set => SetProperty(ref this.h3, value);
+		}
+		public string P3
+		{
+			get => this.p3;
+			set => SetProperty(ref this.p3, value);
+		}
+		public string H4
+		{
+			get => this.h4;
+			set => SetProperty(ref this.h4, value);
+		}
+		public string P4
+		{
+			get => this.p4;
+			set => SetProperty(ref this.p4, value);
+		}
+		public string H5
+		{
+			get => this.h5;
+			set => SetProperty(ref this.h5, value);
+		}
+		public string P5
+		{
+			get => this.p5;
+			set => SetProperty(ref this.p5, value);
+		}
+		public string H6
+		{
+			get => this.h6;
+			set => SetProperty(ref this.h6, value);
+		}
+		public string P6
+		{
+			get => this.p6;
+			set => SetProperty(ref this.p6, value);
 		}
 
 		public ObservableCollection<clsEstablo> Establos { get; set; }
@@ -99,7 +175,8 @@ namespace Base.ViewModels
 			{
 				IsOne = false;
 				IsBusy = true;
-				LoadData();
+				ThFaillog = new Thread(new ThreadStart(LoadData));
+				ThFaillog.Start();
 			}
 		}
 		async void LoadData()
@@ -155,9 +232,20 @@ namespace Base.ViewModels
 					TEMP = new ObservableCollection<Item>();
 					ITH = new ObservableCollection<Item>();
 					HUMEDAD = new ObservableCollection<Item>();
-					SelEstablo = Establos.Where(x => x.ESTABLO_ID.Equals(Preferences.Get("IdEstablo", 0))).FirstOrDefault();
-					//LoadPropiedades();
-					
+					ESTRES1 = new ObservableCollection<Item>();
+					ESTRES2 = new ObservableCollection<Item>();
+
+					var iteme= new Item();
+					for (int i=0; i<=23;i++)
+					{
+						iteme = new Item();
+						iteme.Hora = i;
+						iteme.Value = 69;
+						iteme.Value2 = 74;
+						ESTRES1.Add(iteme);
+					}
+
+					SelEstablo = Establos.Where(x => x.ESTABLO_ID.Equals(Preferences.Get("IdEstablo", 0))).FirstOrDefault();					
 					
 				}
 				catch (Exception ex)
@@ -195,7 +283,7 @@ namespace Base.ViewModels
 				res = JsonConvert.DeserializeObject<List<clsChart>>(strrq);
 
 
-				res = res.OrderBy(x=> x.hora).ToList();
+				//res = res.OrderBy(x=> x.hora).ToList();
 				var elemento = new Item();
 				int a = 0;
 
@@ -223,7 +311,46 @@ namespace Base.ViewModels
 					UV.Add(elemento);
 					a++;
 				}
-				
+
+				strrq = new clsConsultas().ResumenEstres(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
+				var resestres = JsonConvert.DeserializeObject<List<clsResumenEstres>>(strrq);
+
+				foreach (var item in resestres)
+				{
+					if (item.Concepto.Equals("SIN ESTRES"))
+					{
+						H1 = item.Horas.ToString();
+						P1 = item.Porc.ToString();
+					}
+					if (item.Concepto.Equals("ESTRES LIGERO"))
+					{
+						H2 = item.Horas.ToString();
+						P2 = item.Porc.ToString();
+					}
+					if (item.Concepto.Equals("ESTRES MODERADO"))
+					{
+						H3 = item.Horas.ToString();
+						P3 = item.Porc.ToString();
+					}
+					if (item.Concepto.Equals("ESTRES ALTO"))
+					{
+						H4 = item.Horas.ToString();
+						P4 = item.Porc.ToString();
+					}
+					if (item.Concepto.Equals("PELIGRO"))
+					{
+						H5 = item.Horas.ToString();
+						P5 = item.Porc.ToString();
+					}
+					if (item.Concepto.Equals("HORAS DE ESTRES"))
+					{
+						H6 = item.Horas.ToString();
+						P6 = item.Porc.ToString();
+					}
+
+
+
+				}
 
 
 				IsBusy = false;
@@ -238,6 +365,12 @@ namespace Base.ViewModels
 			}
 
 
+		}
+
+		void ChangeEstablo()
+		{
+			ThFaillog = new Thread(new ThreadStart(LoadPropiedades));
+			ThFaillog.Start();
 		}
 		async void hidePopUp()
 		{

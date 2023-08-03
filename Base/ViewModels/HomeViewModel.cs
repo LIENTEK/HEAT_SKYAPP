@@ -24,7 +24,7 @@ namespace Base.ViewModels
 			Establos = new ObservableCollection<clsEstablo>();
 			Propiedades = new ObservableCollection<clsPropiedades>();
 			banderaleiado = 0;
-			CommandConsultar = new Command(LoadPropiedades);
+			CommandConsultar = new Command(ChangeEstablo);
 			CommandConsultarPropiedad = new Command(ChangePropiedad);
 			LoadCommand = new Command(Refresh);
 		}
@@ -147,7 +147,8 @@ namespace Base.ViewModels
 			{
 				IsOne= false;
 				IsBusy = true;
-				LoadData();
+				ThFaillog = new Thread(new ThreadStart(LoadData));
+				ThFaillog.Start();
 			}
 			
 		}
@@ -437,8 +438,15 @@ namespace Base.ViewModels
 		{
             Preferences.Set("Propiedad", SelPropiedad.Id.ToString());
 			if (banderaleiado==1) {
-				LoadPropiedades();
+				ThFaillog = new Thread(new ThreadStart(LoadPropiedades));
+				ThFaillog.Start();
 			}
+		}
+
+		void ChangeEstablo()
+		{
+			ThFaillog = new Thread(new ThreadStart(LoadPropiedades));
+			ThFaillog.Start();
 		}
 
 		Boolean Pago()

@@ -320,15 +320,15 @@ namespace Base.ViewModels
 
 		async void PopUpVisible()
 		{
-			if (ShowPopUp) {
-				ShowPopUp = false;
-			}
-			else
-			{
-				await Task.Delay(200);
-				ShowPopUp = true;
-			}
-			
+			//if (ShowPopUp) {
+			//	ShowPopUp = false;
+			//}
+			//else
+			//{
+			//	await Task.Delay(200);
+			//	ShowPopUp = true;
+			//}
+			await Browser.OpenAsync(clsUriWs.Cliente);
 		}
 
 		async void OnNuevoRegistroClicked()

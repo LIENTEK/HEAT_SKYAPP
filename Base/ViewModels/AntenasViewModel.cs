@@ -11,7 +11,7 @@ namespace Base.ViewModels
 		{
 			Items = new ObservableCollection<clsAntenas>();
 			Establos = new ObservableCollection<clsEstablo>();
-			CommandConsultar = new Command(LoadPropiedades);
+			CommandConsultar = new Command(ChangeEstablo);
 		}
 
 
@@ -75,7 +75,8 @@ namespace Base.ViewModels
 			{
 				IsOne = false;
 				IsBusy = true;
-				LoadData();
+				ThFaillog = new Thread(new ThreadStart(LoadData));
+				ThFaillog.Start();
 			}
 		}
 
@@ -201,12 +202,10 @@ namespace Base.ViewModels
 
 		}
 
-		async void Refresh()
+		void ChangeEstablo()
 		{
-			Items.Clear();
-			await Task.Delay(1000);
-			IsBusy = true;
-			LoadPropiedades();
+			ThFaillog = new Thread(new ThreadStart(LoadPropiedades));
+			ThFaillog.Start();
 		}
 
 		Boolean Pago()
