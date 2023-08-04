@@ -17,14 +17,12 @@ namespace Base.ViewModels
 			ResetTextBoxPasswordCommand = new Command(x => ErrorPassword = false);
 			LoginCommand = new Command(OnLoginClicked);
 			LogOutCommand = new Command(OnLogOutClicked);
-			NuevoRegistroCommand = new Command(OnNuevoRegistroClicked, BlockButton);
-			NewPasswordComand = new Command(OnNewPasswordClick, BlockButton);
+			ResetCommand = new Command(OnResetClicked);
+			ForgettCommand = new Command(OnForgetClick);
 			OpenFbCommand = new Command(Facebook);
 			OpenCallCommand = new Command(Call);
 			OpenCorreoCommand = new Command(Correo);
 			OpenWebCommand = new Command(WebPage);
-			PropertyChanged +=
-				(_, __) => LoginCommand.ChangeCanExecute();
 
 		}
 
@@ -43,16 +41,16 @@ namespace Base.ViewModels
 
 		#region Comands
 		public ICommand ShowPopUpCommand { get; }
-		public Command LoginCommand { get; }
-		public Command LogOutCommand { get; }
-		public Command NuevoRegistroCommand { get; }
+		public ICommand LoginCommand { get; }
+		public ICommand LogOutCommand { get; }
+		public ICommand ResetCommand { get; }
 		public ICommand ResetTextBoxUserCommand { get; }
 		public ICommand ResetTextBoxPasswordCommand { get; }
 		public ICommand OpenFbCommand { get; }
 		public ICommand OpenCallCommand { get; }
 		public ICommand OpenCorreoCommand { get; }
 		public ICommand OpenWebCommand { get; }
-		public Command NewPasswordComand { get; }
+		public ICommand ForgettCommand { get; }
 
 		#endregion
 
@@ -112,12 +110,12 @@ namespace Base.ViewModels
 		public void LoggedAccount()
 		{
 			Logged = Preferences.Get("Logged", false);
+			UserName = Preferences.Get("User", "");
+			Password = Preferences.Get("Password", "");
 			ShowUserInfo();
 
 			if (Logged)
 			{
-				UserName = Preferences.Get("User", "");
-				Password = Preferences.Get("Password", "");
 				OnLoginClicked();
 			}
 			else
@@ -178,6 +176,12 @@ namespace Base.ViewModels
 				await Task.Delay(5000);
 			}
 			ShowPopErrorWs = false;
+		}
+
+		async void hidePopUpE()
+		{
+			await Task.Delay(2000);
+			ShowPopExitoWs = false;
 		}
 
 		void SaveLogInData()
@@ -241,24 +245,31 @@ namespace Base.ViewModels
 			
 			var strrq = rq.LogInWs(userName,Password);
 
-			var response = JsonConvert.DeserializeObject<clsUsuario>(strrq);
-
-            if (response.CLIENTE_ID == -1)
+			try
 			{
-				ErrorPopWsMsg = response.NOMBRE;
-				IsReady = true;
+				var response = JsonConvert.DeserializeObject<clsUsuario>(strrq);
+				if (response.USUARIO_ID == -1)
+				{
+					ErrorPopWsMsg = response.NOMBRE;
+					IsReady = true;
+					IsBusy = false;
+					return false;
+				}
+
+				Nombre = response.NOMBRE.ToString();
+				Cliente = response.CLIENTE_ID.ToString();
+
+				Preferences.Set("objuser", Newtonsoft.Json.JsonConvert.SerializeObject(response));
 				IsBusy = false;
+				IsReady = true;
+				return true;
+			}
+			catch
+			{
+				IsBusy = false;
+				IsReady = true;
 				return false;
 			}
-
-			Nombre = response.NOMBRE.ToString();
-			Cliente = response.CLIENTE_ID.ToString();
-
-			Preferences.Set("objuser", Newtonsoft.Json.JsonConvert.SerializeObject(response));
-
-			IsBusy = false;
-			IsReady = true;
-			return true;
 
 		}
 		
@@ -331,18 +342,46 @@ namespace Base.ViewModels
 			await Browser.OpenAsync(clsUriWs.Cliente);
 		}
 
-		async void OnNuevoRegistroClicked()
+		async void OnResetClicked()
 		{
 			Pressed = true;
-			//await Navigation.NavigateToAsync<RegistrarViewModel>(null);
+			await Navigation.NavigateToAsync<ResetearContraseñaViewModel>(null);
 			await Task.Delay(500);
 			Pressed = false;
 		}
 
-		async void OnNewPasswordClick()
+		async void OnForgetClick()
 		{
+			
+
 			Pressed = true;
-			await Navigation.NavigateToAsync<ResetearContraseñaViewModel>(null);
+			//await Navigation.NavigateToAsync<RegistrarViewModel>(null);
+			if (UserName.Length >= clsUriWs.ShortUser && UserName.Length < clsUriWs.LongUser)
+			{
+				var str = new clsConsultas().OlvidoContraseña(userName);
+
+				if (str.Equals("OK"))
+				{
+					ExitoPopWsMsg = "Se envio tu contraseña al correo vinculado";
+					ShowPopExitoWs = true;
+					ThFaillog = new Thread(new ThreadStart(hidePopUpE));
+					ThFaillog.Start();
+				}
+				else
+				{
+					ErrorPopWsMsg = str;
+					ShowPopErrorWs = true;
+					ThFaillog = new Thread(new ThreadStart(hidePopUp));
+					ThFaillog.Start();
+				}
+			}
+			else
+			{
+				ErrorPopWsMsg = "Ingresa un usuario valido";
+				ShowPopErrorWs = true;
+				ThFaillog = new Thread(new ThreadStart(hidePopUp));
+				ThFaillog.Start();
+			}
 			await Task.Delay(500);
 			Pressed = false;
 		}

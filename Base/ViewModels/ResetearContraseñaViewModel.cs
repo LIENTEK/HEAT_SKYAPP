@@ -9,14 +9,14 @@ namespace Base.ViewModels
 		public ResetearContraseñaViewModel() {
 			Title = "Resetear Contraseña";
 			IsReady = true;
-			IsOne = true;
+			IsOne = false;
 			IsBusy = false;
-			ShowToken = false;
+			ShowToken = true;
 			Pressed = false;
 
 			ShowPopUpCommand = new Command(PopUpVisible);
 			ResetCommand = new Command(OnResetClick, BlockButton);
-			SendTokenCommand = new Command(OnSendTokenClick, BlockButton);
+			CambioCommand = new Command(OnSendTokenClick, BlockButton);
 
 			RTUsuarioCommand = new Command(x => ErrorUsuario = false);
 			RTPasswordCommand = new Command(CheckPassword);
@@ -41,7 +41,7 @@ namespace Base.ViewModels
 
 		public ICommand ShowPopUpCommand { get; }
 
-		public ICommand SendTokenCommand { get; }
+		public ICommand CambioCommand { get; }
 		public ICommand ResetCommand { get; }
 
 		public ICommand RTUsuarioCommand { get; }
@@ -174,7 +174,7 @@ namespace Base.ViewModels
 			}
 
 			var rq = new clsConsultas();
-			var strrq = rq.NuevoRegistroWs();
+			var strrq = rq.CambiarContraseña(User,Password);
 			strrq= "rubendiaznt@live.com.mx";
 
 			if (strrq.Contains(clsUriWs.ErrorHttp))
@@ -229,11 +229,11 @@ namespace Base.ViewModels
 
 		bool ValidateNewPassword()
 		{
-			if (string.IsNullOrWhiteSpace(Token)) // || Password.Length > clsUriWs.LongPassword || usuario.Length < clsUriWs.ShortPassword)
-			{
-				ErrorToken = true;
-				return false;
-			}
+			//if (string.IsNullOrWhiteSpace(Token)) // || Password.Length > clsUriWs.LongPassword || usuario.Length < clsUriWs.ShortPassword)
+			//{
+			//	ErrorToken = true;
+			//	return false;
+			//}
 
 			if (string.IsNullOrWhiteSpace(Password) || Password.Length > clsUriWs.LongPassword || Password.Length < clsUriWs.ShortPassword)
 			{
@@ -254,8 +254,7 @@ namespace Base.ViewModels
 			}
 
 			var rq = new clsConsultas();
-			var strrq = rq.NuevoRegistroWs();
-			strrq= "Tu contraseña se reestablecio correctamente, ya puedes iniciar sesion";
+			var strrq = rq.CambiarContraseña(User,Password);
 
 			if (strrq.Contains(clsUriWs.ErrorHttp))
 			{
@@ -268,23 +267,31 @@ namespace Base.ViewModels
 				strrq = strrq.Replace(clsUriWs.ErrorHttpLientek, string.Empty);
 				ErrorPopWsMsg = strrq;
 				return false;
+			}else if (strrq.Equals("OK"))
+			{
+				ExitoPopWsMsg = "Cambio de contraseña exitoso.";
+				return true;
 			}
-			ExitoPopWsMsg = strrq;
-			return true;
+			else
+			{
+				ExitoPopWsMsg = strrq;
+				return false;
+			}
+			
 		}
 
 		async void PopUpVisible()
 		{
-			if (ShowPopUp)
-			{
-				ShowPopUp = false;
-			}
-			else
-			{
-				await Task.Delay(200);
-				ShowPopUp = true;
-			}
-
+			//if (ShowPopUp)
+			//{
+			//	ShowPopUp = false;
+			//}
+			//else
+			//{
+			//	await Task.Delay(200);
+			//	ShowPopUp = true;
+			//}
+			await Browser.OpenAsync(clsUriWs.Cliente);
 		}
 
 		void CheckPassword()

@@ -203,7 +203,7 @@ namespace Base.ViewModels
 			try
 			{
 				var rq = new clsConsultas();
-				var strrq = rq.VersionActual(DeviceInfo.Current.Platform.ToString(), AppInfo.VersionString, DeviceInfo.Current.Version.Build.ToString(), amb);//corregir este metodo cuando el api este bien hecha
+				var strrq = rq.VersionActual(DeviceInfo.Current.Platform.ToString(), amb);//corregir este metodo cuando el api este bien hecha
 
 				if (strrq.Contains(clsUriWs.ErrorHttp))
 				{
@@ -223,23 +223,23 @@ namespace Base.ViewModels
 					return;
 				}
 
-				var newrq = Newtonsoft.Json.JsonConvert.DeserializeObject<clsVersionApp>(strrq);
+				
 
-				//if (!newrq.Version.Equals(rq.Version))
-				//{
-				//	if (rq.Plataforma.Equals(clsUriWs.Android))
-				//	{
-				//		await Launcher.OpenAsync(clsUriWs.StoreAppAndroid);
-				//	}
-				//	else if (rq.Plataforma.Equals(clsUriWs.iOS))
-				//	{
-				//		MainThread.BeginInvokeOnMainThread(() =>
-				//		{
-				//			Uri uri = new Uri(clsUriWs.StoreAppiOS);
-				//			Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
-				//		});
-				//	}
-				//}
+				if (!strrq.Equals(AppInfo.VersionString))
+				{
+					if (DeviceInfo.Current.Platform.Equals(clsUriWs.Android))
+					{
+						await Launcher.OpenAsync(clsUriWs.StoreAppAndroid);
+					}
+					else if (DeviceInfo.Current.Platform.Equals(clsUriWs.iOS))
+					{
+						MainThread.BeginInvokeOnMainThread(() =>
+						{
+							Uri uri = new Uri(clsUriWs.StoreAppiOS);
+							Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+						});
+					}
+				}
 			}
 			catch (Exception ex)
 			{

@@ -14,8 +14,6 @@ namespace Base.Views
 			InitializeComponent();
 			vm = new HomeViewModel();
 			BindingContext = vm;
-			grid.ItemsSource = vm.Items;
-			grid.RefreshData();
 		}
 
 		async protected override void OnAppearing()
@@ -36,6 +34,7 @@ namespace Base.Views
 			
 			try
 			{
+				var X = vm.Items;
 				double value = (double)grid.GetCellValue(e.RowHandle, "Valor1");
 				if (value >= 39.5)
 				{

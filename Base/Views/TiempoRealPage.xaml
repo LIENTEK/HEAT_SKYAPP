@@ -22,7 +22,7 @@
                           PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="ESTABLO_ID" DisplayMember="NOMBRE"   IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
             </dxe:ComboBoxEdit>
 
-            <dxcv:DXCollectionView Grid.Row="1" ItemsSource="{Binding Items}" VerticalOptions="Fill" AllowLiveDataShaping="True" >
+            <dxcv:DXCollectionView Grid.Row="1" ItemsSource="{Binding Items}" VerticalOptions="Fill" AllowLiveDataShaping="True" IsPullToRefreshEnabled="True" PullToRefreshCommand="{Binding CommandConsultar}" IsRefreshing="{Binding IsBusy,Mode=TwoWay}" >
                 <dxcv:DXCollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame BorderColor="White" CornerRadius="15" BackgroundColor="{StaticResource PrimaryLight}" Padding="5" Margin="25,0,25,10" HeightRequest="150">

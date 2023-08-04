@@ -13,28 +13,32 @@ namespace Base.Models
 		{
 
 		}
-		public string VersionActual(string plataforma, string version, string numberCode, string amb)
+		public string VersionActual(string plataforma, string amb)
 		{
-			string jsnversion =
-				"{" +
-					"plataforma:'" + plataforma + "'," +
-					"version:'" + version + "'," +
-					"compilacion:'" + numberCode + "'," +
-					"ambiente:'" + amb + "'" +
-				"}";
-
+			string jsnversion = "SO=" + plataforma;
 			clsRequestHttp req = new clsRequestHttp();
-			req.URI = "Versiones/PostVersion";
+			req.URI = "/Version";
 			req.JsonData = jsnversion;
 			string result = req.Requestform().Result;
 			return result;
 		}
 
-		public string NuevoRegistroWs()
+		public string OlvidoContraseña(string user)
 		{
+			string jsnversion = "usr=" + user;
 			clsRequestHttp req = new clsRequestHttp();
-			req.URI = clsUriWs.ApiNuevoRegistro;
-			req.JsonData = "";
+			req.URI = "/ContraseñaOlvidada";
+			req.JsonData = jsnversion;
+			string result = req.Requestform().Result;
+			return result;
+		}
+
+		public string CambiarContraseña(string user, string pwd)
+		{
+			string jsnversion = "usr=" + user+"&newpwd="+pwd;
+			clsRequestHttp req = new clsRequestHttp();
+			req.URI = "/CambiarContraseña";
+			req.JsonData = jsnversion;
 			string result = req.Requestform().Result;
 			return result;
 		}
@@ -152,5 +156,15 @@ namespace Base.Models
 			return result;
 		}
 
+		public string ObtenerReporte(string id)
+		{
+
+			string jsnversion = "idest=" + id;
+			clsRequestHttp req = new clsRequestHttp();
+			req.URI = "/ReporteSemanal";
+			req.JsonData = jsnversion;
+			string result = req.RequestformHeatsky().Result;
+			return result;
+		}
 	}
 }

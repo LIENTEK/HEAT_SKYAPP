@@ -8,9 +8,9 @@ namespace Base.Models
 {
     public class clsTrampas
     {
-		public string CORRAL { get; set; }
-		public string TRAMPA { get; set; }
-		public string ESTATUS { get; set; }
+		public string? CORRAL { get; set; }
+		public string? TRAMPA { get; set; }
+		public string? ESTATUS { get; set; }
 		public double DURACION { get; set; }
 
 		public Color AlertaEstatus { get; set; }

@@ -1,46 +1,35 @@
 ﻿using Base.Models;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Base.ViewModels
 {
-    public class AntenasViewModel : BaseViewModel
+	public class ReporteViewModel :  BaseViewModel
 	{
-		public AntenasViewModel()
+		private Stream m_pdfDocumentStream;
+		public Stream PdfDocumentStream
 		{
-			Items = new ObservableCollection<clsAntenas>();
-			Establos = new ObservableCollection<clsEstablo>();
-			CommandConsultar = new Command(ChangeEstablo);
+			get
+			{
+				return m_pdfDocumentStream;
+			}
+			set
+			{
+				m_pdfDocumentStream = value;
+				OnPropertyChanged("PdfDocumentStream");
+			}
 		}
 
-
-
-		#region Variables
-		string nombre = string.Empty;
 		string strrq = "";
-		#endregion
+		public Command CommandConsultar { get; }
 
-		#region Propiedades bool
-
-		#endregion
-
-		#region Propiedades string
-		public string Nombre
-		{
-			get => this.nombre;
-			set => SetProperty(ref this.nombre, value);
-		}
-
-
-		public ObservableCollection<clsAntenas> Items { get; set; }
 		public ObservableCollection<clsEstablo> Establos { get; set; }
-		#endregion
-
-		#region Commands
-		public ICommand CommandCalendario { get; }
-		public ICommand CommandConsultar { get; }
-
 		public Thread ThFaillog { get; set; }
 
 		clsEstablo selEstablo;
@@ -49,17 +38,41 @@ namespace Base.ViewModels
 			get => this.selEstablo;
 			set => SetProperty(ref this.selEstablo, value);
 		}
-
-
-		clsPropiedades selPropiedad;
-		public clsPropiedades SelPropiedad
+		
+		public ReporteViewModel()
 		{
-			get => this.selPropiedad;
-			set => SetProperty(ref this.selPropiedad, value);
+			Establos = new ObservableCollection<clsEstablo>();
+			CommandConsultar = new Command(ChangeEstablo);
 		}
-		#endregion
 
-		#region Funciones
+		
+		private async void SetPdfDocumentStream(string URL)
+		{
+			try
+			{
+				HttpClient httpClient = new HttpClient();
+				HttpResponseMessage response = await httpClient.GetAsync(URL);
+
+				PdfDocumentStream = await response.Content.ReadAsStreamAsync();
+			}catch (Exception ex)
+			{
+				ErrorPopWsMsg = ex.Message;
+				ShowPopErrorWs=true;
+				ThFaillog = new Thread(new ThreadStart(hidePopUp));
+				ThFaillog.Start();
+			}
+		}
+
+		//public void OnPropertyChanged(string name)
+		//{
+		//	PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+		//}
+		void ChangeEstablo()
+		{
+			ThFaillog = new Thread(new ThreadStart(LoadPDF));
+			ThFaillog.Start();
+		}
+
 
 		async public void OnAppearing()
 		{
@@ -76,11 +89,18 @@ namespace Base.ViewModels
 			{
 				IsOne = false;
 				IsBusy = true;
-				LoadData();
+				ThFaillog = new Thread(new ThreadStart(LoadData));
+				ThFaillog.Start();
 			}
 		}
 
-		void LoadData()
+		void LoadPDF()
+		{
+			var strrq = new clsConsultas().ObtenerReporte(SelEstablo.ESTABLO_ID.ToString());
+			SetPdfDocumentStream(strrq);
+		}
+
+		async void LoadData()
 		{
 			if (Pago())
 			{
@@ -143,11 +163,10 @@ namespace Base.ViewModels
 			else
 			{
 				IsBusy = false;
-				//await Task.Delay(100);
+				await Task.Delay(100);
 				ShowPopUp = true;
 			}
 		}
-
 		async void hidePopUp()
 		{
 			if (ErrorPopWsMsg.Length > 40)
@@ -161,61 +180,11 @@ namespace Base.ViewModels
 			ShowPopErrorWs = false;
 		}
 
-		async void LoadPropiedades()
-		{
-			Items.Clear();
-
-			try
-			{
-				Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-
-				strrq = new clsConsultas().ObtenerAntenas(SelEstablo.ESTABLO_ID.ToString());
-				var res = JsonConvert.DeserializeObject<List<clsAntenas>>(strrq);
-
-				foreach (var item in res)
-				{
-					item.AlertaEstatus = Colors.Green;
-					item.AlertaOffline = Colors.White;
-
-					if (item.ULTIMO_ESTATUS.Equals("OFFLINE"))
-					{
-						item.AlertaEstatus = Colors.Red;
-					}
-
-					if (item.HORAS_OFFLINE > 200)
-					{
-						item.AlertaOffline = Colors.Red;
-					}
-					Items.Add(item);
-				}
-
-				await Task.Delay(1500);
-				IsBusy = false;
-			}
-			catch (Exception ex)
-			{
-				await Task.Delay(1500);
-				IsBusy = false;
-				ErrorPopWsMsg = ex.Message + Environment.NewLine + Environment.NewLine + strrq;
-				ShowPopErrorWs = true;
-				ThFaillog = new Thread(new ThreadStart(hidePopUp));
-				ThFaillog.Start();
-			}
-
-		}
-
-		void ChangeEstablo()
-		{
-			LoadPropiedades();
-		}
-
 		Boolean Pago()
 		{
 			//revisar si esta pagada la app
 			return true;
 		}
 
-
-		#endregion
 	}
 }

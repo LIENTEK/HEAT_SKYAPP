@@ -18,6 +18,7 @@ namespace Base.ViewModels
 
 		#region Variables
 		string nombre = string.Empty;
+		string strrq = "";
 		#endregion
 
 		#region Propiedades bool
@@ -75,17 +76,16 @@ namespace Base.ViewModels
 			{
 				IsOne = false;
 				IsBusy = true;
-				ThFaillog = new Thread(new ThreadStart(LoadData));
-				ThFaillog.Start();
+				LoadData();
 			}
 		}
 
-		async void LoadData()
+		void LoadData()
 		{
 			if (Pago())
 			{
 				Establos.Clear();
-
+				
 				try
 				{
 					clsUsuario objuser = new clsUsuario();
@@ -97,7 +97,7 @@ namespace Base.ViewModels
 
 					//obtener establos
 					var rqestablo = new clsConsultas();
-					var strrq = rqestablo.ObtenerEstablos(objuser.USUARIO_ID.ToString());
+					strrq = rqestablo.ObtenerEstablos(objuser.USUARIO_ID.ToString());
 
 					var responseestablos = JsonConvert.DeserializeObject<List<clsEstablo>>(strrq);
 
@@ -133,7 +133,7 @@ namespace Base.ViewModels
 				catch (Exception ex)
 				{
 					IsBusy = false;
-					ErrorPopWsMsg = ex.Message;
+					ErrorPopWsMsg = ex.Message + Environment.NewLine+Environment.NewLine+ strrq;
 					ShowPopErrorWs = true;
 					ThFaillog = new Thread(new ThreadStart(hidePopUp));
 					ThFaillog.Start();
@@ -143,7 +143,7 @@ namespace Base.ViewModels
 			else
 			{
 				IsBusy = false;
-				await Task.Delay(100);
+				//await Task.Delay(100);
 				ShowPopUp = true;
 			}
 		}
@@ -152,26 +152,40 @@ namespace Base.ViewModels
 		{
 			if (ErrorPopWsMsg.Length > 40)
 			{
-				await Task.Delay(7000);
+				await Task.Delay(2000);
 			}
 			else
 			{
-				await Task.Delay(5000);
+				await Task.Delay(2000);
 			}
 			ShowPopErrorWs = false;
 		}
 
-		void LoadPropiedades()
+		async void LoadPropiedades()
 		{
-			Items.Clear();
+			
 
 			try
 			{
 				Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
 
-				var strrq = new clsConsultas().ObtenerTrampas(SelEstablo.ESTABLO_ID.ToString());
+				strrq = new clsConsultas().ObtenerTrampas(SelEstablo.ESTABLO_ID.ToString());
+				if (strrq.Equals("[]"))
+				{
+					IsBusy = false;
+					return;
+				}
+
+				if (strrq.Contains("null"))
+				{
+					IsBusy = false;
+					return;
+				}
+
 				var res = JsonConvert.DeserializeObject<List<clsTrampas>>(strrq);
 
+				
+				Items.Clear();
 				foreach (var item in res)
 				{
 					item.AlertaEstatus = Colors.White;
@@ -196,12 +210,15 @@ namespace Base.ViewModels
 					Items.Add(item);
 				}
 
+				await Task.Delay(1500);
 				IsBusy = false;
 			}
 			catch (Exception ex)
 			{
+
+				await Task.Delay(1500);
 				IsBusy = false;
-				ErrorPopWsMsg = ex.Message;
+				ErrorPopWsMsg = ex.Message + Environment.NewLine + Environment.NewLine + strrq;
 				ShowPopErrorWs = true;
 				ThFaillog = new Thread(new ThreadStart(hidePopUp));
 				ThFaillog.Start();
@@ -211,8 +228,7 @@ namespace Base.ViewModels
 
 		void ChangeEstablo()
 		{
-			ThFaillog = new Thread(new ThreadStart(LoadPropiedades));
-			ThFaillog.Start();
+			LoadPropiedades();
 		}
 		Boolean Pago()
 		{

@@ -9,7 +9,7 @@
 		<RootNamespace>Base</RootNamespace>
 
 		<!-- Display name -->
-		<ApplicationTitle>HEAT SKY</ApplicationTitle>
+		<ApplicationTitle>HEATSKY</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.lientek.heatsky</ApplicationId>
@@ -113,6 +113,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\RecomendacionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ReportePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ResetearContraseñaPage.xaml">

@@ -20,13 +20,13 @@ namespace Base.Models
 		public static string iOS { get => "iOS"; }
 		public static string Win { get => "Win"; }
 
-		public static int LongUser = 12;
+		public static int LongUser = 50;
 
-		public static int ShortUser = 10;
+		public static int ShortUser = 4;
 
-		public static int LongPassword = 15;
+		public static int LongPassword = 50;
 
-		public static int ShortPassword = 8;
+		public static int ShortPassword = 4;
 
 		public static int ShortPhone = 10;
 

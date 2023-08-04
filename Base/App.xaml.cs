@@ -10,11 +10,11 @@ namespace Base
 			InitializeComponent();
 
 			//DependencyService.Register<MockDataStore>();
-			//DependencyService.Register<NavigationService>();
+			DependencyService.Register<NavigationService>();
 			//Routing.RegisterRoute(typeof(NotificacionesPage).FullName, typeof(NotificacionesPage));
 			//Routing.RegisterRoute(typeof(FeedbackPage).FullName, typeof(FeedbackPage));
 			//Routing.RegisterRoute(typeof(SettingsPage).FullName, typeof(SettingsPage));
-			//Routing.RegisterRoute(typeof(ResetearContraseñaPage).FullName, typeof(ResetearContraseñaPage));
+			Routing.RegisterRoute(typeof(ResetearContraseñaPage).FullName, typeof(ResetearContraseñaPage));
 
 			//Routing.RegisterRoute(typeof(AlumnoPage).FullName, typeof(AlumnoPage));
 			//Routing.RegisterRoute(typeof(BLMPage).FullName, typeof(BLMPage));

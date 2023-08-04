@@ -29,7 +29,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <dxco:SimpleButton Grid.Row="0" Grid.Column="0" FontSize="11" Text="¿Olvidaste tu contraseña?" Command="{Binding NewPasswordComand}" BackgroundColor="White" PressedBackgroundColor="White" PressedBorderColor="White" PressedTextColor="{StaticResource PrimaryElements}" FontAttributes="Bold" TextColor="{StaticResource PrimaryElements}" ></dxco:SimpleButton>
+                        <Button Grid.Row="0" Grid.Column="0" FontSize="11" Text="¿Olvidaste tu contraseña?" Command="{Binding ForgettCommand}" BackgroundColor="White" FontAttributes="Bold" TextColor="{StaticResource PrimaryElements}" ></Button>
                 </Grid>
 
                 <Frame BackgroundColor="{StaticResource Primary}" Padding="0" CornerRadius="15" Margin="80,40,80,0"  >
@@ -60,10 +60,10 @@
                           BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" IsEnabled="False" DisabledBorderColor="{StaticResource Primary}"
                           DisabledLabelColor="{StaticResource Primary}" DisabledTextColor="{StaticResource Primary}" />
 
-                   
-                    <dxco:SimpleButton IsVisible="false" Text="Save Changes" Command="{Binding LogInCommand}" TextColor="White" BackgroundColor="{StaticResource Primary}" FontAttributes="Bold" CornerRadius="15" Margin="0,45,0,0" WidthRequest="200" />
-                
-                    <dxco:SimpleButton  Text="Cerrar Sesion" Command="{Binding LogOutCommand}" TextColor="White" BackgroundColor="red" FontAttributes="Bold" CornerRadius="15" Margin="0,145,0,0" WidthRequest="200" />
+
+                    <dxco:SimpleButton  Text="Cambiar Contraseña" Command="{Binding ResetCommand}" TextColor="White" IsEnabled="True" BackgroundColor="{StaticResource Primary}" FontAttributes="Bold" CornerRadius="15" Margin="0,45,0,0" WidthRequest="200" />
+ 
+                    <dxco:SimpleButton  Text="Cerrar Sesion" Command="{Binding LogOutCommand}" TextColor="White" IsEnabled="True" BackgroundColor="red" FontAttributes="Bold" CornerRadius="15" Margin="0,145,0,0" WidthRequest="200" />
 
                 </StackLayout>
             
@@ -71,6 +71,7 @@
 
                 <popups:LientekPopContent/>
                 <popups:ErrorPopWsContent/>
+                <popups:ExitoPopWsContent/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

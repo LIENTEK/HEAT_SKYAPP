@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.PdfViewer;assembly=Syncfusion.Maui.PdfViewer"
+             xmlns:local="clr-namespace:Base.ViewModels"
+             xmlns:popups="clr-namespace:Base.Views.PopUp"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             x:Class="Base.Views.ReportePage"
+             Title="Reporte Semanal">
+
+
+    <Grid RowDefinitions="auto,*">
+        <dxe:ComboBoxEdit Grid.Row="0" x:Name="lkestablo" Margin="10,5,10,5" CursorColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" DropDownBackgroundColor="{StaticResource PrimaryLight}" DropDownSelectedItemTextColor="{StaticResource Primary}" DropDownSelectedItemBackgroundColor="White" LabelColor="{StaticResource Primary}"
+                          PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="ESTABLO_ID" DisplayMember="NOMBRE"   IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
+        </dxe:ComboBoxEdit>
+        <syncfusion:SfPdfViewer Grid.Row="1" x:Name="pdfview" BackgroundColor="LightGray"
+                               DocumentSource="{Binding PdfDocumentStream}">
+            <syncfusion:SfPdfViewer.Resources>
+                <Style TargetType="ActivityIndicator" ApplyToDerivedTypes="False">
+                    <Setter Property="Color" Value="Red" />
+                </Style>
+            </syncfusion:SfPdfViewer.Resources>
+        </syncfusion:SfPdfViewer>
+        <popups:LientekPopContent/>
+        <popups:ErrorPopWsContent/>
+        <popups:ExitoPopWsContent/>
+    </Grid>
+</ContentPage>

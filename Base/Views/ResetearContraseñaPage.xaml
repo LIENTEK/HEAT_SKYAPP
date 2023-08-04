@@ -16,7 +16,7 @@
             
        
         <StackLayout IsVisible="{Binding IsOne}" Margin="5" >
-            <Image Source="https://upload.wikimedia.org/wikipedia/en/5/56/Xcode_14_icon.png" HorizontalOptions="Center" Aspect="AspectFit"  HeightRequest="140"/>
+            <Image Source="heatsky" HorizontalOptions="Center" Aspect="AspectFit"  HeightRequest="140"/>
             <Label Margin="50,15,50,0" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="Para proteger tu cuenta, " FontSize="20" FontAttributes="Bold" TextColor="Black" />
             <Label Margin="50,0,50,0" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="queremos asegurarnos de que " FontSize="20" FontAttributes="Bold" TextColor="Black" />
             <Label Text=" realmente seas tu la persona" Margin="50,0,50,0" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="20" FontAttributes="Bold" TextColor="Black" />
@@ -44,10 +44,10 @@
             </StackLayout>
 
         <StackLayout IsVisible="{Binding ShowToken}" Margin="5">
-            <Label Margin="0,10,0,0" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="Ingrese el codigo enviado al correo:" FontSize="20" FontAttributes="Bold" TextColor="Black" />
-            <Label Margin="0,10,0,15" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="{Binding Correo}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource PrimaryElements}" />
+            <Label Margin="0,10,0,0" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="Ingrese la nueva contraseña para el usuario:" FontSize="20" FontAttributes="Bold" TextColor="Black" />
+            <Label Margin="0,10,0,15" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="{Binding UserName}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource PrimaryElements}" />
 
-            <dxe:TextEdit Margin="50,0,50,15" Text="{Binding Token}" HorizontalOptions="FillAndExpand" ErrorText="Ingrese un codigo valido"  LabelText="Codigo" ReturnType="Done" HasError="{Binding ErrorToken}" TextChangedCommand="{Binding RTTokenCommand}" 
+            <dxe:TextEdit Margin="50,0,50,15" Text="{Binding Token}" IsVisible="false" HorizontalOptions="FillAndExpand" ErrorText="Ingrese un codigo valido"  LabelText="Codigo" ReturnType="Done" HasError="{Binding ErrorToken}" TextChangedCommand="{Binding RTTokenCommand}" 
                               BorderColor="{StaticResource Primary}" CursorColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" />
 
             <dxe:PasswordEdit Margin="50,0,50,10" Text="{Binding Password}" HelpText="{Binding HelpPassword}" ErrorText="Ingrese una contraseña." HasError="{Binding ErrorPassword}"  TextChangedCommand="{Binding RTPasswordCommand}" LabelText="Password"  LabelFontSize="Small" ReturnType="Done"
@@ -66,7 +66,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <ActivityIndicator IsVisible="{Binding IsBusy}"  Color="White" IsRunning="{Binding IsBusy}" HeightRequest="40" />
-                        <dxco:SimpleButton IsVisible="{Binding IsReady}" Text="Reestablecer" Command="{Binding SendTokenCommand}" TextColor="White" WidthRequest="220" BackgroundColor="Transparent" FontAttributes="Bold" />
+                        <dxco:SimpleButton IsVisible="{Binding IsReady}" Text="Reestablecer" Command="{Binding CambioCommand}" TextColor="White" WidthRequest="220" BackgroundColor="Transparent" FontAttributes="Bold" />
                     </Grid>
                 </Frame>
             </StackLayout>
@@ -75,7 +75,7 @@
         <popups:ErrorPopWsContent/>
         <popups:ExitoPopWsContent/>
 
-        <dxco:SimpleButton x:Name="btnLientek" PressedBackgroundColor="White" PressedBorderColor="White" Clicked="lientek" Command="{Binding ShowPopUpCommand}" Text="By LIENTEK" FontSize="19" HorizontalOptions="Center" BackgroundColor="Transparent" FontAttributes="Bold" Margin="0,0,0,10" VerticalOptions="EndAndExpand" TextColor="{StaticResource Lientek}" />
+        <dxco:SimpleButton x:Name="btnLientek" PressedBackgroundColor="White" PressedBorderColor="White" Clicked="lientek" Command="{Binding ShowPopUpCommand}" Text="By DIGiTH" FontSize="19" HorizontalOptions="Center" BackgroundColor="Transparent" FontAttributes="Bold" Margin="0,0,0,10" VerticalOptions="EndAndExpand" TextColor="{StaticResource Lientek}" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

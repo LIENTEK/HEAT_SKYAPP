@@ -37,6 +37,9 @@
         <Tab Title="Estres" Icon="grid">
             <ShellContent Title="Estres Calorico" ContentTemplate="{DataTemplate local:EstresCaloricoPage}"/>
         </Tab>
+        <Tab Title="Reporte" Icon="grid">
+            <ShellContent Title="Reporte Semanal" ContentTemplate="{DataTemplate local:ReportePage}"/>
+        </Tab>
     </TabBar>
 
   
