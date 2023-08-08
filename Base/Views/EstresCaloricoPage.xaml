@@ -27,11 +27,13 @@
 
     <ContentPage.Content>
         <ScrollView  >
-        <Grid RowDefinitions="auto,auto,auto,550" >
+            <Grid RowDefinitions="auto,auto,auto,550" >
+                
             <dxe:ComboBoxEdit x:Name="lkestablo" Grid.Row="0" IsVisible="true" Margin="10,5,10,5" CursorColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" DropDownBackgroundColor="{StaticResource PrimaryLight}" DropDownSelectedItemTextColor="{StaticResource Primary}" DropDownSelectedItemBackgroundColor="White" LabelColor="{StaticResource Primary}"
                           PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="ESTABLO_ID" DisplayMember="NOMBRE"  IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
             </dxe:ComboBoxEdit>
 
+    
             <Grid Grid.Row="1" RowDefinitions="25,*,*,*,*,*" ColumnDefinitions="2*,1*,1.2*"  Padding="40,10,40,20">
                 
                 <Label Text="ESTRES"  Grid.Row="0" Grid.Column="0" BackgroundColor="{StaticResource Primary}" TextColor="White" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Padding="5,0,0,0" />
@@ -66,11 +68,12 @@
             </Grid>
                 
             <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Center" >
-                    <ImageButton Source="anterior" Command="{Binding LeftCommand}"  HeightRequest="50" WidthRequest="30" />
+                    <ImageButton Source="anterior" Command="{Binding LeftCommand}"  HeightRequest="50" WidthRequest="30" IsEnabled="{Binding IsOne}" />
                     <Label Grid.Row="2" Text="{Binding Date}"  HorizontalOptions="Center" Margin="0,0,5,0" FontSize="20"  FontAttributes="Bold" TextColor="{AppThemeBinding Dark=Black,Light=Black}" VerticalOptions="Center" />
-                    <ImageButton Source="siguiente" Command="{Binding RightCommand}"  HeightRequest="50" WidthRequest="30" />
+                    <ImageButton Source="siguiente" Command="{Binding RightCommand}"  HeightRequest="50" WidthRequest="30" IsEnabled="{Binding IsOne}" />
             </StackLayout>
-            
+
+            <dxco:ShimmerView Grid.Row="3" IsVisible="true" IsLoading="{Binding IsBusy}" Margin="0">
                 <Frame Grid.Row="3" Padding="5" Margin="0" >
                 <dxc:ChartView  x:Name="Sestres" Margin="0" >
                     <!--<dxc:ChartView.GestureRecognizers>
@@ -196,6 +199,7 @@
                 </dxc:ChartView>
 
             </Frame>
+            </dxco:ShimmerView>
             
             <dxco:DXPopup IsOpen="{Binding ShowPopUp}" AllowScrim="True" BackgroundColor="White" ScrimColor="#70111111" CornerRadius="12" Margin="25" >
                 <StackLayout Padding="0,0,0,20" WidthRequest="320" >
@@ -232,6 +236,6 @@
             <popups:ErrorPopWsContent/>
             <popups:ExitoPopWsContent/>
         </Grid>
-            </ScrollView >
+        </ScrollView >
     </ContentPage.Content>
 </ContentPage>

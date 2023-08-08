@@ -176,7 +176,7 @@ namespace Base.ViewModels
 			Logged = Preferences.Get("Logged", false);
 			if (!Logged)
 			{
-				IsOne = true;
+				IsOne = false;
 				ErrorPopWsMsg = "No has iniciado session no puedes continuar.";
 				await Task.Delay(100);
 				ShowPopErrorWs = true;
@@ -185,6 +185,7 @@ namespace Base.ViewModels
 			{
 				IsOne = false;
 				IsBusy = true;
+				await Task.Delay(100);
 				fecha = DateTime.Today;
 				Date = fecha.ToString("dd/MM/yyyy");
 				LoadData();
@@ -275,7 +276,7 @@ namespace Base.ViewModels
 
 		}
 		
-		void LoadPropiedades()
+		async void LoadPropiedades()
 		{
 			UV.Clear();
 			TEMP.Clear();
@@ -360,8 +361,9 @@ namespace Base.ViewModels
 
 				}
 
-
+				await Task.Delay(1500);
 				IsBusy = false;
+				IsOne = true;
 			}
 			catch (Exception ex)
 			{
@@ -376,6 +378,8 @@ namespace Base.ViewModels
 
 		void ChangeEstablo()
 		{
+			IsBusy = true;
+			IsOne = false;
 			LoadPropiedades();
 			
 		}
@@ -394,18 +398,21 @@ namespace Base.ViewModels
 
 		void LeftConsulta()
 		{
-
+			IsBusy = true;
+			IsOne = false;
 			fecha = fecha.AddDays(-1);
 			Date = fecha.ToString("dd/MM/yyyy");
-			//LoadPropiedades();
+			LoadPropiedades();
 			
 		}
 
 		void RightConsulta()
 		{
+			IsBusy = true;
+			IsOne = false;
 			fecha = fecha.AddDays(1);
 			Date = fecha.ToString("dd/MM/yyyy");
-			//LoadPropiedades();
+			LoadPropiedades();
 		}
 		Boolean Pago()
 		{

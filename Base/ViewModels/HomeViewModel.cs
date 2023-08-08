@@ -20,6 +20,7 @@ namespace Base.ViewModels
 	{
 		public HomeViewModel()
 		{
+			IsBusy = true;
 			Items = new ObservableCollection<clsItemsMet>();
 			Establos = new ObservableCollection<clsEstablo>();
 			Propiedades = new ObservableCollection<clsPropiedades>();
@@ -150,6 +151,7 @@ namespace Base.ViewModels
 			{
 				IsOne= false;
 				IsBusy = true;
+				await Task.Delay(100);
 				LoadData();
 			}
 			
@@ -426,26 +428,28 @@ namespace Base.ViewModels
 			}
 			else
 			{
-				Items.Clear();
+				IsBusy=true;
 				await Task.Delay(1000);
-				IsBusy = true;
 				banderaleiado = 0;
 				LoadPropiedades();
 			}
 			
 		}
 
-		void ChangePropiedad()
+		async void ChangePropiedad()
 		{
             Preferences.Set("Propiedad", SelPropiedad.Id.ToString());
 			if (banderaleiado==1) {
+				IsBusy = true;
+				await Task.Delay(1000);
 				LoadPropiedades();
-				
 			}
 		}
 
-		void ChangeEstablo()
+		async void ChangeEstablo()
 		{
+			IsBusy = true;
+			await Task.Delay(1000);
 			LoadPropiedades();
 		}
 

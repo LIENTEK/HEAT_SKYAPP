@@ -35,29 +35,33 @@
                           PlaceholderText="Selecciona una propiedad" LabelText="Propiedad" ItemsSource="{Binding Propiedades}" ValueMember="Id" DisplayMember="Propiedad" IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultarPropiedad}" SelectedItem="{Binding SelPropiedad, Mode=TwoWay}" >
             </dxe:ComboBoxEdit>
 
-            <Frame  Grid.Row="3"  Margin="0" Padding="5">
-                    <dxg:DataGridView x:Name="dataGridView" ItemsSource="{Binding Items}"  FilterString="like"  CustomCellAppearance="DataGridView_CustomCellAppearance"
-                   ShowAutoFilterRow="{Binding IsReady, Mode=TwoWay}" IsRefreshing="{Binding IsBusy,Mode=TwoWay}" IsLoadMoreEnabled="{Binding IsOne, Mode=TwoWay}"  IsPullToRefreshEnabled="true" PullToRefreshCommand="{Binding LoadCommand}">
-                    <dxg:DataGridView.ColumnHeaderAppearance>
-                        <dxg:ColumnHeaderAppearance BackgroundColor="{StaticResource Primary}" FontColor="White" />
-                    </dxg:DataGridView.ColumnHeaderAppearance>
-                    <dxg:DataGridView.CellAppearance>
-                        <dxg:CellAppearance  SelectionColor="{StaticResource PrimaryElements}" />
-                    </dxg:DataGridView.CellAppearance>
-                    <dxg:DataGridView.Columns>
-                        <dxg:TextColumn Caption="HORA" FieldName="Hora" AutoFilterCondition="Contains" MinWidth="80" Column="0" FixedStyle="Start"/>
-                        <dxg:TextColumn Caption="{Binding D1}" FieldName="Valor1" MinWidth="80" AllowAutoFilter="False" />
-                        <dxg:TextColumn Caption="{Binding D2}" FieldName="Valor2" MinWidth="80" AllowAutoFilter="False" />
-                        <dxg:TextColumn Caption="{Binding D3}" FieldName="Valor3" MinWidth="80" AllowAutoFilter="False" />
-                        <dxg:TextColumn Caption="{Binding D4}" FieldName="Valor4" MinWidth="80" AllowAutoFilter="False" />
-                        <dxg:TextColumn Caption="{Binding D5}" FieldName="Valor5" MinWidth="80" AllowAutoFilter="False" />
-                        <dxg:TextColumn Caption="{Binding D6}" FieldName="Valor6" MinWidth="80" AllowAutoFilter="False" />
-                        <dxg:TextColumn Caption="{Binding D7}" FieldName="Valor7" MinWidth="80" AllowAutoFilter="False" />
-                    </dxg:DataGridView.Columns>
+                <dxco:ShimmerView Grid.Row="3" IsVisible="true" IsLoading="{Binding IsBusy}" Margin="0">
+                    <Frame  Grid.Row="3"  Margin="0" Padding="5">
+                        <dxg:DataGridView x:Name="dataGridView" ItemsSource="{Binding Items}"  FilterString="like"  CustomCellAppearance="DataGridView_CustomCellAppearance"
+                                    ShowAutoFilterRow="{Binding IsReady, Mode=TwoWay}" IsRefreshing="{Binding IsBusy,Mode=TwoWay}" IsPullToRefreshEnabled="true" PullToRefreshCommand="{Binding LoadCommand}">
+                            <dxg:DataGridView.ColumnHeaderAppearance>
+                                <dxg:ColumnHeaderAppearance BackgroundColor="{StaticResource Primary}" FontColor="White" />
+                            </dxg:DataGridView.ColumnHeaderAppearance>
+                            <dxg:DataGridView.CellAppearance>
+                                <dxg:CellAppearance  SelectionColor="{StaticResource PrimaryElements}" />
+                            </dxg:DataGridView.CellAppearance>
+                            <dxg:DataGridView.Columns>
+                                <dxg:TextColumn Caption="HORA" FieldName="Hora" AutoFilterCondition="Contains" MinWidth="80" Column="0" FixedStyle="Start"/>
+                                <dxg:TextColumn Caption="{Binding D1}" FieldName="Valor1" MinWidth="80" AllowAutoFilter="False" />
+                                <dxg:TextColumn Caption="{Binding D2}" FieldName="Valor2" MinWidth="80" AllowAutoFilter="False" />
+                                <dxg:TextColumn Caption="{Binding D3}" FieldName="Valor3" MinWidth="80" AllowAutoFilter="False" />
+                                <dxg:TextColumn Caption="{Binding D4}" FieldName="Valor4" MinWidth="80" AllowAutoFilter="False" />
+                                <dxg:TextColumn Caption="{Binding D5}" FieldName="Valor5" MinWidth="80" AllowAutoFilter="False" />
+                                <dxg:TextColumn Caption="{Binding D6}" FieldName="Valor6" MinWidth="80" AllowAutoFilter="False" />
+                                <dxg:TextColumn Caption="{Binding D7}" FieldName="Valor7" MinWidth="80" AllowAutoFilter="False" />
+                            </dxg:DataGridView.Columns>
 
-                </dxg:DataGridView>
-            </Frame>
-            <dxco:DXPopup IsOpen="{Binding ShowPopUp}" AllowScrim="True" BackgroundColor="White" ScrimColor="#70111111" CornerRadius="12" Margin="25" >
+                        </dxg:DataGridView>
+                    </Frame>
+                </dxco:ShimmerView>
+
+
+                <dxco:DXPopup IsOpen="{Binding ShowPopUp}" AllowScrim="True" BackgroundColor="White" ScrimColor="#70111111" CornerRadius="12" Margin="25" >
                 <StackLayout Padding="0,0,0,20" WidthRequest="320" >
                     <ImageButton Source="cerrar" HorizontalOptions="End" CornerRadius="10" HeightRequest="30" WidthRequest="40" Command="{Binding ShowPopUpCommand}" Margin="0" BackgroundColor="Transparent" />
 

@@ -9,6 +9,7 @@ namespace Base.ViewModels
 	{
 		public TiempoRealViewModel()
 		{
+			IsBusy = true;
 			Items = new ObservableCollection<clsTiempoReal>();
 			Establos = new ObservableCollection<clsEstablo>();
 			CommandConsultar = new Command(ChangeEstablo);
@@ -79,6 +80,7 @@ namespace Base.ViewModels
 			{
 				IsOne = false;
 				IsBusy = true;
+				await Task.Delay(1000);
 				LoadData();
 				
 				//ThFaillog = new Thread(new ThreadStart(LoadPropiedades));
@@ -231,8 +233,10 @@ namespace Base.ViewModels
 
 		}
 
-		void ChangeEstablo()
+		async void ChangeEstablo()
 		{
+			IsBusy = true;
+			await Task.Delay(1000);
 			LoadPropiedades();
 		}
 		

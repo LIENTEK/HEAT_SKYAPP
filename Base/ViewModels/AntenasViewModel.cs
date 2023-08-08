@@ -9,6 +9,7 @@ namespace Base.ViewModels
 	{
 		public AntenasViewModel()
 		{
+			IsBusy = true;
 			Items = new ObservableCollection<clsAntenas>();
 			Establos = new ObservableCollection<clsEstablo>();
 			CommandConsultar = new Command(ChangeEstablo);
@@ -79,6 +80,7 @@ namespace Base.ViewModels
 			{
 				IsOne = false;
 				IsBusy = true;
+				await Task.Delay(1000);
 				LoadData();
 			}
 		}
@@ -218,8 +220,10 @@ namespace Base.ViewModels
 
 		}
 
-		void ChangeEstablo()
+		async void ChangeEstablo()
 		{
+			IsBusy = true;
+			await Task.Delay(1000);
 			LoadPropiedades();
 		}
 

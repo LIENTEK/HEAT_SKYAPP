@@ -42,6 +42,7 @@ namespace Base.ViewModels
 		
 		public ReporteViewModel()
 		{
+			IsBusy = true;
 			Establos = new ObservableCollection<clsEstablo>();
 			CommandConsultar = new Command(ChangeEstablo);
 			ShowPopUpCommand = new Command(x => ShowPopErrorWs = false);
@@ -56,8 +57,11 @@ namespace Base.ViewModels
 				HttpResponseMessage response = await httpClient.GetAsync(URL);
 
 				PdfDocumentStream = await response.Content.ReadAsStreamAsync();
+
+				IsBusy = false;
 			}catch (Exception ex)
 			{
+				IsBusy = false;
 				ErrorPopWsMsg = ex.Message;
 				ErrorPopWsMsg = "Intente de nuevo porfavor";
 				ShowPopErrorWs =true;
@@ -90,6 +94,7 @@ namespace Base.ViewModels
 			{
 				IsOne = false;
 				IsBusy = true;
+				await Task.Delay(1000);
 				LoadData();
 			}
 		}

@@ -22,11 +22,12 @@
                           PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="ESTABLO_ID" DisplayMember="NOMBRE"   IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
             </dxe:ComboBoxEdit>
 
-            <dxcv:DXCollectionView Grid.Row="1" ItemsSource="{Binding Items}" VerticalOptions="Fill" AllowGroupCollapse="True" IsPullToRefreshEnabled="True" PullToRefreshCommand="{Binding CommandConsultar}" IsRefreshing="{Binding IsBusy,Mode=TwoWay}" ItemSpacing="0" Margin="0,0,0,15" >
-                <dxcv:DXCollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Border  Margin="20,0,20,0" HeightRequest="50">
-                              
+            <dxco:ShimmerView Grid.Row="1" IsVisible="true" IsLoading="{Binding IsBusy}" Margin="0">
+                <dxcv:DXCollectionView Grid.Row="1" ItemsSource="{Binding Items}" VerticalOptions="Fill" AllowGroupCollapse="True" IsPullToRefreshEnabled="True" PullToRefreshCommand="{Binding CommandConsultar}" IsRefreshing="{Binding IsBusy,Mode=TwoWay}" ItemSpacing="0" Margin="0,0,0,15" >
+                    <dxcv:DXCollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border  Margin="20,0,20,0" HeightRequest="50">
+
                                 <Grid ColumnDefinitions="*,*,*" RowDefinitions="*"  RowSpacing="0" ColumnSpacing="0" BackgroundColor="{StaticResource Primary}" >
                                     <!--<Button Text="Trampa" Grid.Column="0" WidthRequest="80"  CornerRadius="0" />
                                     <Button Text="Estatus"  Grid.Column="1" WidthRequest="120"   CornerRadius="0"/>
@@ -38,27 +39,27 @@
 
                                     <Button Text="{Binding TRAMPA}"  Grid.Row="0"  Grid.Column="0"   CornerRadius="0" BackgroundColor="{Binding AlertaHeader}" TextColor="Black" />
                                     <Button Text="{Binding ESTATUS}" Grid.Row="0"  Grid.Column="1"  BackgroundColor="{Binding AlertaEstatus}" CornerRadius="0" TextColor="Black" />
-                                <Button Text="{Binding DURACION, StringFormat='{N2}'}"  Grid.Row="0"  Grid.Column="2"   BackgroundColor="{Binding AlertaOffline}" CornerRadius="0" TextColor="Black" />
+                                    <Button Text="{Binding DURACION, StringFormat='{N2}'}"  Grid.Row="0"  Grid.Column="2"   BackgroundColor="{Binding AlertaOffline}" CornerRadius="0" TextColor="Black" />
 
-                            </Grid>
+                                </Grid>
 
-                        </Border>
+                            </Border>
 
-                    </DataTemplate>
-                </dxcv:DXCollectionView.ItemTemplate>
-                <dxcv:DXCollectionView.GroupDescription>
-                    <dxcv:GroupDescription FieldName="CORRAL" GroupInterval="Value"/>
-                </dxcv:DXCollectionView.GroupDescription>
-                <dxcv:DXCollectionView.GroupHeaderTemplate>
-                    <DataTemplate>
-                        <StackLayout Margin="5,10,25,5" >
-                            <Label Margin="0,20,0,1" Padding="10" TextColor="#55575c" FontSize="20" Text="{Binding Value, StringFormat='CORRAL : {0}'}" FontAttributes="Bold" />
-                            <BoxView BackgroundColor="{StaticResource Primary}" HeightRequest="3"/>
-                        </StackLayout>
-                    </DataTemplate>
-                </dxcv:DXCollectionView.GroupHeaderTemplate>
-            </dxcv:DXCollectionView>
-
+                        </DataTemplate>
+                    </dxcv:DXCollectionView.ItemTemplate>
+                    <dxcv:DXCollectionView.GroupDescription>
+                        <dxcv:GroupDescription FieldName="CORRAL" GroupInterval="Value"/>
+                    </dxcv:DXCollectionView.GroupDescription>
+                    <dxcv:DXCollectionView.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <StackLayout Margin="5,10,25,5" >
+                                <Label Margin="0,20,0,1" Padding="10" TextColor="#55575c" FontSize="20" Text="{Binding Value, StringFormat='CORRAL : {0}'}" FontAttributes="Bold" />
+                                <BoxView BackgroundColor="{StaticResource Primary}" HeightRequest="3"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </dxcv:DXCollectionView.GroupHeaderTemplate>
+                </dxcv:DXCollectionView>
+            </dxco:ShimmerView>
 
             <dxco:DXPopup IsOpen="{Binding ShowPopUp}" AllowScrim="True" BackgroundColor="White" ScrimColor="#70111111" CornerRadius="12" Margin="25" >
                 <StackLayout Padding="0,0,0,20" WidthRequest="320" >
