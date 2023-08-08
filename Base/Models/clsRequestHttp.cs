@@ -30,6 +30,7 @@ namespace Base.Models
 			HttpClient client = new HttpClient();
 			string result;
 			MainURI = MainURI + URI;
+			//client.Timeout = System.TimeSpan.FromMilliseconds(1000);
 			try
 			{
 				var content = new StringContent(JsonData, Encoding.UTF8, "application/x-www-form-urlencoded");
@@ -49,7 +50,8 @@ namespace Base.Models
             HttpClient client = new HttpClient();
             string result;
             MainURIHeat = MainURIHeat + URI;
-            try
+			//client.Timeout = System.TimeSpan.FromMilliseconds(1000);
+			try
             {
                 var content = new StringContent(JsonData, Encoding.UTF8, "application/x-www-form-urlencoded");
                 HttpResponseMessage response = client.PostAsync(MainURIHeat, content).Result;
@@ -68,6 +70,7 @@ namespace Base.Models
 			HttpClient client = new HttpClient();
 			string result;
 			MainURICOW = MainURICOW + URI;
+			//client.Timeout = System.TimeSpan.FromMilliseconds(1000);
 			try
 			{
 				var content = new StringContent(JsonData, Encoding.UTF8, "application/x-www-form-urlencoded");

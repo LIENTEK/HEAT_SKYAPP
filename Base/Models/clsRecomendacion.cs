@@ -8,9 +8,9 @@ namespace Base.Models
 {
 	public class clsRecomendacion
 	{
-		public string Amb { get; set; }
-		public string Id { get; set; }
-		public string Titulo { get; set; }
-		public string Recomendacion { get; set; }
+		public string? Amb { get; set; }
+		public string? Id { get; set; }
+		public string? Titulo { get; set; }
+		public string? Recomendacion { get; set; }
 	}
 }

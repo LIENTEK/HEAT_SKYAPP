@@ -14,7 +14,7 @@ namespace Base.ViewModels
 			ShowToken = true;
 			Pressed = false;
 
-			ShowPopUpCommand = new Command(PopUpVisible);
+			ShowPopUpLCommand = new Command(PopUpVisible);
 			ResetCommand = new Command(OnResetClick, BlockButton);
 			CambioCommand = new Command(OnSendTokenClick, BlockButton);
 
@@ -22,6 +22,7 @@ namespace Base.ViewModels
 			RTPasswordCommand = new Command(CheckPassword);
 			RTCPasswordCommand = new Command(CheckPassword);
 			RTTokenCommand = new Command(x=> ErrorToken=false);
+			ShowPopUpCommand = new Command(x => ShowPopErrorWs = false);
 		}
 
 		bool showToken = false;
@@ -39,6 +40,8 @@ namespace Base.ViewModels
 
 		#region Comands
 
+		public ICommand ShowPopUpLCommand { get; }
+
 		public ICommand ShowPopUpCommand { get; }
 
 		public ICommand CambioCommand { get; }
@@ -48,6 +51,7 @@ namespace Base.ViewModels
 		public ICommand RTPasswordCommand { get; }
 		public ICommand RTCPasswordCommand { get; }
 		public ICommand RTTokenCommand { get; }
+
 		#endregion
 
 		#region Propiedades Publicas bool
@@ -151,8 +155,7 @@ namespace Base.ViewModels
 					return;
 				}
 				ShowPopErrorWs = true;
-				ThFailReset = new Thread(new ThreadStart(hidePopUp));
-				ThFailReset.Start();
+				
 
 			}
 			Pressed = false;
@@ -221,8 +224,7 @@ namespace Base.ViewModels
 					return;
 				}
 				ShowPopErrorWs = true;
-				ThFailReset = new Thread(new ThreadStart(hidePopUp));
-				ThFailReset.Start();
+				
 				
 			};
 		}

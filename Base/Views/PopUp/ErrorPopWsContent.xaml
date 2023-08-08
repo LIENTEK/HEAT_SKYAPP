@@ -5,18 +5,21 @@
              x:Class="Base.Views.PopUp.ErrorPopWsContent"
              IsVisible="false" >
     <dxco:DXPopup IsOpen="{Binding ShowPopErrorWs}" AllowScrim="True" BackgroundColor="White" ScrimColor="#70111111" CornerRadius="12" >
-        <Grid Padding="15" WidthRequest="260" HorizontalOptions="Center" RowSpacing="10">
+        <Grid Padding="0" WidthRequest="260" HeightRequest="200" HorizontalOptions="Center" RowSpacing="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="60"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="5" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="2" />
             </Grid.ColumnDefinitions>
-            <Image Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="error" HeightRequest="50" WidthRequest="50" Margin="5" />
-            <Label Grid.Row="1" Grid.Column="1" Text="{Binding ErrorPopWsMsg}" HorizontalTextAlignment="Center" />
+            <ImageButton Grid.Row="0" Grid.Column="2" Source="cerrar" Padding="4" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="30" WidthRequest="30" Command="{Binding ShowPopUpCommand}" Margin="0"  />
+
+            <Image Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Source="error" HeightRequest="50" WidthRequest="50" Margin="5" />
+            <Label Grid.Row="2" Grid.Column="1" Text="{Binding ErrorPopWsMsg}" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light=Black, Dark=Black}" Margin="20,0,20,0" />
 
         </Grid>
     </dxco:DXPopup>

@@ -8,7 +8,11 @@ namespace Base
 		public App()
 		{
 			InitializeComponent();
-
+			Application.Current.UserAppTheme = AppTheme.Light;
+			Application.Current.RequestedThemeChanged += (s, a) =>
+			{
+				Application.Current.UserAppTheme = AppTheme.Light;
+			};
 			//DependencyService.Register<MockDataStore>();
 			DependencyService.Register<NavigationService>();
 			//Routing.RegisterRoute(typeof(NotificacionesPage).FullName, typeof(NotificacionesPage));

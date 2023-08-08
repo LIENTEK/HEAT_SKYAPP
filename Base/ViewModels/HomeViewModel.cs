@@ -27,6 +27,7 @@ namespace Base.ViewModels
 			CommandConsultar = new Command(ChangeEstablo);
 			CommandConsultarPropiedad = new Command(ChangePropiedad);
 			LoadCommand = new Command(Refresh);
+			ShowPopUpCommand = new Command(x => ShowPopErrorWs = false);
 		}
 
 
@@ -42,6 +43,7 @@ namespace Base.ViewModels
 		string d7 = string.Empty;
 		clsPropiedadesMet[][] res;
 		int banderaleiado = 0;
+		string strrq=string.Empty;
 		#endregion
 
 		#region Propiedades bool
@@ -97,7 +99,7 @@ namespace Base.ViewModels
 		}
 		public DateTime FechaSemana
 		{
-			get => DateTime.Now.AddDays(7);
+			get => DateTime.Now.AddDays(6);
 		}
 
 		public ObservableCollection<clsItemsMet> Items { get;  set; }
@@ -110,11 +112,12 @@ namespace Base.ViewModels
 		public ICommand CommandCalendario { get; }
 		public ICommand CommandConsultar { get; }
 		public ICommand CommandConsultarPropiedad { get; }
+		public Command ShowPopUpCommand { get; }
 
-        public Thread ThFaillog { get; set; }
+		public Thread ThFaillog { get; set; }
 
 
-        clsEstablo selEstablo;
+		clsEstablo selEstablo;
 		public clsEstablo SelEstablo
 		{
 			get => this.selEstablo;
@@ -147,8 +150,7 @@ namespace Base.ViewModels
 			{
 				IsOne= false;
 				IsBusy = true;
-				ThFaillog = new Thread(new ThreadStart(LoadData));
-				ThFaillog.Start();
+				LoadData();
 			}
 			
 		}
@@ -172,7 +174,7 @@ namespace Base.ViewModels
 
 						//obtener establos
 						var rqestablo = new clsConsultas();
-						var strrq = rqestablo.ObtenerEstablos(objuser.USUARIO_ID.ToString());
+						strrq = rqestablo.ObtenerEstablos(objuser.USUARIO_ID.ToString());
 
 						var responseestablos = JsonConvert.DeserializeObject<List<clsEstablo>>(strrq);
 
@@ -196,8 +198,7 @@ namespace Base.ViewModels
 								var error = JsonConvert.DeserializeObject<clsEstablo>(strrq);
 								ErrorPopWsMsg = error.NOMBRE;
 								ShowPopErrorWs = true;
-								ThFaillog = new Thread(new ThreadStart(hidePopUp));
-								ThFaillog.Start();
+								
 							}
 						}
 
@@ -233,10 +234,10 @@ namespace Base.ViewModels
 					catch (Exception ex)
 					{
 						IsBusy = false;
-						ErrorPopWsMsg = ex.Message;
+						ErrorPopWsMsg = ex.Message + strrq;
+						ErrorPopWsMsg = "Intente de nuevo porfavor";
 						ShowPopErrorWs = true;
-						ThFaillog = new Thread(new ThreadStart(hidePopUp));
-						ThFaillog.Start();
+						
 					}
 
 
@@ -271,9 +272,9 @@ namespace Base.ViewModels
 
 			try
 			{
-
-				Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-				var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
+				var id = int.Parse(SelEstablo.ESTABLO_ID.ToString());
+				Preferences.Set("IdEstablo", id);
+				strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
 				res = JsonConvert.DeserializeObject<clsPropiedadesMet[][]>(strrq);
 
 
@@ -405,10 +406,10 @@ namespace Base.ViewModels
 			catch(Exception ex)
 			{
 				IsBusy = false;
-				ErrorPopWsMsg = ex.Message;
+				ErrorPopWsMsg = ex.Message +strrq;
+				ErrorPopWsMsg = "Intente de nuevo porfavor";
 				ShowPopErrorWs = true;
-				ThFaillog = new Thread(new ThreadStart(hidePopUp));
-				ThFaillog.Start();
+				
 			}
 			
 		}
@@ -438,15 +439,14 @@ namespace Base.ViewModels
 		{
             Preferences.Set("Propiedad", SelPropiedad.Id.ToString());
 			if (banderaleiado==1) {
-				ThFaillog = new Thread(new ThreadStart(LoadPropiedades));
-				ThFaillog.Start();
+				LoadPropiedades();
+				
 			}
 		}
 
 		void ChangeEstablo()
 		{
-			ThFaillog = new Thread(new ThreadStart(LoadPropiedades));
-			ThFaillog.Start();
+			LoadPropiedades();
 		}
 
 		Boolean Pago()

@@ -12,6 +12,8 @@ namespace Base.ViewModels
 			Items = new ObservableCollection<clsTiempoReal>();
 			Establos = new ObservableCollection<clsEstablo>();
 			CommandConsultar = new Command(ChangeEstablo);
+			ShowPopUpCommand = new Command(x => ShowPopErrorWs = false);
+			
 		}
 
 
@@ -39,6 +41,8 @@ namespace Base.ViewModels
 		#region Commands
 		public ICommand CommandCalendario { get; }
 		public ICommand CommandConsultar { get; }
+
+		public Command ShowPopUpCommand { get; }
 
 		public Thread ThFaillog { get; set; }
 
@@ -76,6 +80,7 @@ namespace Base.ViewModels
 				IsOne = false;
 				IsBusy = true;
 				LoadData();
+				
 				//ThFaillog = new Thread(new ThreadStart(LoadPropiedades));
 				//ThFaillog.Start();
 			}
@@ -128,8 +133,7 @@ namespace Base.ViewModels
 							var responerror = JsonConvert.DeserializeObject<clsEstablo>(strrq);
 							ErrorPopWsMsg = responerror.NOMBRE;
 							ShowPopErrorWs = true;
-							ThFaillog = new Thread(new ThreadStart(hidePopUp));
-							ThFaillog.Start();
+							
 						}
 					}
 
@@ -141,9 +145,9 @@ namespace Base.ViewModels
 				{
 					IsBusy = false;
 					ErrorPopWsMsg = ex.Message + Environment.NewLine + Environment.NewLine + strrq;
+					ErrorPopWsMsg = "Intente de nuevo porfavor";
 					ShowPopErrorWs = true;
-					ThFaillog = new Thread(new ThreadStart(hidePopUp));
-					ThFaillog.Start();
+					
 				}
 
 			}
@@ -174,7 +178,8 @@ namespace Base.ViewModels
 
 			try
 			{
-				Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
+				var id = int.Parse(SelEstablo.ESTABLO_ID.ToString());
+				Preferences.Set("IdEstablo", id);
 
 				strrq = new clsConsultas().ObtenerCorrales(SelEstablo.ESTABLO_ID.ToString());
 				var res = JsonConvert.DeserializeObject<List<clsTiempoReal>>(strrq);
@@ -212,17 +217,16 @@ namespace Base.ViewModels
 					Items.Add(item);
 				}
 
-				await Task.Delay(1500);
 				IsBusy = false;
 			}
 			catch (Exception ex)
 			{
-				await Task.Delay(1500);
+				await Task.Delay(500);
 				IsBusy = false;
 				ErrorPopWsMsg = ex.Message + Environment.NewLine + Environment.NewLine + strrq;
+				ErrorPopWsMsg = "Intente de nuevo porfavor";
 				ShowPopErrorWs = true;
-				ThFaillog = new Thread(new ThreadStart(hidePopUp));
-				ThFaillog.Start();
+				
 			}
 
 		}

@@ -17,10 +17,9 @@ namespace Base
 			var builder = MauiApp.CreateBuilder();
 			builder
 				.UseMauiApp<App>()
-				.UseDevExpress(useLocalization: true)
-				.UseMauiCommunityToolkitMediaElement()
+				//.UseMauiCommunityToolkitMediaElement()
 				.ConfigureSyncfusionCore()
-				.UseLocalNotification()
+				//.UseLocalNotification()
 				.ConfigureFonts(fonts =>
 				{
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -33,9 +32,17 @@ namespace Base
 				.ConfigureEffects((effects) =>
 				{
 					effects.AddCompatibilityEffects(AppDomain.CurrentDomain.GetAssemblies());
-				});
+				})
+				.UseDevExpress(useLocalization: true);
+				DevExpress.Maui.Charts.Initializer.Init();
+				DevExpress.Maui.CollectionView.Initializer.Init();
+				DevExpress.Maui.Controls.Initializer.Init();
+				DevExpress.Maui.Editors.Initializer.Init();
+				DevExpress.Maui.DataGrid.Initializer.Init();
+				DevExpress.Maui.Scheduler.Initializer.Init();
 
-			
+
+
 			return builder.Build();
 		}
 

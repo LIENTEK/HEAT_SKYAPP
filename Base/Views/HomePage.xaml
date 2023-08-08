@@ -17,7 +17,8 @@
              x:Class="Base.Views.HomePage">
 
     <ContentPage.Content>
-        <Grid BackgroundColor="Transparent" RowDefinitions="70,70,70,*" >
+        <ScrollView >
+        <Grid BackgroundColor="Transparent" RowDefinitions="70,70,70,550" >
             <dxe:ComboBoxEdit x:Name="lkestablo" Grid.Row="0" Margin="10,5,10,5" CursorColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" DropDownBackgroundColor="{StaticResource PrimaryLight}" DropDownSelectedItemTextColor="{StaticResource Primary}" DropDownSelectedItemBackgroundColor="White" LabelColor="{StaticResource Primary}"
                           PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="ESTABLO_ID" DisplayMember="NOMBRE"  IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
             </dxe:ComboBoxEdit>
@@ -35,7 +36,7 @@
             </dxe:ComboBoxEdit>
 
             <Frame  Grid.Row="3"  Margin="0" Padding="5">
-                <dxg:DataGridView x:Name="grid" ItemsSource="{Binding Items}"  FilterString="like"  CustomCellAppearance="DataGridView_CustomCellAppearance"
+                    <dxg:DataGridView x:Name="dataGridView" ItemsSource="{Binding Items}"  FilterString="like"  CustomCellAppearance="DataGridView_CustomCellAppearance"
                    ShowAutoFilterRow="{Binding IsReady, Mode=TwoWay}" IsRefreshing="{Binding IsBusy,Mode=TwoWay}" IsLoadMoreEnabled="{Binding IsOne, Mode=TwoWay}"  IsPullToRefreshEnabled="true" PullToRefreshCommand="{Binding LoadCommand}">
                     <dxg:DataGridView.ColumnHeaderAppearance>
                         <dxg:ColumnHeaderAppearance BackgroundColor="{StaticResource Primary}" FontColor="White" />
@@ -91,5 +92,6 @@
             <popups:ErrorPopWsContent/>
             <popups:ExitoPopWsContent/>
         </Grid>
+    </ScrollView >
     </ContentPage.Content>
 </ContentPage>

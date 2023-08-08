@@ -7,7 +7,7 @@
 
     <dxco:DXPopup IsOpen="{Binding ShowPopUp}" AllowScrim="True" BackgroundColor="White" ScrimColor="#70111111" CornerRadius="12" Margin="25">
         <StackLayout Padding="0,0,0,20" WidthRequest="320" >
-            <ImageButton Source="cerrar" HorizontalOptions="End" Padding="3" CornerRadius="10" HeightRequest="30" WidthRequest="40" Command="{Binding ShowPopUpCommand}" Margin="0" BackgroundColor="Transparent" />
+            <ImageButton Source="cerrar" HorizontalOptions="End" Padding="3" CornerRadius="10" HeightRequest="30" WidthRequest="40" Command="{Binding ShowPopUpLCommand}" Margin="0" BackgroundColor="Transparent" />
 
             <Grid HorizontalOptions="Center"  RowSpacing="5" ColumnSpacing="0" >
                 <Grid.RowDefinitions>
@@ -22,8 +22,8 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="{Binding Company}" HorizontalOptions="Center" FontSize="25" FontAttributes="Bold"/>
-                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"  Padding="40,0,40,0" Text="{Binding MsgLientek}" HorizontalOptions="Center" VerticalOptions="Center" />
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="{Binding Company}"  TextColor="{AppThemeBinding Light=Black, Dark=Black}" HorizontalOptions="Center" FontSize="25" FontAttributes="Bold"/>
+                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"  Padding="40,0,40,0" Text="{Binding MsgLientek}"  TextColor="{AppThemeBinding Light=Black, Dark=Black}" HorizontalOptions="Center" VerticalOptions="Center" />
                 <ImageButton Grid.Row="2" Grid.Column="0" Aspect="AspectFit" Source="llamada" Command="{Binding OpenCallCommand}" HorizontalOptions="Center" VerticalOptions="Center" />
                 <ImageButton Grid.Row="2" Grid.Column="1" Aspect="AspectFit" Source="facebook" Command="{Binding OpenFbCommand}" HorizontalOptions="Center" VerticalOptions="Center" />
                 <ImageButton Grid.Row="2" Grid.Column="2" Aspect="AspectFit" Source="google" Command="{Binding OpenWebCommand}" HorizontalOptions="Center" VerticalOptions="Center" />

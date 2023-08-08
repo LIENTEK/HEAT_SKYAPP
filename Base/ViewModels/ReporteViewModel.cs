@@ -28,9 +28,10 @@ namespace Base.ViewModels
 
 		string strrq = "";
 		public Command CommandConsultar { get; }
+		public Command ShowPopUpCommand { get; }
 
 		public ObservableCollection<clsEstablo> Establos { get; set; }
-		public Thread ThFaillog { get; set; }
+		//public Thread ThFaillog { get; set; }
 
 		clsEstablo selEstablo;
 		public clsEstablo SelEstablo
@@ -43,6 +44,7 @@ namespace Base.ViewModels
 		{
 			Establos = new ObservableCollection<clsEstablo>();
 			CommandConsultar = new Command(ChangeEstablo);
+			ShowPopUpCommand = new Command(x => ShowPopErrorWs = false);
 		}
 
 		
@@ -57,9 +59,9 @@ namespace Base.ViewModels
 			}catch (Exception ex)
 			{
 				ErrorPopWsMsg = ex.Message;
-				ShowPopErrorWs=true;
-				ThFaillog = new Thread(new ThreadStart(hidePopUp));
-				ThFaillog.Start();
+				ErrorPopWsMsg = "Intente de nuevo porfavor";
+				ShowPopErrorWs =true;
+				
 			}
 		}
 
@@ -69,8 +71,7 @@ namespace Base.ViewModels
 		//}
 		void ChangeEstablo()
 		{
-			ThFaillog = new Thread(new ThreadStart(LoadPDF));
-			ThFaillog.Start();
+			LoadPDF();
 		}
 
 
@@ -89,8 +90,7 @@ namespace Base.ViewModels
 			{
 				IsOne = false;
 				IsBusy = true;
-				ThFaillog = new Thread(new ThreadStart(LoadData));
-				ThFaillog.Start();
+				LoadData();
 			}
 		}
 
@@ -141,8 +141,6 @@ namespace Base.ViewModels
 							var error = JsonConvert.DeserializeObject<clsEstablo>(strrq);
 							ErrorPopWsMsg = error.NOMBRE;
 							ShowPopErrorWs = true;
-							ThFaillog = new Thread(new ThreadStart(hidePopUp));
-							ThFaillog.Start();
 						}
 					}
 
@@ -154,9 +152,8 @@ namespace Base.ViewModels
 				{
 					IsBusy = false;
 					ErrorPopWsMsg = ex.Message + Environment.NewLine + Environment.NewLine + strrq;
+					ErrorPopWsMsg = "Intente de nuevo porfavor";
 					ShowPopErrorWs = true;
-					ThFaillog = new Thread(new ThreadStart(hidePopUp));
-					ThFaillog.Start();
 				}
 
 			}

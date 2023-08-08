@@ -42,6 +42,9 @@ namespace Base.ViewModels
 
 			Establos = new ObservableCollection<clsEstablo>();
 			CommandConsultar = new Command(ChangeEstablo);
+			ShowPopUpCommand = new Command(x => ShowPopErrorWs = false);
+			LeftCommand = new Command(LeftConsulta);
+			RightCommand = new Command(RightConsulta);
 			//LoadData();
 
 		}
@@ -60,6 +63,7 @@ namespace Base.ViewModels
 		ObservableCollection<Item> humedad = new ObservableCollection<Item>();
 		string p1,p2,p3,p4,p5,p6 = string.Empty;
 		string h1,h2,h3,h4,h5,h6 = string.Empty;
+		DateTime fecha;	
 		#endregion
 
 		#region Propiedades bool
@@ -154,6 +158,12 @@ namespace Base.ViewModels
 		#region Commands
 		public ICommand CommandConsultar { get; }
 
+		public Command ShowPopUpCommand { get; }
+
+		public Command LeftCommand { get; }
+
+		public Command RightCommand { get; }
+
 		public Thread ThFaillog { get; set; }
 
 		#endregion
@@ -175,8 +185,10 @@ namespace Base.ViewModels
 			{
 				IsOne = false;
 				IsBusy = true;
-				ThFaillog = new Thread(new ThreadStart(LoadData));
-				ThFaillog.Start();
+				fecha = DateTime.Today;
+				Date = fecha.ToString("dd/MM/yyyy");
+				LoadData();
+				
 			}
 		}
 		async void LoadData()
@@ -220,14 +232,10 @@ namespace Base.ViewModels
 							var error = JsonConvert.DeserializeObject<clsEstablo>(strrq);
 							ErrorPopWsMsg = error.NOMBRE;
 							ShowPopErrorWs = true;
-							ThFaillog = new Thread(new ThreadStart(hidePopUp));
-							ThFaillog.Start();
+							
 						}
 					}
 
-										
-					
-					Date = DateTime.Now.ToString("dd/MM/yyyy");
 					UV = new ObservableCollection<Item>();
 					TEMP = new ObservableCollection<Item>();
 					ITH = new ObservableCollection<Item>();
@@ -252,9 +260,9 @@ namespace Base.ViewModels
 				{
 					IsBusy = false;
 					ErrorPopWsMsg = ex.Message;
+					ErrorPopWsMsg = "Intente de nuevo porfavor";
 					ShowPopErrorWs = true;
-					ThFaillog = new Thread(new ThreadStart(hidePopUp));
-					ThFaillog.Start();
+					
 				}
 
 			}
@@ -277,9 +285,9 @@ namespace Base.ViewModels
 			try
 			{
 				res = new List<clsChart>();
-
-				Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-				var strrq = new clsConsultas().DatosChart(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
+				var id = int.Parse(SelEstablo.ESTABLO_ID.ToString());
+				Preferences.Set("IdEstablo", id);
+				var strrq = new clsConsultas().DatosChart(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString(),Date);
 				res = JsonConvert.DeserializeObject<List<clsChart>>(strrq);
 
 
@@ -359,9 +367,8 @@ namespace Base.ViewModels
 			{
 				IsBusy = false;
 				ErrorPopWsMsg = ex.Message;
+				ErrorPopWsMsg = "Intente de nuevo porfavor";
 				ShowPopErrorWs = true;
-				ThFaillog = new Thread(new ThreadStart(hidePopUp));
-				ThFaillog.Start();
 			}
 
 
@@ -369,8 +376,8 @@ namespace Base.ViewModels
 
 		void ChangeEstablo()
 		{
-			ThFaillog = new Thread(new ThreadStart(LoadPropiedades));
-			ThFaillog.Start();
+			LoadPropiedades();
+			
 		}
 		async void hidePopUp()
 		{
@@ -383,6 +390,22 @@ namespace Base.ViewModels
 				await Task.Delay(5000);
 			}
 			ShowPopErrorWs = false;
+		}
+
+		void LeftConsulta()
+		{
+
+			fecha = fecha.AddDays(-1);
+			Date = fecha.ToString("dd/MM/yyyy");
+			//LoadPropiedades();
+			
+		}
+
+		void RightConsulta()
+		{
+			fecha = fecha.AddDays(1);
+			Date = fecha.ToString("dd/MM/yyyy");
+			//LoadPropiedades();
 		}
 		Boolean Pago()
 		{

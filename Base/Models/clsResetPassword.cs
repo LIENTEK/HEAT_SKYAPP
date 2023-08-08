@@ -8,12 +8,12 @@ namespace Base.Models
 {
     public class clsResetPassword
     {
-		public string Amb { get; set; }
-		public string Id { get; set; }
-		public string User { get; set; }
-        public string Codigo { get; set; }
-		public string Password { get; set; }
-		public string Cpassword { get; set; }
+		public string? Amb { get; set; }
+		public string? Id { get; set; }
+		public string? User { get; set; }
+        public string? Codigo { get; set; }
+		public string? Password { get; set; }
+		public string? Cpassword { get; set; }
 		
 	}
 }

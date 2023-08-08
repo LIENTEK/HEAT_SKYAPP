@@ -31,59 +31,58 @@ namespace Base.Views
 
 		void DataGridView_CustomCellAppearance(object sender, CustomCellAppearanceEventArgs e)
 		{
-			
+			e.FontColor = Colors.Black;
 			try
-			{
-				var X = vm.Items;
-				double value = (double)grid.GetCellValue(e.RowHandle, "Valor1");
-				if (value >= 39.5)
-				{
-					e.FontColor = Color.FromRgb(255, 199, 206);
-				}
-				if (value >= 39 && value < 39.5)
-				{
-					e.FontColor = Color.FromRgb(255, 235, 156);
-				}
+			{			
 
-				//if (vm.SelPropiedad.Id.Equals("Temperatura °C"))
-				//{
-				//		double value = (double)grid.GetCellValue(e.RowHandle, e.FieldName);
-				//		if (value >= 39.5)
-				//		{
-				//			e.FontColor = Color.FromRgb(255, 199, 206);
-				//		}
-				//		if (value >= 39 && value < 39.5)
-				//		{
-				//			e.FontColor = Color.FromRgb(255, 235, 156);
-				//		}
-
-				//}
-				//else if (vm.SelPropiedad.Id.Equals("ITH"))
-				//{
-				//		double value = (double)grid.GetCellValue(e.RowHandle, e.FieldName);
-				//		if (value >= 80)
-				//		{
-				//			e.FontColor = Color.FromRgb(255, 117, 117);
-				//		}
-				//		if (value >= 74 && value < 80)
-				//		{
-				//			e.FontColor = Color.FromRgb(255, 204, 102);
-				//		}
-				//		if (value >= 60 && value < 74)
-				//		{
-				//			e.FontColor = Color.FromRgb(255, 255, 153);
-				//		}
-				//}
-				//else
-				//{
-				//	e.FontColor = Colors.Black;
-				//}
+				if (vm.SelPropiedad.Id.Equals("Temperatura °C"))
+				{
+					if (e.FieldName != "Hora")
+					{
+						double value = double.Parse(dataGridView.GetCellValue(e.RowHandle, e.FieldName).ToString());
+						if (value >= 39.5)
+						{
+							e.BackgroundColor = Color.FromRgb(255, 199, 206);
+						}
+						if (value >= 39 && value < 39.5)
+						{
+							e.BackgroundColor = Color.FromRgb(255, 235, 156);
+						}
+					}
+				}
+				else if (vm.SelPropiedad.Id.Equals("ITH"))
+				{
+					if (e.FieldName != "Hora")
+					{
+						double value = double.Parse(dataGridView.GetCellValue(e.RowHandle, e.FieldName).ToString());
+						if (value >= 80)
+						{
+							e.BackgroundColor = Color.FromRgb(255, 117, 117);
+						}
+						if (value >= 74 && value < 80)
+						{
+							e.BackgroundColor = Color.FromRgb(255, 204, 102);
+						}
+						if (value >= 60 && value < 74)
+						{
+							e.BackgroundColor = Color.FromRgb(255, 255, 153);
+						}
+					}
+				}
+				else
+				{
+					if (e.FieldName != "Hora")
+					{
+						e.FontColor = Colors.Black;
+					}
+				}
 
 
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
-				e.FontColor = Colors.Black;
+				vm.ErrorPopWsMsg = ex.Message;
+				//vm.ShowPopErrorWs = true;
 			}
 		}
 

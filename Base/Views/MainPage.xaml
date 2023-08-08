@@ -25,7 +25,7 @@
             <ShellContent ContentTemplate="{DataTemplate local:NotificacionesPage}" />
         </Tab>-->
 
-        <Tab Title="Forecast" Icon="charts" Route="Home">
+        <Tab Title="Forecast" Icon="scheduler" Route="Home">
             <ShellContent ContentTemplate="{DataTemplate local:HomePage}"/>
         </Tab>
 
@@ -34,7 +34,7 @@
             <ShellContent Title="Trampas" ContentTemplate="{DataTemplate local:TrampasPage}"/>
             <ShellContent Title="Antenas" ContentTemplate="{DataTemplate local:AntenasPage}"/>
         </Tab>
-        <Tab Title="Estres" Icon="grid">
+        <Tab Title="Estres" Icon="charts">
             <ShellContent Title="Estres Calorico" ContentTemplate="{DataTemplate local:EstresCaloricoPage}"/>
         </Tab>
         <Tab Title="Reporte" Icon="grid">

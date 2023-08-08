@@ -12,6 +12,7 @@ namespace Base.ViewModels
 			Items = new ObservableCollection<clsAntenas>();
 			Establos = new ObservableCollection<clsEstablo>();
 			CommandConsultar = new Command(ChangeEstablo);
+			ShowPopUpCommand = new Command(x => ShowPopErrorWs = false);
 		}
 
 
@@ -40,6 +41,8 @@ namespace Base.ViewModels
 		#region Commands
 		public ICommand CommandCalendario { get; }
 		public ICommand CommandConsultar { get; }
+
+		public Command ShowPopUpCommand { get; }
 
 		public Thread ThFaillog { get; set; }
 
@@ -84,7 +87,9 @@ namespace Base.ViewModels
 		{
 			if (Pago())
 			{
+				
 				Establos.Clear();
+				
 
 				try
 				{
@@ -121,8 +126,7 @@ namespace Base.ViewModels
 							var error = JsonConvert.DeserializeObject<clsEstablo>(strrq);
 							ErrorPopWsMsg = error.NOMBRE;
 							ShowPopErrorWs = true;
-							ThFaillog = new Thread(new ThreadStart(hidePopUp));
-							ThFaillog.Start();
+							
 						}
 					}
 
@@ -134,9 +138,9 @@ namespace Base.ViewModels
 				{
 					IsBusy = false;
 					ErrorPopWsMsg = ex.Message + Environment.NewLine + Environment.NewLine + strrq;
+					ErrorPopWsMsg = "Intente de nuevo porfavor";
 					ShowPopErrorWs = true;
-					ThFaillog = new Thread(new ThreadStart(hidePopUp));
-					ThFaillog.Start();
+					
 				}
 
 			}
@@ -163,11 +167,13 @@ namespace Base.ViewModels
 
 		async void LoadPropiedades()
 		{
+			//Items = new ObservableCollection<clsAntenas>();
 			Items.Clear();
 
 			try
 			{
-				Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
+				var id = int.Parse(SelEstablo.ESTABLO_ID.ToString());
+				Preferences.Set("IdEstablo", id);
 
 				strrq = new clsConsultas().ObtenerAntenas(SelEstablo.ESTABLO_ID.ToString());
 				var res = JsonConvert.DeserializeObject<List<clsAntenas>>(strrq);
@@ -177,10 +183,19 @@ namespace Base.ViewModels
 					item.AlertaEstatus = Colors.Green;
 					item.AlertaOffline = Colors.White;
 
-					if (item.ULTIMO_ESTATUS.Equals("OFFLINE"))
+					if (string.IsNullOrEmpty(item.ULTIMO_ESTATUS))
 					{
 						item.AlertaEstatus = Colors.Red;
 					}
+					else
+					{
+						if (item.ULTIMO_ESTATUS.Equals("OFFLINE"))
+						{
+							item.AlertaEstatus = Colors.Red;
+						}
+					}
+
+					
 
 					if (item.HORAS_OFFLINE > 200)
 					{
@@ -189,17 +204,16 @@ namespace Base.ViewModels
 					Items.Add(item);
 				}
 
-				await Task.Delay(1500);
 				IsBusy = false;
 			}
 			catch (Exception ex)
 			{
-				await Task.Delay(1500);
+				await Task.Delay(500);
 				IsBusy = false;
 				ErrorPopWsMsg = ex.Message + Environment.NewLine + Environment.NewLine + strrq;
+				ErrorPopWsMsg = "Intente de nuevo porfavor";
 				ShowPopErrorWs = true;
-				ThFaillog = new Thread(new ThreadStart(hidePopUp));
-				ThFaillog.Start();
+				
 			}
 
 		}

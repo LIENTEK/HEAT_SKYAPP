@@ -92,9 +92,9 @@ namespace Base.Models
 			return result;
 		}
 
-		public string DatosChart(string lat, string lon)
+		public string DatosChart(string lat, string lon,string date)
 		{
-			string jsnversion = "lat=" + lat + "&lon=" + lon;
+			string jsnversion = "lat=" + lat + "&lon=" + lon + "&fecha=" + date;
 			clsRequestHttp req = new clsRequestHttp();
 			req.JsonData = jsnversion;
 			req.URI = "/GraficaClima24";

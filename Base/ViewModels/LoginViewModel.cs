@@ -12,7 +12,7 @@ namespace Base.ViewModels
 			ChecarVersion();
 			
 
-			ShowPopUpCommand = new Command(PopUpVisible);
+			ShowPopUpLCommand = new Command(PopUpVisible);
 			ResetTextBoxUserCommand = new Command(x => ErrorUser = false);
 			ResetTextBoxPasswordCommand = new Command(x => ErrorPassword = false);
 			LoginCommand = new Command(OnLoginClicked);
@@ -23,6 +23,7 @@ namespace Base.ViewModels
 			OpenCallCommand = new Command(Call);
 			OpenCorreoCommand = new Command(Correo);
 			OpenWebCommand = new Command(WebPage);
+			ShowPopUpCommand = new Command(x => ShowPopErrorWs = false);
 
 		}
 
@@ -41,6 +42,7 @@ namespace Base.ViewModels
 
 		#region Comands
 		public ICommand ShowPopUpCommand { get; }
+		public ICommand ShowPopUpLCommand { get; }
 		public ICommand LoginCommand { get; }
 		public ICommand LogOutCommand { get; }
 		public ICommand ResetCommand { get; }
@@ -152,8 +154,6 @@ namespace Base.ViewModels
 				IsBusy = false;
 				IsReady = true;
 				ShowPopErrorWs= true;
-				ThFaillog = new Thread(new ThreadStart(hidePopUp));
-				ThFaillog.Start();
 			}
 		}
 
@@ -266,6 +266,7 @@ namespace Base.ViewModels
 			}
 			catch
 			{
+				ErrorPopWsMsg = "Intente de nuevo porfavor";
 				IsBusy = false;
 				IsReady = true;
 				return false;
@@ -371,16 +372,14 @@ namespace Base.ViewModels
 				{
 					ErrorPopWsMsg = str;
 					ShowPopErrorWs = true;
-					ThFaillog = new Thread(new ThreadStart(hidePopUp));
-					ThFaillog.Start();
+					
 				}
 			}
 			else
 			{
 				ErrorPopWsMsg = "Ingresa un usuario valido";
 				ShowPopErrorWs = true;
-				ThFaillog = new Thread(new ThreadStart(hidePopUp));
-				ThFaillog.Start();
+				
 			}
 			await Task.Delay(500);
 			Pressed = false;

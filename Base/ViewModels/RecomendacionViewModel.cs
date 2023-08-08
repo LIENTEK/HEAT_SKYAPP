@@ -16,14 +16,12 @@ namespace Base.ViewModels
 			Items = new ObservableCollection<clsTiempoReal>();
 			Establos = new ObservableCollection<clsEstablo>();
 			CommandConsultar = new Command(LoadPropiedades);
-			banderaleiado = 0;
 		}
 
 
 
 		#region Variables
 			string nombre = string.Empty;
-			int banderaleiado = 0;
 		#endregion
 
 		#region Propiedades bool
@@ -170,43 +168,7 @@ namespace Base.ViewModels
 		{
 			Items.Clear();
 
-			try
-			{
-				var establo = Preferences.Get("IdEstablo", 0);
-				if (establo == SelEstablo.ESTABLO_ID && banderaleiado == 0)
-				{
-					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-					var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
-
-				}
-				else if (establo == SelEstablo.ESTABLO_ID && banderaleiado == 1)
-				{
-					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-					//var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
-					//res = JsonConvert.DeserializeObject<clsPropiedadesMet[][]>(strrq);
-				}
-				else
-				{
-					Preferences.Set("IdEstablo", SelEstablo.ESTABLO_ID);
-					var strrq = new clsConsultas().ObtenerAllData(SelEstablo.LATITUD.ToString(), SelEstablo.LONGITUD.ToString());
-
-				}
-
-				var elemento = new clsItemsMet();
-
-
-
-				banderaleiado = 1;
-				IsBusy = false;
-			}
-			catch (Exception ex)
-			{
-				IsBusy = false;
-				ErrorPopWsMsg = ex.Message;
-				ShowPopErrorWs = true;
-				ThFaillog = new Thread(new ThreadStart(hidePopUp));
-				ThFaillog.Start();
-			}
+	
 
 		}
 
@@ -215,7 +177,6 @@ namespace Base.ViewModels
 			Items.Clear();
 			await Task.Delay(1000);
 			IsBusy = true;
-			banderaleiado = 0;
 			LoadPropiedades();
 		}
 

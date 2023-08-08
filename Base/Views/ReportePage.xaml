@@ -6,14 +6,14 @@
              xmlns:popups="clr-namespace:Base.Views.PopUp"
              xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
              x:Class="Base.Views.ReportePage"
+             Shell.NavBarIsVisible="False"
              Title="Reporte Semanal">
-
 
     <Grid RowDefinitions="auto,*">
         <dxe:ComboBoxEdit Grid.Row="0" x:Name="lkestablo" Margin="10,5,10,5" CursorColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" DropDownBackgroundColor="{StaticResource PrimaryLight}" DropDownSelectedItemTextColor="{StaticResource Primary}" DropDownSelectedItemBackgroundColor="White" LabelColor="{StaticResource Primary}"
                           PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="ESTABLO_ID" DisplayMember="NOMBRE"   IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
         </dxe:ComboBoxEdit>
-        <syncfusion:SfPdfViewer Grid.Row="1" x:Name="pdfview" BackgroundColor="LightGray"
+        <syncfusion:SfPdfViewer Grid.Row="1" x:Name="pdfview" BackgroundColor="LightGray" MaxZoomFactor="10"
                                DocumentSource="{Binding PdfDocumentStream}">
             <syncfusion:SfPdfViewer.Resources>
                 <Style TargetType="ActivityIndicator" ApplyToDerivedTypes="False">
