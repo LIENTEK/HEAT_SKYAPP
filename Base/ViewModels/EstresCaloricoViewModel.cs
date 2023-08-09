@@ -361,7 +361,6 @@ namespace Base.ViewModels
 
 				}
 
-				await Task.Delay(1500);
 				IsBusy = false;
 				IsOne = true;
 			}
@@ -396,22 +395,24 @@ namespace Base.ViewModels
 			ShowPopErrorWs = false;
 		}
 
-		void LeftConsulta()
+		async void LeftConsulta()
 		{
-			IsBusy = true;
-			IsOne = false;
 			fecha = fecha.AddDays(-1);
 			Date = fecha.ToString("dd/MM/yyyy");
+			IsBusy = true;
+			IsOne = false;
+			await Task.Delay(1000);
 			LoadPropiedades();
 			
 		}
 
-		void RightConsulta()
+		async void RightConsulta()
 		{
-			IsBusy = true;
-			IsOne = false;
 			fecha = fecha.AddDays(1);
 			Date = fecha.ToString("dd/MM/yyyy");
+			IsBusy = true;
+			IsOne = false;
+			await Task.Delay(1000);
 			LoadPropiedades();
 		}
 		Boolean Pago()
