@@ -18,12 +18,12 @@
 
     <ContentPage.Content>
         <Grid BackgroundColor="Transparent" RowDefinitions="auto,*" >
-            <dxe:ComboBoxEdit Grid.Row="0" x:Name="lkestablo" Margin="10,5,10,5" CursorColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" DropDownBackgroundColor="{StaticResource PrimaryLight}" DropDownSelectedItemTextColor="{StaticResource Primary}" DropDownSelectedItemBackgroundColor="White" LabelColor="{StaticResource Primary}"
+            <dxe:ComboBoxEdit Grid.Row="0" x:Name="lkestablo" Margin="10,35,10,5" CursorColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" ClearIconColor="{StaticResource Primary}" FocusedBorderColor="{StaticResource Primary}" FocusedLabelColor="{StaticResource Primary}" DropDownBackgroundColor="{StaticResource PrimaryLight}" DropDownSelectedItemTextColor="{StaticResource Primary}" DropDownSelectedItemBackgroundColor="White" LabelColor="{StaticResource Primary}"
                           PlaceholderText="Selecciona un establo" LabelText="Establo" ItemsSource="{Binding Establos}" ValueMember="ESTABLO_ID" DisplayMember="NOMBRE"   IsReadOnly="{Binding IsOne}" SelectionChangedCommand="{Binding CommandConsultar}" SelectedItem="{Binding SelEstablo, Mode=TwoWay}" SelectedIndex="0" >
             </dxe:ComboBoxEdit>
 
 
-            <dxco:ShimmerView Grid.Row="1" IsVisible="true" IsLoading="{Binding IsBusy}" Margin="0">
+            <dxco:ShimmerView Grid.Row="1" IsVisible="true" IsLoading="{Binding IsBusy}" Margin="0" >
                 <dxcv:DXCollectionView Grid.Row="1" ItemsSource="{Binding Items}" VerticalOptions="Fill" AllowLiveDataShaping="True" IsPullToRefreshEnabled="True" PullToRefreshCommand="{Binding CommandConsultar}" IsRefreshing="{Binding IsBusy,Mode=TwoWay}" Margin="0,0,0,15" >
                     <dxcv:DXCollectionView.ItemTemplate>
                         <DataTemplate>

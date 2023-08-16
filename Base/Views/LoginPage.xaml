@@ -14,7 +14,7 @@
         <ScrollView >
             <StackLayout>
                 <StackLayout IsVisible="{Binding LogOut}" BackgroundColor="White" Padding="10" >
-                <Image Source="heatsky2" Aspect="AspectFit" Margin="0,50,0,0" HeightRequest="220" BackgroundColor="Transparent"/>
+                <Image Source="heatsky2.PNG" Aspect="AspectFit" Margin="0,50,0,0" HeightRequest="220" BackgroundColor="Transparent"/>
                 <Label Text="" FontAttributes="Bold" FontSize="Title" HorizontalOptions="Center" Margin="20,10,20,50" HorizontalTextAlignment="Center"></Label>
 
                 <dxe:TextEdit Text="{Binding UserName}" ErrorText="Ingrese un usuario valido" HasError="{Binding ErrorUser}" TextChangedCommand="{Binding ResetTextBoxUserCommand}" LabelText="User" Margin="50,5,50,0" ReturnType="Done" 
